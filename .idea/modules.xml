@@ -5,8 +5,10 @@
       <module fileurl="file://D:\android_application_utxo\Changelly.iml" filepath="D:\android_application_utxo\Changelly.iml" />
       <module fileurl="file://D:\android_application_utxo\.idea\android_application_changelly.iml" filepath="D:\android_application_utxo\.idea\android_application_changelly.iml" />
       <module fileurl="file://$PROJECT_DIR$/android_application_utxo.iml" filepath="$PROJECT_DIR$/android_application_utxo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android_application_utxo.iml" filepath="$PROJECT_DIR$/android_application_utxo.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://D:\android_application_utxo\app\app.iml" filepath="D:\android_application_utxo\app\app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
 </project>

@@ -1,16 +1,13 @@
-package com.androidevlinux.percy.UTXO.Beans;
+package com.androidevlinux.percy.UTXO.data.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-import java.util.List;
 
 /**
  * Created by percy on 15/11/2017.
  */
 
-public class GetCurrenciesResponseBean {
-
+public class TransactionBean {
     @SerializedName("jsonrpc")
     @Expose
     private String jsonrpc;
@@ -19,7 +16,7 @@ public class GetCurrenciesResponseBean {
     private Integer id;
     @SerializedName("result")
     @Expose
-    private List<String> result = null;
+    private TransactionResultBean result;
 
     public String getJsonrpc() {
         return jsonrpc;
@@ -37,11 +34,11 @@ public class GetCurrenciesResponseBean {
         this.id = id;
     }
 
-    public List<String> getResult() {
+    public TransactionResultBean getResult() {
         return result;
     }
 
-    public void setResult(List<String> result) {
+    public void setResult(TransactionResultBean result) {
         this.result = result;
     }
 }

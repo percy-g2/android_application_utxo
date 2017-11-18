@@ -1,4 +1,4 @@
-package com.androidevlinux.percy.UTXO.Fragment;
+package com.androidevlinux.percy.UTXO.ui.fragment;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -14,15 +14,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.androidevlinux.percy.UTXO.Beans.GetMinAmountReponseBean;
-import com.androidevlinux.percy.UTXO.Beans.MainBodyBean;
-import com.androidevlinux.percy.UTXO.Beans.ParamsBean;
+import com.androidevlinux.percy.UTXO.data.models.GetMinAmountReponseBean;
+import com.androidevlinux.percy.UTXO.data.models.MainBodyBean;
+import com.androidevlinux.percy.UTXO.data.models.ParamsBean;
 import com.androidevlinux.percy.UTXO.R;
-import com.androidevlinux.percy.UTXO.Retrofit.InterfaceAPI;
-import com.androidevlinux.percy.UTXO.Retrofit.RetrofitBaseAPi;
-import com.androidevlinux.percy.UTXO.Utils.Constants;
-import com.androidevlinux.percy.UTXO.Utils.CustomProgressDialog;
-import com.androidevlinux.percy.UTXO.Utils.Utils;
+import com.androidevlinux.percy.UTXO.data.network.InterfaceAPI;
+import com.androidevlinux.percy.UTXO.data.network.RetrofitBaseAPi;
+import com.androidevlinux.percy.UTXO.utils.Constants;
+import com.androidevlinux.percy.UTXO.utils.CustomProgressDialog;
+import com.androidevlinux.percy.UTXO.utils.Utils;
 import com.google.gson.Gson;
 
 import butterknife.BindView;

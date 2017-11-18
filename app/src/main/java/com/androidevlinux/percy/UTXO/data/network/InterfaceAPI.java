@@ -1,10 +1,10 @@
-package com.androidevlinux.percy.UTXO.Retrofit;
+package com.androidevlinux.percy.UTXO.data.network;
 
-import com.androidevlinux.percy.UTXO.Beans.BitfinexPubTickerResponseBean;
-import com.androidevlinux.percy.UTXO.Beans.GetCurrenciesResponseBean;
-import com.androidevlinux.percy.UTXO.Beans.GetMinAmountReponseBean;
-import com.androidevlinux.percy.UTXO.Beans.MainBodyBean;
-import com.androidevlinux.percy.UTXO.Beans.TransactionBean;
+import com.androidevlinux.percy.UTXO.data.models.BitfinexPubTickerResponseBean;
+import com.androidevlinux.percy.UTXO.data.models.GetCurrenciesResponseBean;
+import com.androidevlinux.percy.UTXO.data.models.GetMinAmountReponseBean;
+import com.androidevlinux.percy.UTXO.data.models.MainBodyBean;
+import com.androidevlinux.percy.UTXO.data.models.TransactionBean;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

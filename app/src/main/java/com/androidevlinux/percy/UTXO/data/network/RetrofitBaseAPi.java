@@ -1,4 +1,4 @@
-package com.androidevlinux.percy.UTXO.Retrofit;
+package com.androidevlinux.percy.UTXO.data.network;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -10,11 +10,11 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Created by percy on 18/11/17.
+ * Created by percy on 14/11/2017.
  */
 
-public class BitfinexRetrofitBaseApi {
-    private static final String BASE_URL = "https://api.bitfinex.com/";
+public class RetrofitBaseAPi {
+    private static final String BASE_URL = "https://api.changelly.com";
     private static Retrofit retrofit = null;
     private static Gson gson = new GsonBuilder()
             .setLenient()

@@ -1,4 +1,4 @@
-package com.androidevlinux.percy.UTXO.Utils;
+package com.androidevlinux.percy.UTXO.utils;
 
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;

@@ -1,4 +1,4 @@
-package com.androidevlinux.percy.UTXO.Beans;
+package com.androidevlinux.percy.UTXO.data.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -7,16 +7,19 @@ import com.google.gson.annotations.SerializedName;
  * Created by percy on 15/11/2017.
  */
 
-public class TransactionBean {
+public class MainBodyBean {
     @SerializedName("jsonrpc")
     @Expose
     private String jsonrpc;
+    @SerializedName("method")
+    @Expose
+    private String method;
+    @SerializedName("params")
+    @Expose
+    private ParamsBean params;
     @SerializedName("id")
     @Expose
     private Integer id;
-    @SerializedName("result")
-    @Expose
-    private TransactionResultBean result;
 
     public String getJsonrpc() {
         return jsonrpc;
@@ -24,6 +27,22 @@ public class TransactionBean {
 
     public void setJsonrpc(String jsonrpc) {
         this.jsonrpc = jsonrpc;
+    }
+
+    public String getMethod() {
+        return method;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
+    }
+
+    public ParamsBean getParams() {
+        return params;
+    }
+
+    public void setParams(ParamsBean params) {
+        this.params = params;
     }
 
     public Integer getId() {
@@ -34,11 +53,4 @@ public class TransactionBean {
         this.id = id;
     }
 
-    public TransactionResultBean getResult() {
-        return result;
-    }
-
-    public void setResult(TransactionResultBean result) {
-        this.result = result;
-    }
 }
