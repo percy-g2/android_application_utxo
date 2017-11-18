@@ -26,4 +26,4 @@ More things will be added in the future versions.
 
 **Support**
 1. You can drop me a proxthehacker@gmail.com here for any queries.
-2. Buy me a beer, BTC   wallet address :- 32nRfmpUazZQBK7aFCK6YVuFsr2RzdzZrE
+2. Buy me a beer, BTC  wallet address :- 32nRfmpUazZQBK7aFCK6YVuFsr2RzdzZrE
