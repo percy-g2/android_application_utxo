@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_get_min_amount"
+            android:icon="@mipmap/ic_crypto"
+            android:title="@string/min_amount_check" />
+        <item
+            android:id="@+id/nav_exchange_amount"
+            android:icon="@mipmap/ic_crypto"
+            android:title="@string/exchange_amount" />
+        <item
+            android:id="@+id/nav_create_transaction"
+            android:icon="@mipmap/ic_crypto"
+            android:visible="false"
+            android:title="@string/create_transaction" />
+        <item
+            android:id="@+id/nav_get_status"
+            android:icon="@mipmap/ic_crypto"
+            android:title="@string/get_status" />
+        <item
+            android:id="@+id/nav_extras"
+            android:icon="@mipmap/ic_crypto"
+            android:title="@string/extras" />
+    </group>
+
+</menu>
