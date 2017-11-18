@@ -1,5 +1,5 @@
-<p align="center"> android_application_utxo <br>
-<img src="https://raw.githubusercontent.com/percy-g2/android_application_utxo/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png?raw=true"/></p>
+# android_application_utxo 
+<p align="center"> <img src="https://raw.githubusercontent.com/percy-g2/android_application_utxo/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png?raw=true"/></p>
 
 **About**
 1. Exchange crypto currencies supported and available in Changelly as their API is used in the app
