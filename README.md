@@ -1,18 +1,19 @@
-# android_application_utxo
-![](https://raw.githubusercontent.com/percy-g2/android_application_utxo/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png?raw=true)
+# android_application_utxo 
+<p align="center"> <img src="https://raw.githubusercontent.com/percy-g2/android_application_utxo/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png?raw=true"/></p>
 
 **About**
-1. Main aim of this app is exchange crypto currency.
-Transfer from one wallet to another within seconds. It's that simple.
-2. Show real time BTC price.
+1. Exchange crypto currencies supported and available in Changelly as their API is used in the app
+2. Check Bitcoin Price (source: Bitfinex)
+
+More things will be added in the future versions.
 
 
 **Getting Started For Developers**
 
-1. Sign up in [Changelly](https://changelly.com/) and get your api-key along with it's secret key.
+1. Sign up on [Changelly](https://changelly.com/) and get your api-key along with it's secret key.
 2. Now paste those in [Key Constants](https://github.com/percy-g2/android_application_utxo/blob/master/app/src/main/java/com/androidevlinux/percy/UTXO/Utils/Constants.java) respectively.
 3. Now run the project and check.
-4. For fetching btc price at real time i'm using bitfinex api's and for exchange amount, creating a transaction and status of transaction  changelly api's.
+4. For fetching BTC-USD price I'm using bitfinex APIs and for exchange amount, creating a transaction and status of transaction Changelly APIs.
 
 **Sources**
 1. [Changelly developer doc](https://changelly.com/developers)
@@ -25,4 +26,4 @@ Transfer from one wallet to another within seconds. It's that simple.
 
 **Support**
 1. You can drop me a proxthehacker@gmail.com here for any queries.
-2. Buy me a beer, wallet address :- 32nRfmpUazZQBK7aFCK6YVuFsr2RzdzZrE
+2. Buy me a beer, BTC  wallet address :- 32nRfmpUazZQBK7aFCK6YVuFsr2RzdzZrE

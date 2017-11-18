@@ -1,4 +1,4 @@
-package com.androidevlinux.percy.UTXO.Fragment;
+package com.androidevlinux.percy.UTXO.ui.fragment;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -14,11 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.androidevlinux.percy.UTXO.Beans.BitfinexPubTickerResponseBean;
+import com.androidevlinux.percy.UTXO.data.models.BitfinexPubTickerResponseBean;
 import com.androidevlinux.percy.UTXO.R;
-import com.androidevlinux.percy.UTXO.Retrofit.BitfinexRetrofitBaseApi;
-import com.androidevlinux.percy.UTXO.Retrofit.InterfaceAPI;
-import com.androidevlinux.percy.UTXO.Utils.CustomProgressDialog;
+import com.androidevlinux.percy.UTXO.data.network.BitfinexRetrofitBaseApi;
+import com.androidevlinux.percy.UTXO.data.network.InterfaceAPI;
+import com.androidevlinux.percy.UTXO.utils.CustomProgressDialog;
 
 import java.text.MessageFormat;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.androidevlinux.percy.UTXO.Utils;
+package com.androidevlinux.percy.UTXO.utils;
 
 import android.app.Dialog;
 import android.content.Context;

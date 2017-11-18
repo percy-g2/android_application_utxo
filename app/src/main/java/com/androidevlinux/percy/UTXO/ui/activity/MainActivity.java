@@ -1,4 +1,4 @@
-package com.androidevlinux.percy.UTXO.Activity;
+package com.androidevlinux.percy.UTXO.ui.activity;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,11 +14,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.androidevlinux.percy.UTXO.Fragment.CreateTransactionFragment;
-import com.androidevlinux.percy.UTXO.Fragment.ExchangeAmountFragment;
-import com.androidevlinux.percy.UTXO.Fragment.ExtrasFragment;
-import com.androidevlinux.percy.UTXO.Fragment.GetStatusFragment;
-import com.androidevlinux.percy.UTXO.Fragment.MinAmountFragment;
+import com.androidevlinux.percy.UTXO.ui.fragment.CreateTransactionFragment;
+import com.androidevlinux.percy.UTXO.ui.fragment.ExchangeAmountFragment;
+import com.androidevlinux.percy.UTXO.ui.fragment.ExtrasFragment;
+import com.androidevlinux.percy.UTXO.ui.fragment.GetStatusFragment;
+import com.androidevlinux.percy.UTXO.ui.fragment.MinAmountFragment;
 import com.androidevlinux.percy.UTXO.R;
 
 import com.crashlytics.android.Crashlytics;

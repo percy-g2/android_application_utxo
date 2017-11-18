@@ -1,4 +1,4 @@
-package com.androidevlinux.percy.UTXO.Fragment;
+package com.androidevlinux.percy.UTXO.ui.fragment;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.Log;
@@ -15,16 +16,16 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.androidevlinux.percy.UTXO.Beans.GetCurrenciesResponseBean;
-import com.androidevlinux.percy.UTXO.Beans.GetMinAmountReponseBean;
-import com.androidevlinux.percy.UTXO.Beans.MainBodyBean;
-import com.androidevlinux.percy.UTXO.Beans.ParamsBean;
+import com.androidevlinux.percy.UTXO.data.models.GetCurrenciesResponseBean;
+import com.androidevlinux.percy.UTXO.data.models.MainBodyBean;
+import com.androidevlinux.percy.UTXO.data.models.ParamsBean;
+import com.androidevlinux.percy.UTXO.data.models.TransactionBean;
 import com.androidevlinux.percy.UTXO.R;
-import com.androidevlinux.percy.UTXO.Retrofit.InterfaceAPI;
-import com.androidevlinux.percy.UTXO.Retrofit.RetrofitBaseAPi;
-import com.androidevlinux.percy.UTXO.Utils.Constants;
-import com.androidevlinux.percy.UTXO.Utils.CustomProgressDialog;
-import com.androidevlinux.percy.UTXO.Utils.Utils;
+import com.androidevlinux.percy.UTXO.data.network.InterfaceAPI;
+import com.androidevlinux.percy.UTXO.data.network.RetrofitBaseAPi;
+import com.androidevlinux.percy.UTXO.utils.Constants;
+import com.androidevlinux.percy.UTXO.utils.CustomProgressDialog;
+import com.androidevlinux.percy.UTXO.utils.Utils;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -42,8 +43,7 @@ import retrofit2.Response;
  * Created by percy on 15/11/2017.
  */
 
-public class MinAmountFragment extends Fragment {
-
+public class CreateTransactionFragment extends Fragment {
     @BindView(R.id.spinner_from)
     AppCompatSpinner spinnerFrom;
     @BindView(R.id.spinner_to)
@@ -54,11 +54,17 @@ public class MinAmountFragment extends Fragment {
     AppCompatTextView txtMinAmount;
     Unbinder unbinder;
     List<String> currenciesStringList;
+    @BindView(R.id.edtAmount)
+    AppCompatEditText edtAmount;
+    @BindView(R.id.txt_info)
+    AppCompatTextView txtInfo;
+    @BindView(R.id.edtUserPayOutAddress)
+    AppCompatEditText edtUserPayOutAddress;
 
     @Override
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         assert inflater != null;
-        View view = inflater.inflate(R.layout.min_amount_fragment, container, false);
+        View view = inflater.inflate(R.layout.create_transaction_fragment, container, false);
         unbinder = ButterKnife.bind(this, view);
         return view;
 
@@ -69,21 +75,22 @@ public class MinAmountFragment extends Fragment {
         assert view != null;
         super.onViewCreated(view, savedInstanceState);
         TextView Title = getActivity().findViewById(R.id.txtTitle);
-        Title.setText(getResources().getString(R.string.min_amount_check));
-        TextView txtInfo = view.findViewById(R.id.txt_info);
-        txtInfo.setText(R.string.min_amount_info);
+        Title.setText(getResources().getString(R.string.create_transaction));
+        txtInfo.setText(R.string.transaction_id);
         currenciesStringList = new ArrayList<>();
         Init();
     }
 
-    private void MinAmount(String From, String To) {
+    private void MinAmount(String From, String To, String amount, String address) {
         MainBodyBean testbean = new MainBodyBean();
         testbean.setId(1);
         testbean.setJsonrpc("2.0");
-        testbean.setMethod("getMinAmount");
+        testbean.setMethod("createTransaction");
         ParamsBean params = new ParamsBean();
         params.setFrom(From);
         params.setTo(To);
+        params.setAmount(amount);
+        params.setAddress(address);
         testbean.setParams(params);
         String sign = null;
         try {
@@ -97,21 +104,21 @@ public class MinAmountFragment extends Fragment {
 
         Log.i("DownloadFlagSuccess", sign);
 
-        Call<GetMinAmountReponseBean> call = service.getMinAmount("application/json", Constants.api_key, sign, testbean);
+        Call<TransactionBean> call = service.createTransaction("application/json", Constants.api_key, sign, testbean);
 
-        final Dialog dialogToSaveData = CustomProgressDialog.showCustomProgressDialog(getActivity(), "Please Wait Fetching Data ...");
-        call.enqueue(new Callback<GetMinAmountReponseBean>() {
+        final Dialog dialogToSaveData =  CustomProgressDialog.showCustomProgressDialog(getActivity(), "Please Wait Creating Transaction ...");
+        call.enqueue(new Callback<TransactionBean>() {
             @Override
-            public void onResponse(@NonNull Call<GetMinAmountReponseBean> call, @NonNull Response<GetMinAmountReponseBean> response) {
+            public void onResponse(@NonNull Call<TransactionBean> call, @NonNull Response<TransactionBean> response) {
                 Log.i("DownloadFlagSuccess", response.body().toString());
-                txtMinAmount.setText(response.body().getResult());
+                txtMinAmount.setText(response.body().getResult().getId());
                 if (dialogToSaveData != null) {
                     CustomProgressDialog.dismissCustomProgressDialog(dialogToSaveData);
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<GetMinAmountReponseBean> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<TransactionBean> call, @NonNull Throwable t) {
                 Log.i("DownloadFlagSuccess", t.getMessage());
                 if (dialogToSaveData != null) {
                     CustomProgressDialog.dismissCustomProgressDialog(dialogToSaveData);
@@ -141,7 +148,7 @@ public class MinAmountFragment extends Fragment {
 
         Call<GetCurrenciesResponseBean> call = service.getCurrencies("application/json", Constants.api_key, sign, testbean);
 
-        final Dialog dialogToSaveData = CustomProgressDialog.showCustomProgressDialog(getActivity(), "Please Wait Loading Currencies ...");
+        final Dialog dialogToSaveData =  CustomProgressDialog.showCustomProgressDialog(getActivity(), "Please Wait Loading Currencies ...");
         call.enqueue(new Callback<GetCurrenciesResponseBean>() {
             @Override
             public void onResponse(@NonNull Call<GetCurrenciesResponseBean> call, @NonNull Response<GetCurrenciesResponseBean> response) {
@@ -159,7 +166,7 @@ public class MinAmountFragment extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<GetCurrenciesResponseBean> call, @NonNull Throwable t) {
-                Log.i("DownloadFlagFail", t.getMessage());
+                Log.i("DownloadFlagSuccess", t.getMessage());
                 if (dialogToSaveData != null) {
                     CustomProgressDialog.dismissCustomProgressDialog(dialogToSaveData);
                 }
@@ -175,6 +182,8 @@ public class MinAmountFragment extends Fragment {
 
     @OnClick(R.id.btn_get_amount)
     public void onClick() {
-        MinAmount(spinnerFrom.getSelectedItem().toString(), spinnerTo.getSelectedItem().toString());
+        MinAmount(spinnerFrom.getSelectedItem().toString(), spinnerTo.getSelectedItem().toString(), edtAmount.getText().toString(), edtUserPayOutAddress.getText().toString());
     }
 }
+
+

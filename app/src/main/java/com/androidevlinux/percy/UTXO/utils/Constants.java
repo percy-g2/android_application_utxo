@@ -1,7 +1,7 @@
-package com.androidevlinux.percy.UTXO.Utils;
+package com.androidevlinux.percy.UTXO.utils;
 
 /**
- * Created by percy on 18/11/17.
+ * Created by percy on 18/11/17
  */
 
 public class Constants {

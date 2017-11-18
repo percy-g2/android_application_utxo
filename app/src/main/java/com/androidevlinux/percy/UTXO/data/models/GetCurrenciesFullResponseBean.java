@@ -1,25 +1,25 @@
-package com.androidevlinux.percy.UTXO.Beans;
+package com.androidevlinux.percy.UTXO.data.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 /**
  * Created by percy on 15/11/2017.
  */
 
-public class MainBodyBean {
+public class GetCurrenciesFullResponseBean {
+
     @SerializedName("jsonrpc")
     @Expose
     private String jsonrpc;
-    @SerializedName("method")
-    @Expose
-    private String method;
-    @SerializedName("params")
-    @Expose
-    private ParamsBean params;
     @SerializedName("id")
     @Expose
     private Integer id;
+    @SerializedName("result")
+    @Expose
+    private List<CurrenciesFullResultBean> result = null;
 
     public String getJsonrpc() {
         return jsonrpc;
@@ -27,22 +27,6 @@ public class MainBodyBean {
 
     public void setJsonrpc(String jsonrpc) {
         this.jsonrpc = jsonrpc;
-    }
-
-    public String getMethod() {
-        return method;
-    }
-
-    public void setMethod(String method) {
-        this.method = method;
-    }
-
-    public ParamsBean getParams() {
-        return params;
-    }
-
-    public void setParams(ParamsBean params) {
-        this.params = params;
     }
 
     public Integer getId() {
@@ -53,4 +37,11 @@ public class MainBodyBean {
         this.id = id;
     }
 
+    public List<CurrenciesFullResultBean> getResult() {
+        return result;
+    }
+
+    public void setResult(List<CurrenciesFullResultBean> result) {
+        this.result = result;
+    }
 }
