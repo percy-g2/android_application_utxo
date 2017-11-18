@@ -11,7 +11,7 @@ More things will be added in the future versions.
 **Getting Started For Developers**
 
 1. Sign up on [Changelly](https://changelly.com/) and get your api-key along with it's secret key.
-2. Now paste those in [Key Constants](https://github.com/percy-g2/android_application_utxo/blob/master/app/src/main/java/com/androidevlinux/percy/UTXO/Utils/Constants.java) respectively.
+2. Now paste those in [Key Constants](https://github.com/percy-g2/android_application_utxo/blob/master/app/src/main/java/com/androidevlinux/percy/UTXO/utils/Constants.java) respectively.
 3. Now run the project and check.
 4. For fetching BTC-USD price I'm using bitfinex APIs and for exchange amount, creating a transaction and status of transaction Changelly APIs.
 
