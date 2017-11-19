@@ -21,6 +21,7 @@ import com.androidevlinux.percy.UTXO.ui.fragment.GetStatusFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.MinAmountFragment;
 import com.androidevlinux.percy.UTXO.R;
 
+import com.androidevlinux.percy.UTXO.ui.fragment.SettingsFragment;
 import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
 
@@ -72,6 +73,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_extras:
                 fragment = new ExtrasFragment();
+                break;
+            case R.id.nav_settings:
+                fragment = new SettingsFragment();
                 break;
         }
         //replacing the fragment

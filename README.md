@@ -4,6 +4,7 @@
 **About**
 1. Exchange crypto currencies supported and available in Changelly as their API is used in the app
 2. Check Bitcoin Price (source: Bitfinex)
+3. You either enable refresh button to check BTC price in settings or get BTC price automatically updated every 1 min.
 
 More things will be added in the future versions.
 

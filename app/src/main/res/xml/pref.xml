@@ -1,0 +1,9 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/action_settings">
+        <SwitchPreference
+            android:background="@color/colorAccent"
+            android:key="enable_refresh_pref_keys"
+            android:defaultValue="false"
+            android:summary="Enable refresh button for BTC Price"
+            android:title="Refresh Button" />
+</PreferenceScreen>

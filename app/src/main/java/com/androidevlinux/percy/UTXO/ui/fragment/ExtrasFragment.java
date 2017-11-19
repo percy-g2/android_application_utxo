@@ -1,12 +1,15 @@
 package com.androidevlinux.percy.UTXO.ui.fragment;
 
 import android.app.Dialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.preference.PreferenceManager;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,10 +17,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.androidevlinux.percy.UTXO.data.models.BitfinexPubTickerResponseBean;
 import com.androidevlinux.percy.UTXO.R;
+import com.androidevlinux.percy.UTXO.data.models.BitfinexPubTickerResponseBean;
 import com.androidevlinux.percy.UTXO.data.network.BitfinexRetrofitBaseApi;
 import com.androidevlinux.percy.UTXO.data.network.InterfaceAPI;
+import com.androidevlinux.percy.UTXO.utils.Constants;
 import com.androidevlinux.percy.UTXO.utils.CustomProgressDialog;
 
 import java.text.MessageFormat;
@@ -25,6 +29,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,6 +49,9 @@ public class ExtrasFragment extends Fragment {
     AppCompatTextView bitfinexHighPrice;
     @BindView(R.id.bitfinex_volume_price)
     AppCompatTextView bitfinexVolumePrice;
+    SharedPreferences mSharedPreferences;
+    @BindView(R.id.btn_refresh)
+    AppCompatButton btnRefresh;
 
     @Override
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -60,9 +68,15 @@ public class ExtrasFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         TextView Title = getActivity().findViewById(R.id.txtTitle);
         Title.setText(getResources().getString(R.string.extras));
-        //timer.schedule(timerTask, 0, 10000);
-        //Start
-        handler.postDelayed(runnable, 5000);
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        boolean isRefreshButtonEnabled = mSharedPreferences.getBoolean(SettingsFragment.refresh_btc_price_button_key, false);
+        if (!isRefreshButtonEnabled) {
+            handler.postDelayed(runnable, 30000);
+            bitfinexLastPrice.setText(MessageFormat.format("$ {0}", Constants.btc_price));
+        } else {
+            btnRefresh.setVisibility(View.VISIBLE);
+            bitfinexLastPrice.setText(MessageFormat.format("$ {0}", Constants.btc_price));
+        }
     }
 
     // Init
@@ -71,7 +85,7 @@ public class ExtrasFragment extends Fragment {
         @Override
         public void run() {
             getBitfinexPubTicker();
-            handler.postDelayed(this, 5000);
+            handler.postDelayed(this, 30000);
         }
     };
 
@@ -92,7 +106,8 @@ public class ExtrasFragment extends Fragment {
                 if (response.body() != null) {
                     if (getVisibleFragment() instanceof ExtrasFragment) {
                         Log.i("DownloadFlagSuccess", response.body().getLastPrice());
-                        bitfinexLastPrice.setText(MessageFormat.format("$ {0}", response.body().getLastPrice()));
+                        Constants.btc_price = response.body().getLastPrice();
+                        bitfinexLastPrice.setText(MessageFormat.format("$ {0}", Constants.btc_price));
                         bitfinexLowPrice.setText(MessageFormat.format("$ {0}", response.body().getLastPrice()));
                         bitfinexHighPrice.setText(MessageFormat.format("$ {0}", response.body().getHigh()));
                         bitfinexVolumePrice.setText(MessageFormat.format("Bitcoin {0}", response.body().getVolume()));
@@ -107,7 +122,7 @@ public class ExtrasFragment extends Fragment {
             public void onFailure(@NonNull Call<BitfinexPubTickerResponseBean> call, @NonNull Throwable t) {
                 if (getVisibleFragment() instanceof ExtrasFragment) {
                     Log.i("DownloadFlagFail", t.getMessage());
-                    bitfinexLastPrice.setText(getString(R.string.zerodotzerozero));
+                    bitfinexLastPrice.setText(Constants.btc_price);
                     bitfinexLowPrice.setText(getString(R.string.zerodotzerozero));
                     bitfinexHighPrice.setText(getString(R.string.zerodotzerozero));
                     bitfinexVolumePrice.setText(R.string.zerovolume);
@@ -127,5 +142,10 @@ public class ExtrasFragment extends Fragment {
                 return fragment;
         }
         return null;
+    }
+
+    @OnClick(R.id.btn_refresh)
+    public void onClick() {
+        getBitfinexPubTicker();
     }
 }

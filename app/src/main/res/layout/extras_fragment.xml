@@ -55,6 +55,28 @@
             android:orientation="horizontal"
             android:weightSum="1">
 
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_refresh"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@color/colorPrimaryDark"
+                android:gravity="center"
+                android:text="@string/refresh"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:visibility="invisible" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:weightSum="1">
+
             <android.support.v7.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -71,6 +93,7 @@
             android:layout_margin="2dp"
             android:layout_weight="1"
             android:orientation="horizontal"
+            android:visibility="gone"
             android:weightSum="1">
 
             <android.support.v7.widget.AppCompatTextView
@@ -89,6 +112,7 @@
             android:layout_margin="2dp"
             android:layout_weight="1"
             android:orientation="horizontal"
+            android:visibility="gone"
             android:weightSum="1">
 
             <android.support.v7.widget.AppCompatTextView
@@ -107,6 +131,7 @@
             android:layout_margin="2dp"
             android:layout_weight="1"
             android:orientation="horizontal"
+            android:visibility="gone"
             android:weightSum="1">
 
             <android.support.v7.widget.AppCompatTextView
@@ -125,6 +150,7 @@
             android:layout_margin="2dp"
             android:layout_weight="1"
             android:orientation="horizontal"
+            android:visibility="gone"
             android:weightSum="1">
 
             <android.support.v7.widget.AppCompatTextView
@@ -143,6 +169,7 @@
             android:layout_margin="2dp"
             android:layout_weight="1"
             android:orientation="horizontal"
+            android:visibility="gone"
             android:weightSum="1">
 
             <android.support.v7.widget.AppCompatTextView
