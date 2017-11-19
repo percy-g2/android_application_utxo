@@ -17,6 +17,9 @@ public class TransactionBean {
     @SerializedName("result")
     @Expose
     private TransactionResultBean result;
+    @SerializedName("error")
+    @Expose
+    private ErrorBean error;
 
     public String getJsonrpc() {
         return jsonrpc;
@@ -40,5 +43,13 @@ public class TransactionBean {
 
     public void setResult(TransactionResultBean result) {
         this.result = result;
+    }
+
+    public ErrorBean getError() {
+        return error;
+    }
+
+    public void setError(ErrorBean error) {
+        this.error = error;
     }
 }

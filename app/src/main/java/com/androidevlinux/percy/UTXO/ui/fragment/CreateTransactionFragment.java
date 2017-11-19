@@ -111,8 +111,13 @@ public class CreateTransactionFragment extends Fragment {
         call.enqueue(new Callback<TransactionBean>() {
             @Override
             public void onResponse(@NonNull Call<TransactionBean> call, @NonNull Response<TransactionBean> response) {
-                Log.i("DownloadFlagSuccess", response.body().toString());
-                txtMinAmount.setText(response.body().getResult().getId());
+                if (response.body() != null) {
+                    if (response.body().getError() != null) {
+                        Toast.makeText(getActivity(), response.body().getError().getMessage(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        txtMinAmount.setText(response.body().getResult().getId());
+                    }
+                }
                 if (dialogToSaveData != null) {
                     CustomProgressDialog.dismissCustomProgressDialog(dialogToSaveData);
                 }

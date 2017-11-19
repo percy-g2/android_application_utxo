@@ -104,8 +104,14 @@ public class MinAmountFragment extends Fragment {
         call.enqueue(new Callback<GetMinAmountReponseBean>() {
             @Override
             public void onResponse(@NonNull Call<GetMinAmountReponseBean> call, @NonNull Response<GetMinAmountReponseBean> response) {
-                Log.i("DownloadFlagSuccess", response.body().toString());
-                txtMinAmount.setText(response.body().getResult());
+                if (response.body() != null) {
+                    if (response.body().getError() != null) {
+                        Toast.makeText(getActivity(), response.body().getError().getMessage(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity(), response.body().getResult(), Toast.LENGTH_SHORT).show();
+                        txtMinAmount.setText(response.body().getResult());
+                    }
+                }
                 if (dialogToSaveData != null) {
                     CustomProgressDialog.dismissCustomProgressDialog(dialogToSaveData);
                 }

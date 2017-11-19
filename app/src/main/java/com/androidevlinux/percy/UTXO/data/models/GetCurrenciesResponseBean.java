@@ -21,6 +21,7 @@ public class GetCurrenciesResponseBean {
     @Expose
     private List<String> result = null;
 
+
     public String getJsonrpc() {
         return jsonrpc;
     }

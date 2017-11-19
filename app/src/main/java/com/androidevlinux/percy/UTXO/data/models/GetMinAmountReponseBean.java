@@ -17,6 +17,9 @@ public class GetMinAmountReponseBean {
     @SerializedName("result")
     @Expose
     private String result;
+    @SerializedName("error")
+    @Expose
+    private ErrorBean error;
 
     public String getJsonrpc() {
         return jsonrpc;
@@ -40,6 +43,15 @@ public class GetMinAmountReponseBean {
 
     public void setResult(String result) {
         this.result = result;
+    }
+
+
+    public ErrorBean getError() {
+        return error;
+    }
+
+    public void setError(ErrorBean error) {
+        this.error = error;
     }
 
 }

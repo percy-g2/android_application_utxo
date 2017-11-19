@@ -94,8 +94,12 @@ public class GetStatusFragment  extends Fragment {
             @Override
             public void onResponse(@NonNull Call<GetMinAmountReponseBean> call, @NonNull Response<GetMinAmountReponseBean> response) {
                 if (response.body() != null) {
-                    Log.i("DownloadFlagSuccess", response.body().toString());
-                    txtMinAmount.setText(response.body().getResult());
+                    if (response.body().getError() != null) {
+                        Toast.makeText(getActivity(), response.body().getError().getMessage(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity(), response.body().getResult(), Toast.LENGTH_SHORT).show();
+                        txtMinAmount.setText(response.body().getResult());
+                    }
                 }
                 if (response.code() == 401) {
                     Toast.makeText(getActivity(), "Unauthorized! Please Check Your Keys", Toast.LENGTH_LONG).show();
