@@ -8,4 +8,6 @@ public class Constants {
     public static String api_key = "api_key";
     public static String secret_key = "secret_key";
     public static String btc_price = "0.00";
+    public static String btc_price_low = "0.00";
+    public static String btc_price_high = "0.00";
 }

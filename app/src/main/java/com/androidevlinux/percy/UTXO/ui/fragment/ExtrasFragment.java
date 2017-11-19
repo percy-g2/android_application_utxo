@@ -73,9 +73,13 @@ public class ExtrasFragment extends Fragment {
         if (!isRefreshButtonEnabled) {
             handler.postDelayed(runnable, 30000);
             bitfinexLastPrice.setText(MessageFormat.format("$ {0}", Constants.btc_price));
+            bitfinexLowPrice.setText(MessageFormat.format("$ {0}", Constants.btc_price_low));
+            bitfinexHighPrice.setText(MessageFormat.format("$ {0}", Constants.btc_price_high));
         } else {
             btnRefresh.setVisibility(View.VISIBLE);
             bitfinexLastPrice.setText(MessageFormat.format("$ {0}", Constants.btc_price));
+            bitfinexLowPrice.setText(MessageFormat.format("$ {0}", Constants.btc_price_low));
+            bitfinexHighPrice.setText(MessageFormat.format("$ {0}", Constants.btc_price_high));
         }
     }
 
@@ -107,9 +111,11 @@ public class ExtrasFragment extends Fragment {
                     if (getVisibleFragment() instanceof ExtrasFragment) {
                         Log.i("DownloadFlagSuccess", response.body().getLastPrice());
                         Constants.btc_price = response.body().getLastPrice();
+                        Constants.btc_price_low = response.body().getLow();
+                        Constants.btc_price_high = response.body().getHigh();
                         bitfinexLastPrice.setText(MessageFormat.format("$ {0}", Constants.btc_price));
-                        bitfinexLowPrice.setText(MessageFormat.format("$ {0}", response.body().getLastPrice()));
-                        bitfinexHighPrice.setText(MessageFormat.format("$ {0}", response.body().getHigh()));
+                        bitfinexLowPrice.setText(MessageFormat.format("$ {0}", Constants.btc_price_low));
+                        bitfinexHighPrice.setText(MessageFormat.format("$ {0}", Constants.btc_price_high));
                         bitfinexVolumePrice.setText(MessageFormat.format("Bitcoin {0}", response.body().getVolume()));
                     }
                 }
