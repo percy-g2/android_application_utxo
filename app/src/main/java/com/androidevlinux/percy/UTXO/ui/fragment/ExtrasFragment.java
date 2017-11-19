@@ -89,15 +89,17 @@ public class ExtrasFragment extends Fragment {
         call.enqueue(new Callback<BitfinexPubTickerResponseBean>() {
             @Override
             public void onResponse(@NonNull Call<BitfinexPubTickerResponseBean> call, @NonNull Response<BitfinexPubTickerResponseBean> response) {
-                if (getVisibleFragment() instanceof ExtrasFragment) {
-                    Log.i("DownloadFlagSuccess", response.body().getLastPrice());
-                    bitfinexLastPrice.setText(MessageFormat.format("$ {0}", response.body().getLastPrice()));
-                    bitfinexLowPrice.setText(MessageFormat.format("$ {0}", response.body().getLastPrice()));
-                    bitfinexHighPrice.setText(MessageFormat.format("$ {0}", response.body().getHigh()));
-                    bitfinexVolumePrice.setText(MessageFormat.format("Bitcoin {0}", response.body().getVolume()));
-                    if (dialogToSaveData != null) {
-                        CustomProgressDialog.dismissCustomProgressDialog(dialogToSaveData);
+                if (response.body() != null) {
+                    if (getVisibleFragment() instanceof ExtrasFragment) {
+                        Log.i("DownloadFlagSuccess", response.body().getLastPrice());
+                        bitfinexLastPrice.setText(MessageFormat.format("$ {0}", response.body().getLastPrice()));
+                        bitfinexLowPrice.setText(MessageFormat.format("$ {0}", response.body().getLastPrice()));
+                        bitfinexHighPrice.setText(MessageFormat.format("$ {0}", response.body().getHigh()));
+                        bitfinexVolumePrice.setText(MessageFormat.format("Bitcoin {0}", response.body().getVolume()));
                     }
+                }
+                if (dialogToSaveData != null) {
+                    CustomProgressDialog.dismissCustomProgressDialog(dialogToSaveData);
                 }
             }
 
@@ -108,7 +110,7 @@ public class ExtrasFragment extends Fragment {
                     bitfinexLastPrice.setText(getString(R.string.zerodotzerozero));
                     bitfinexLowPrice.setText(getString(R.string.zerodotzerozero));
                     bitfinexHighPrice.setText(getString(R.string.zerodotzerozero));
-                    bitfinexVolumePrice.setText("Bitcoin 0.00");
+                    bitfinexVolumePrice.setText(R.string.zerovolume);
                     if (dialogToSaveData != null) {
                         CustomProgressDialog.dismissCustomProgressDialog(dialogToSaveData);
                     }

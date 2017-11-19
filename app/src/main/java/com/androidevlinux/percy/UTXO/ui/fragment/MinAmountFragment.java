@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androidevlinux.percy.UTXO.data.models.GetCurrenciesResponseBean;
 import com.androidevlinux.percy.UTXO.data.models.GetMinAmountReponseBean;
@@ -145,15 +146,20 @@ public class MinAmountFragment extends Fragment {
         call.enqueue(new Callback<GetCurrenciesResponseBean>() {
             @Override
             public void onResponse(@NonNull Call<GetCurrenciesResponseBean> call, @NonNull Response<GetCurrenciesResponseBean> response) {
-                Log.i("DownloadFlagSuccess", response.body().getResult().toString());
-                currenciesStringList = response.body().getResult();
-                ArrayAdapter<String> karant_adapter = new ArrayAdapter<>(getActivity(),
-                        android.R.layout.simple_spinner_item, currenciesStringList);
-                karant_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerFrom.setAdapter(karant_adapter);
-                spinnerTo.setAdapter(karant_adapter);
+                if (response.body()!=null) {
+                    Log.i("DownloadFlagSuccess", response.body().getResult().toString());
+                    currenciesStringList = response.body().getResult();
+                    ArrayAdapter<String> karant_adapter = new ArrayAdapter<>(getActivity(),
+                            android.R.layout.simple_spinner_item, currenciesStringList);
+                    karant_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerFrom.setAdapter(karant_adapter);
+                    spinnerTo.setAdapter(karant_adapter);
+                }
                 if (dialogToSaveData != null) {
                     CustomProgressDialog.dismissCustomProgressDialog(dialogToSaveData);
+                }
+                if (response.code() == 401) {
+                    Toast.makeText(getActivity(), "Unauthorized! Please Check Your Keys", Toast.LENGTH_LONG).show();
                 }
             }
 

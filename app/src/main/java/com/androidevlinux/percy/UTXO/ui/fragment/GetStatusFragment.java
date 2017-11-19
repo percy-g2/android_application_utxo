@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androidevlinux.percy.UTXO.data.models.GetMinAmountReponseBean;
 import com.androidevlinux.percy.UTXO.data.models.MainBodyBean;
@@ -92,8 +93,13 @@ public class GetStatusFragment  extends Fragment {
         call.enqueue(new Callback<GetMinAmountReponseBean>() {
             @Override
             public void onResponse(@NonNull Call<GetMinAmountReponseBean> call, @NonNull Response<GetMinAmountReponseBean> response) {
-                Log.i("DownloadFlagSuccess", response.body().toString());
-                txtMinAmount.setText(response.body().getResult());
+                if (response.body() != null) {
+                    Log.i("DownloadFlagSuccess", response.body().toString());
+                    txtMinAmount.setText(response.body().getResult());
+                }
+                if (response.code() == 401) {
+                    Toast.makeText(getActivity(), "Unauthorized! Please Check Your Keys", Toast.LENGTH_LONG).show();
+                }
                 if (dialogToSaveData != null) {
                     CustomProgressDialog.dismissCustomProgressDialog(dialogToSaveData);
                 }

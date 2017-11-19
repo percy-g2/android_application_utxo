@@ -25,4 +25,5 @@
     <string name="twentyfourhourslow">24 Hr\'s Low</string>
     <string name="twentyfourhourshigh">24 Hr\'s High</string>
     <string name="twentyfourhoursvolume">24 Hr\'s Volume</string>
+    <string name="zerovolume">0.00 Bitcoin</string>
 </resources>

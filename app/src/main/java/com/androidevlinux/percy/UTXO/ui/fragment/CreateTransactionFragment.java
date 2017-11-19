@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androidevlinux.percy.UTXO.data.models.GetCurrenciesResponseBean;
 import com.androidevlinux.percy.UTXO.data.models.MainBodyBean;
@@ -106,7 +107,7 @@ public class CreateTransactionFragment extends Fragment {
 
         Call<TransactionBean> call = service.createTransaction("application/json", Constants.api_key, sign, testbean);
 
-        final Dialog dialogToSaveData =  CustomProgressDialog.showCustomProgressDialog(getActivity(), "Please Wait Creating Transaction ...");
+        final Dialog dialogToSaveData = CustomProgressDialog.showCustomProgressDialog(getActivity(), "Please Wait Creating Transaction ...");
         call.enqueue(new Callback<TransactionBean>() {
             @Override
             public void onResponse(@NonNull Call<TransactionBean> call, @NonNull Response<TransactionBean> response) {
@@ -148,19 +149,24 @@ public class CreateTransactionFragment extends Fragment {
 
         Call<GetCurrenciesResponseBean> call = service.getCurrencies("application/json", Constants.api_key, sign, testbean);
 
-        final Dialog dialogToSaveData =  CustomProgressDialog.showCustomProgressDialog(getActivity(), "Please Wait Loading Currencies ...");
+        final Dialog dialogToSaveData = CustomProgressDialog.showCustomProgressDialog(getActivity(), "Please Wait Loading Currencies ...");
         call.enqueue(new Callback<GetCurrenciesResponseBean>() {
             @Override
             public void onResponse(@NonNull Call<GetCurrenciesResponseBean> call, @NonNull Response<GetCurrenciesResponseBean> response) {
-                Log.i("DownloadFlagSuccess", response.body().getResult().toString());
-                currenciesStringList = response.body().getResult();
-                ArrayAdapter<String> karant_adapter = new ArrayAdapter<>(getActivity(),
-                        android.R.layout.simple_spinner_item, currenciesStringList);
-                karant_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerFrom.setAdapter(karant_adapter);
-                spinnerTo.setAdapter(karant_adapter);
+                if (response.body() != null) {
+                    Log.i("DownloadFlagSuccess", response.body().getResult().toString());
+                    currenciesStringList = response.body().getResult();
+                    ArrayAdapter<String> karant_adapter = new ArrayAdapter<>(getActivity(),
+                            android.R.layout.simple_spinner_item, currenciesStringList);
+                    karant_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerFrom.setAdapter(karant_adapter);
+                    spinnerTo.setAdapter(karant_adapter);
+                }
                 if (dialogToSaveData != null) {
                     CustomProgressDialog.dismissCustomProgressDialog(dialogToSaveData);
+                }
+                if (response.code() == 401) {
+                    Toast.makeText(getActivity(), "Unauthorized! Please Check Your Keys", Toast.LENGTH_LONG).show();
                 }
             }
 
