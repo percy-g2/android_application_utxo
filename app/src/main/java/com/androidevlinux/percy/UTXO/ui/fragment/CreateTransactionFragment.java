@@ -193,7 +193,15 @@ public class CreateTransactionFragment extends Fragment {
 
     @OnClick(R.id.btn_get_amount)
     public void onClick() {
-        MinAmount(spinnerFrom.getSelectedItem().toString(), spinnerTo.getSelectedItem().toString(), edtAmount.getText().toString(), edtUserPayOutAddress.getText().toString());
+        if (Utils.isConnectingToInternet(getActivity())) {
+            if (spinnerFrom.getSelectedItem() !=null && spinnerTo.getSelectedItem() !=null && spinnerFrom.getSelectedItem().toString() != null && spinnerFrom.getSelectedItem().toString() != null && !edtAmount.getText().toString().isEmpty() && !edtUserPayOutAddress.getText().toString().isEmpty()) {
+                MinAmount(spinnerFrom.getSelectedItem().toString(), spinnerTo.getSelectedItem().toString(), edtAmount.getText().toString(), edtUserPayOutAddress.getText().toString());
+            } else {
+                Toast.makeText(getActivity(), "Empty Fields Please Check", Toast.LENGTH_LONG).show();
+            }
+        } else {
+            Toast.makeText(getActivity(), "No Internet", Toast.LENGTH_LONG).show();
+        }
     }
 }
 

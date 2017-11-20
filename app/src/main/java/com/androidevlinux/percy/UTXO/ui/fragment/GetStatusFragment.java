@@ -128,7 +128,15 @@ public class GetStatusFragment  extends Fragment {
 
     @OnClick(R.id.btn_get_amount)
     public void onClick() {
-        MinAmount(edtTransactionId.getText().toString());
+        if (Utils.isConnectingToInternet(getActivity())) {
+            if (!edtTransactionId.getText().toString().isEmpty()) {
+                MinAmount(edtTransactionId.getText().toString());
+            } else {
+                Toast.makeText(getActivity(), "Empty Field Please Check", Toast.LENGTH_LONG).show();
+            }
+        } else {
+            Toast.makeText(getActivity(), "No Internet", Toast.LENGTH_LONG).show();
+        }
     }
 }
 

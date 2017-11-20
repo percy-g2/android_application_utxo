@@ -187,6 +187,14 @@ public class MinAmountFragment extends Fragment {
 
     @OnClick(R.id.btn_get_amount)
     public void onClick() {
-        MinAmount(spinnerFrom.getSelectedItem().toString(), spinnerTo.getSelectedItem().toString());
+        if (Utils.isConnectingToInternet(getActivity())) {
+            if (spinnerFrom.getSelectedItem() !=null && spinnerTo.getSelectedItem() !=null && spinnerFrom.getSelectedItem().toString() != null && spinnerFrom.getSelectedItem().toString() != null) {
+                MinAmount(spinnerFrom.getSelectedItem().toString(), spinnerTo.getSelectedItem().toString());
+            } else {
+                Toast.makeText(getActivity(), "Empty Fields Please Check", Toast.LENGTH_LONG).show();
+            }
+        } else {
+            Toast.makeText(getActivity(), "No Internet", Toast.LENGTH_LONG).show();
+        }
     }
 }

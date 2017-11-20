@@ -1,5 +1,9 @@
 package com.androidevlinux.percy.UTXO.utils;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -29,10 +33,23 @@ public class Utils {
                 hash.append(hex);
             }
             digest = hash.toString();
-        } catch (UnsupportedEncodingException e) {
-        } catch (InvalidKeyException e) {
-        } catch (NoSuchAlgorithmException e) {
+        } catch (UnsupportedEncodingException ignored) {
+        } catch (InvalidKeyException ignored) {
+        } catch (NoSuchAlgorithmException ignored) {
         }
         return digest;
+    }
+
+    public static boolean isConnectingToInternet(Context context) {
+
+        ConnectivityManager cm =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = null;
+        if (cm != null) {
+            activeNetwork = cm.getActiveNetworkInfo();
+        }
+        return activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
     }
 }

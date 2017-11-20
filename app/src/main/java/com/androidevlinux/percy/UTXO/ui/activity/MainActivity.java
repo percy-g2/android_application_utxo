@@ -3,9 +3,9 @@ package com.androidevlinux.percy.UTXO.ui.activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,21 +14,23 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.androidevlinux.percy.UTXO.R;
 import com.androidevlinux.percy.UTXO.ui.fragment.CreateTransactionFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.ExchangeAmountFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.ExtrasFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.GetStatusFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.MinAmountFragment;
-import com.androidevlinux.percy.UTXO.R;
-
 import com.androidevlinux.percy.UTXO.ui.fragment.SettingsFragment;
 import com.crashlytics.android.Crashlytics;
+
 import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Fragment fragment;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,4 +130,6 @@ public class MainActivity extends AppCompatActivity
         displaySelectedScreen(item.getItemId());
         return true;
     }
+
+
 }
