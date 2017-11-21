@@ -31,10 +31,10 @@ More things will be added in the future versions.
 
 **ScreenShots**
 
-<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/develop/screenshots/1.png"><img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/develop/screenshots/2.png">
-<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/develop/screenshots/3.png">
-<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/develop/screenshots/4.png">
-<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/develop/screenshots/5.png">
-<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/develop/screenshots/6.png">
-<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/develop/screenshots/7.png">
-<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/develop/screenshots/8.png">
+<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/master/screenshots/1.png"><img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/master/screenshots/2.png">
+<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/master/screenshots/3.png">
+<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/master/screenshots/4.png">
+<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/master/screenshots/5.png">
+<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/master/screenshots/6.png">
+<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/master/screenshots/7.png">
+<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/master/screenshots/8.png">
