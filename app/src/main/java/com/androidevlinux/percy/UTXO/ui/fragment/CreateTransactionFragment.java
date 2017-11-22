@@ -17,13 +17,12 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.androidevlinux.percy.UTXO.R;
 import com.androidevlinux.percy.UTXO.data.models.GetCurrenciesResponseBean;
 import com.androidevlinux.percy.UTXO.data.models.MainBodyBean;
 import com.androidevlinux.percy.UTXO.data.models.ParamsBean;
 import com.androidevlinux.percy.UTXO.data.models.TransactionBean;
-import com.androidevlinux.percy.UTXO.R;
-import com.androidevlinux.percy.UTXO.data.network.InterfaceAPI;
-import com.androidevlinux.percy.UTXO.data.network.RetrofitBaseAPi;
+import com.androidevlinux.percy.UTXO.data.network.ChangellyApiManager;
 import com.androidevlinux.percy.UTXO.utils.Constants;
 import com.androidevlinux.percy.UTXO.utils.CustomProgressDialog;
 import com.androidevlinux.percy.UTXO.utils.Utils;
@@ -61,7 +60,7 @@ public class CreateTransactionFragment extends Fragment {
     AppCompatTextView txtInfo;
     @BindView(R.id.edtUserPayOutAddress)
     AppCompatEditText edtUserPayOutAddress;
-
+    protected ChangellyApiManager changellyApiManager;
     @Override
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         assert inflater != null;
@@ -79,6 +78,7 @@ public class CreateTransactionFragment extends Fragment {
         Title.setText(getResources().getString(R.string.create_transaction));
         txtInfo.setText(R.string.transaction_id);
         currenciesStringList = new ArrayList<>();
+        changellyApiManager = ChangellyApiManager.getInstance();
         Init();
     }
 
@@ -100,15 +100,8 @@ public class CreateTransactionFragment extends Fragment {
             e.printStackTrace();
         }
 
-
-        InterfaceAPI service = RetrofitBaseAPi.getClient().create(InterfaceAPI.class);
-
-        Log.i("DownloadFlagSuccess", sign);
-
-        Call<TransactionBean> call = service.createTransaction("application/json", Constants.api_key, sign, testbean);
-
         final Dialog dialogToSaveData = CustomProgressDialog.showCustomProgressDialog(getActivity(), "Please Wait Creating Transaction ...");
-        call.enqueue(new Callback<TransactionBean>() {
+        changellyApiManager.createTransaction(sign, testbean, new Callback<TransactionBean>() {
             @Override
             public void onResponse(@NonNull Call<TransactionBean> call, @NonNull Response<TransactionBean> response) {
                 if (response.body() != null) {
@@ -147,15 +140,8 @@ public class CreateTransactionFragment extends Fragment {
             e.printStackTrace();
         }
 
-
-        InterfaceAPI service = RetrofitBaseAPi.getClient().create(InterfaceAPI.class);
-
-        Log.i("DownloadFlagSuccess", sign);
-
-        Call<GetCurrenciesResponseBean> call = service.getCurrencies("application/json", Constants.api_key, sign, testbean);
-
         final Dialog dialogToSaveData = CustomProgressDialog.showCustomProgressDialog(getActivity(), "Please Wait Loading Currencies ...");
-        call.enqueue(new Callback<GetCurrenciesResponseBean>() {
+        changellyApiManager.getCurrencies(sign, testbean, new Callback<GetCurrenciesResponseBean>() {
             @Override
             public void onResponse(@NonNull Call<GetCurrenciesResponseBean> call, @NonNull Response<GetCurrenciesResponseBean> response) {
                 if (response.body() != null) {

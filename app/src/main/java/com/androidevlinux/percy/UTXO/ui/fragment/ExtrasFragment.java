@@ -19,8 +19,7 @@ import android.widget.TextView;
 
 import com.androidevlinux.percy.UTXO.R;
 import com.androidevlinux.percy.UTXO.data.models.BitfinexPubTickerResponseBean;
-import com.androidevlinux.percy.UTXO.data.network.BitfinexRetrofitBaseApi;
-import com.androidevlinux.percy.UTXO.data.network.InterfaceAPI;
+import com.androidevlinux.percy.UTXO.data.network.BitfinexApiManager;
 import com.androidevlinux.percy.UTXO.utils.Constants;
 import com.androidevlinux.percy.UTXO.utils.CustomProgressDialog;
 
@@ -52,7 +51,7 @@ public class ExtrasFragment extends Fragment {
     SharedPreferences mSharedPreferences;
     @BindView(R.id.btn_refresh)
     AppCompatButton btnRefresh;
-
+    protected BitfinexApiManager bitfinexApiManager;
     @Override
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         assert inflater != null;
@@ -68,6 +67,8 @@ public class ExtrasFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         TextView Title = getActivity().findViewById(R.id.txtTitle);
         Title.setText(getResources().getString(R.string.extras));
+        bitfinexApiManager = BitfinexApiManager.getInstance();
+
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         boolean isRefreshButtonEnabled = mSharedPreferences.getBoolean(SettingsFragment.refresh_btc_price_button_key, false);
         if (!isRefreshButtonEnabled) {
@@ -101,10 +102,8 @@ public class ExtrasFragment extends Fragment {
     }
 
     private void getBitfinexPubTicker() {
-        InterfaceAPI service = BitfinexRetrofitBaseApi.getClient().create(InterfaceAPI.class);
-        Call<BitfinexPubTickerResponseBean> call = service.getBitfinexPubTicker();
         final Dialog dialogToSaveData = CustomProgressDialog.showCustomProgressDialog(getActivity(), "Please Wait Loading Bitcoin Last Price ...");
-        call.enqueue(new Callback<BitfinexPubTickerResponseBean>() {
+        bitfinexApiManager.getBitfinexPubTicker(new Callback<BitfinexPubTickerResponseBean>() {
             @Override
             public void onResponse(@NonNull Call<BitfinexPubTickerResponseBean> call, @NonNull Response<BitfinexPubTickerResponseBean> response) {
                 if (response.body() != null) {

@@ -15,12 +15,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.androidevlinux.percy.UTXO.R;
 import com.androidevlinux.percy.UTXO.data.models.GetMinAmountReponseBean;
 import com.androidevlinux.percy.UTXO.data.models.MainBodyBean;
 import com.androidevlinux.percy.UTXO.data.models.ParamsBean;
-import com.androidevlinux.percy.UTXO.R;
-import com.androidevlinux.percy.UTXO.data.network.InterfaceAPI;
-import com.androidevlinux.percy.UTXO.data.network.RetrofitBaseAPi;
+import com.androidevlinux.percy.UTXO.data.network.ChangellyApiManager;
 import com.androidevlinux.percy.UTXO.utils.Constants;
 import com.androidevlinux.percy.UTXO.utils.CustomProgressDialog;
 import com.androidevlinux.percy.UTXO.utils.Utils;
@@ -48,7 +47,7 @@ public class GetStatusFragment  extends Fragment {
     AppCompatTextView txtInfo;
     @BindView(R.id.edtTransactionId)
     AppCompatEditText edtTransactionId;
-
+    protected ChangellyApiManager changellyApiManager;
     @Override
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         assert inflater != null;
@@ -65,6 +64,7 @@ public class GetStatusFragment  extends Fragment {
         TextView Title = getActivity().findViewById(R.id.txtTitle);
         Title.setText(getResources().getString(R.string.exchange_amount));
         txtInfo.setText(R.string.get_status_info);
+        changellyApiManager = ChangellyApiManager.getInstance();
     }
 
     private void MinAmount(String strTransactionId) {
@@ -82,15 +82,9 @@ public class GetStatusFragment  extends Fragment {
             e.printStackTrace();
         }
 
-
-        InterfaceAPI service = RetrofitBaseAPi.getClient().create(InterfaceAPI.class);
-
-        Log.i("DownloadFlagSuccess", sign);
-
-        Call<GetMinAmountReponseBean> call = service.getMinAmount("application/json", Constants.api_key, sign, testbean);
         final Dialog dialogToSaveData =  CustomProgressDialog.showCustomProgressDialog(getActivity(), "Please Wait Fetching Data ...");
 
-        call.enqueue(new Callback<GetMinAmountReponseBean>() {
+        changellyApiManager.getMinAmount(sign, testbean, new Callback<GetMinAmountReponseBean>() {
             @Override
             public void onResponse(@NonNull Call<GetMinAmountReponseBean> call, @NonNull Response<GetMinAmountReponseBean> response) {
                 if (response.body() != null) {
