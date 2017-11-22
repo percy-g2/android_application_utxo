@@ -70,7 +70,7 @@ public class ExtrasFragment extends BaseFragment {
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         boolean isRefreshButtonEnabled = mSharedPreferences.getBoolean(SettingsFragment.refresh_btc_price_button_key, false);
         if (!isRefreshButtonEnabled) {
-            handler.postDelayed(runnable, 30000);
+            handler.postDelayed(runnable, 60000);
             bitfinexLastPrice.setText(MessageFormat.format("$ {0}", Constants.btc_price));
             bitfinexLowPrice.setText(MessageFormat.format("$ {0}", Constants.btc_price_low));
             bitfinexHighPrice.setText(MessageFormat.format("$ {0}", Constants.btc_price_high));
@@ -88,7 +88,7 @@ public class ExtrasFragment extends BaseFragment {
         @Override
         public void run() {
             getBitfinexPubTicker();
-            handler.postDelayed(this, 30000);
+            handler.postDelayed(this, 60000);
         }
     };
 
