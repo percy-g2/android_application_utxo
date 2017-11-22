@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatSpinner;
@@ -22,7 +21,7 @@ import com.androidevlinux.percy.UTXO.data.models.GetCurrenciesResponseBean;
 import com.androidevlinux.percy.UTXO.data.models.MainBodyBean;
 import com.androidevlinux.percy.UTXO.data.models.ParamsBean;
 import com.androidevlinux.percy.UTXO.data.models.TransactionBean;
-import com.androidevlinux.percy.UTXO.data.network.ChangellyApiManager;
+import com.androidevlinux.percy.UTXO.ui.base.BaseFragment;
 import com.androidevlinux.percy.UTXO.utils.Constants;
 import com.androidevlinux.percy.UTXO.utils.CustomProgressDialog;
 import com.androidevlinux.percy.UTXO.utils.Utils;
@@ -43,7 +42,7 @@ import retrofit2.Response;
  * Created by percy on 15/11/2017.
  */
 
-public class CreateTransactionFragment extends Fragment {
+public class CreateTransactionFragment extends BaseFragment {
     @BindView(R.id.spinner_from)
     AppCompatSpinner spinnerFrom;
     @BindView(R.id.spinner_to)
@@ -60,7 +59,6 @@ public class CreateTransactionFragment extends Fragment {
     AppCompatTextView txtInfo;
     @BindView(R.id.edtUserPayOutAddress)
     AppCompatEditText edtUserPayOutAddress;
-    protected ChangellyApiManager changellyApiManager;
     @Override
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         assert inflater != null;
@@ -78,7 +76,6 @@ public class CreateTransactionFragment extends Fragment {
         Title.setText(getResources().getString(R.string.create_transaction));
         txtInfo.setText(R.string.transaction_id);
         currenciesStringList = new ArrayList<>();
-        changellyApiManager = ChangellyApiManager.getInstance();
         Init();
     }
 

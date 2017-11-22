@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
@@ -19,7 +18,7 @@ import com.androidevlinux.percy.UTXO.R;
 import com.androidevlinux.percy.UTXO.data.models.GetMinAmountReponseBean;
 import com.androidevlinux.percy.UTXO.data.models.MainBodyBean;
 import com.androidevlinux.percy.UTXO.data.models.ParamsBean;
-import com.androidevlinux.percy.UTXO.data.network.ChangellyApiManager;
+import com.androidevlinux.percy.UTXO.ui.base.BaseFragment;
 import com.androidevlinux.percy.UTXO.utils.Constants;
 import com.androidevlinux.percy.UTXO.utils.CustomProgressDialog;
 import com.androidevlinux.percy.UTXO.utils.Utils;
@@ -37,7 +36,7 @@ import retrofit2.Response;
  * Created by percy on 15/11/2017.
  */
 
-public class GetStatusFragment  extends Fragment {
+public class GetStatusFragment  extends BaseFragment {
     @BindView(R.id.btn_get_amount)
     AppCompatButton btnGetAmount;
     @BindView(R.id.txt_min_amount)
@@ -47,7 +46,6 @@ public class GetStatusFragment  extends Fragment {
     AppCompatTextView txtInfo;
     @BindView(R.id.edtTransactionId)
     AppCompatEditText edtTransactionId;
-    protected ChangellyApiManager changellyApiManager;
     @Override
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         assert inflater != null;
@@ -64,7 +62,6 @@ public class GetStatusFragment  extends Fragment {
         TextView Title = getActivity().findViewById(R.id.txtTitle);
         Title.setText(getResources().getString(R.string.exchange_amount));
         txtInfo.setText(R.string.get_status_info);
-        changellyApiManager = ChangellyApiManager.getInstance();
     }
 
     private void MinAmount(String strTransactionId) {

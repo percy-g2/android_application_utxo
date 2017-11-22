@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import com.androidevlinux.percy.UTXO.R;
 import com.androidevlinux.percy.UTXO.data.models.BitfinexPubTickerResponseBean;
-import com.androidevlinux.percy.UTXO.data.network.BitfinexApiManager;
+import com.androidevlinux.percy.UTXO.ui.base.BaseFragment;
 import com.androidevlinux.percy.UTXO.utils.Constants;
 import com.androidevlinux.percy.UTXO.utils.CustomProgressDialog;
 
@@ -38,7 +38,7 @@ import retrofit2.Response;
  * Created by percy on 18/11/17.
  */
 
-public class ExtrasFragment extends Fragment {
+public class ExtrasFragment extends BaseFragment {
     @BindView(R.id.bitfinex_last_price)
     AppCompatTextView bitfinexLastPrice;
     Unbinder unbinder;
@@ -51,7 +51,6 @@ public class ExtrasFragment extends Fragment {
     SharedPreferences mSharedPreferences;
     @BindView(R.id.btn_refresh)
     AppCompatButton btnRefresh;
-    protected BitfinexApiManager bitfinexApiManager;
     @Override
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         assert inflater != null;
@@ -67,8 +66,7 @@ public class ExtrasFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         TextView Title = getActivity().findViewById(R.id.txtTitle);
         Title.setText(getResources().getString(R.string.extras));
-        bitfinexApiManager = BitfinexApiManager.getInstance();
-
+        getBitfinexPubTicker();
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         boolean isRefreshButtonEnabled = mSharedPreferences.getBoolean(SettingsFragment.refresh_btc_price_button_key, false);
         if (!isRefreshButtonEnabled) {

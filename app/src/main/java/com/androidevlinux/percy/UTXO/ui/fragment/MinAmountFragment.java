@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.AppCompatTextView;
@@ -21,7 +20,7 @@ import com.androidevlinux.percy.UTXO.data.models.GetCurrenciesResponseBean;
 import com.androidevlinux.percy.UTXO.data.models.GetMinAmountReponseBean;
 import com.androidevlinux.percy.UTXO.data.models.MainBodyBean;
 import com.androidevlinux.percy.UTXO.data.models.ParamsBean;
-import com.androidevlinux.percy.UTXO.data.network.ChangellyApiManager;
+import com.androidevlinux.percy.UTXO.ui.base.BaseFragment;
 import com.androidevlinux.percy.UTXO.utils.Constants;
 import com.androidevlinux.percy.UTXO.utils.CustomProgressDialog;
 import com.androidevlinux.percy.UTXO.utils.Utils;
@@ -42,7 +41,7 @@ import retrofit2.Response;
  * Created by percy on 15/11/2017.
  */
 
-public class MinAmountFragment extends Fragment {
+public class MinAmountFragment extends BaseFragment {
 
     @BindView(R.id.spinner_from)
     AppCompatSpinner spinnerFrom;
@@ -54,7 +53,6 @@ public class MinAmountFragment extends Fragment {
     AppCompatTextView txtMinAmount;
     Unbinder unbinder;
     List<String> currenciesStringList;
-    protected ChangellyApiManager changellyApiManager;
     @Override
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         assert inflater != null;
@@ -73,7 +71,6 @@ public class MinAmountFragment extends Fragment {
         TextView txtInfo = view.findViewById(R.id.txt_info);
         txtInfo.setText(R.string.min_amount_info);
         currenciesStringList = new ArrayList<>();
-        changellyApiManager = ChangellyApiManager.getInstance();
         Init();
     }
 
