@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity
 
     private Fragment fragment;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +55,18 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
-        displaySelectedScreen(R.id.nav_get_min_amount);
+        String ACTION_SETTINGS = "com.androidevlinux.percy.UTXO.ui.activity.SETTINGS";
+        String ACTION_BTC = "com.androidevlinux.percy.UTXO.ui.activity.BTC";
+        String ACTION_CREATE_TRANSACTION = "com.androidevlinux.percy.UTXO.ui.activity.CREATE_TRANSACTION";
+        if (ACTION_SETTINGS.equalsIgnoreCase(getIntent().getAction())) {
+            displaySelectedScreen(R.id.nav_settings);
+        } else if (ACTION_BTC.equalsIgnoreCase(getIntent().getAction())) {
+            displaySelectedScreen(R.id.nav_extras);
+        } else if (ACTION_CREATE_TRANSACTION.equalsIgnoreCase(getIntent().getAction())) {
+            displaySelectedScreen(R.id.nav_create_transaction);
+        } else {
+            displaySelectedScreen(R.id.nav_get_min_amount);
+        }
     }
 
     private void displaySelectedScreen(int itemId) {

@@ -27,4 +27,5 @@
     <string name="twentyfourhoursvolume">24 Hr\'s Volume</string>
     <string name="zerovolume">0.00 Bitcoin</string>
     <string name="refresh">REFRESH</string>
+    <string name="btc_price">BTC Price</string>
 </resources>

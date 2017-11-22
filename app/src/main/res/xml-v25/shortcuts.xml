@@ -1,0 +1,40 @@
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android" >
+    <shortcut
+        android:shortcutId="settings"
+        android:icon="@mipmap/settings_icon"
+        android:shortcutShortLabel="@string/action_settings"
+        android:shortcutLongLabel="@string/action_settings"
+        >
+        <intent
+            android:action="com.androidevlinux.percy.UTXO.ui.activity.SETTINGS"
+            android:targetPackage="com.androidevlinux.percy.UTXO"
+            android:targetClass="com.androidevlinux.percy.UTXO.ui.activity.MainActivity"
+            />
+    </shortcut>
+
+    <shortcut
+        android:shortcutId="BTC Price"
+        android:icon="@mipmap/extras_icon"
+        android:shortcutShortLabel="@string/btc_price"
+        android:shortcutLongLabel="@string/btc_price"
+        >
+        <intent
+            android:action="com.androidevlinux.percy.UTXO.ui.activity.BTC"
+            android:targetPackage="com.androidevlinux.percy.UTXO"
+            android:targetClass="com.androidevlinux.percy.UTXO.ui.activity.MainActivity"
+            />
+    </shortcut>
+
+    <shortcut
+        android:shortcutId="Create Transaction"
+        android:icon="@drawable/exchange_shortcut"
+        android:shortcutShortLabel="@string/create_transaction"
+        android:shortcutLongLabel="@string/create_transaction"
+        >
+        <intent
+            android:action="com.androidevlinux.percy.UTXO.ui.activity.CREATE_TRANSACTION"
+            android:targetPackage="com.androidevlinux.percy.UTXO"
+            android:targetClass="com.androidevlinux.percy.UTXO.ui.activity.MainActivity"
+            />
+    </shortcut>
+</shortcuts>
