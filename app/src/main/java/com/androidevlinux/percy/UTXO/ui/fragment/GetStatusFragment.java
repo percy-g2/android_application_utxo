@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -102,7 +101,6 @@ public class GetStatusFragment  extends BaseFragment {
 
             @Override
             public void onFailure(@NonNull Call<GetMinAmountReponseBean> call, @NonNull Throwable t) {
-                Log.i("DownloadFlagSuccess", t.getMessage());
                 if (dialogToSaveData != null) {
                     CustomProgressDialog.dismissCustomProgressDialog(dialogToSaveData);
                 }

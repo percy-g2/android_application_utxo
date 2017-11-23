@@ -3,13 +3,10 @@ package com.androidevlinux.percy.UTXO.data.network;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -45,19 +42,16 @@ public abstract class BaseApiManager<T> {
     protected final T getClient(Class<T> t) {
         if (retrofit == null) {
             // set your desired log level
-            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+            logging.setLevel(HttpLoggingInterceptor.Level.NONE);
 
             clientOkHttp = new OkHttpClient.Builder()
                     .connectTimeout(connectTimeOut, TimeUnit.SECONDS)
                     .writeTimeout(writeTimeOut, TimeUnit.SECONDS)
                     .readTimeout(readTimeOut, TimeUnit.SECONDS).addInterceptor(logging)
-                    .addInterceptor(new Interceptor() {
-                        @Override
-                        public Response intercept(Interceptor.Chain chain) throws IOException {
-                            Request.Builder requestBuilder = chain.request().newBuilder();
-                            requestBuilder.header("Content-Type", "application/json");
-                            return chain.proceed(requestBuilder.build());
-                        }
+                    .addInterceptor(chain -> {
+                        Request.Builder requestBuilder = chain.request().newBuilder();
+                        requestBuilder.header("Content-Type", "application/json");
+                        return chain.proceed(requestBuilder.build());
                     })
                     .build();
 

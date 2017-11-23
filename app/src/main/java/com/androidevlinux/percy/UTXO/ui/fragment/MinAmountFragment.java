@@ -90,8 +90,6 @@ public class MinAmountFragment extends BaseFragment {
             e.printStackTrace();
         }
 
-        Log.i("DownloadFlagSuccess", sign);
-
         final Dialog dialogToSaveData = CustomProgressDialog.showCustomProgressDialog(getActivity(), "Please Wait Fetching Data ...");
         changellyApiManager.getMinAmount(sign, testbean, new Callback<GetMinAmountReponseBean>() {
             @Override
@@ -111,7 +109,6 @@ public class MinAmountFragment extends BaseFragment {
 
             @Override
             public void onFailure(@NonNull Call<GetMinAmountReponseBean> call, @NonNull Throwable t) {
-                Log.i("DownloadFlagSuccess", t.getMessage());
                 if (dialogToSaveData != null) {
                     CustomProgressDialog.dismissCustomProgressDialog(dialogToSaveData);
                 }
@@ -138,7 +135,6 @@ public class MinAmountFragment extends BaseFragment {
             @Override
             public void onResponse(@NonNull Call<GetCurrenciesResponseBean> call, @NonNull Response<GetCurrenciesResponseBean> response) {
                 if (response.body()!=null) {
-                    Log.i("DownloadFlagSuccess", response.body().getResult().toString());
                     currenciesStringList = response.body().getResult();
                     ArrayAdapter<String> karant_adapter = new ArrayAdapter<>(getActivity(),
                             android.R.layout.simple_spinner_item, currenciesStringList);

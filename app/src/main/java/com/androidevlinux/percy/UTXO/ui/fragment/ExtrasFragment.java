@@ -11,7 +11,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -106,7 +105,6 @@ public class ExtrasFragment extends BaseFragment {
             public void onResponse(@NonNull Call<BitfinexPubTickerResponseBean> call, @NonNull Response<BitfinexPubTickerResponseBean> response) {
                 if (response.body() != null) {
                     if (getVisibleFragment() instanceof ExtrasFragment) {
-                        Log.i("DownloadFlagSuccess", response.body().getLastPrice());
                         Constants.btc_price = response.body().getLastPrice();
                         Constants.btc_price_low = response.body().getLow();
                         Constants.btc_price_high = response.body().getHigh();
@@ -124,7 +122,6 @@ public class ExtrasFragment extends BaseFragment {
             @Override
             public void onFailure(@NonNull Call<BitfinexPubTickerResponseBean> call, @NonNull Throwable t) {
                 if (getVisibleFragment() instanceof ExtrasFragment) {
-                    Log.i("DownloadFlagFail", t.getMessage());
                     bitfinexLastPrice.setText(Constants.btc_price);
                     bitfinexLowPrice.setText(getString(R.string.zerodotzerozero));
                     bitfinexHighPrice.setText(getString(R.string.zerodotzerozero));

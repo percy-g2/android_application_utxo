@@ -8,7 +8,6 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.AppCompatTextView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -115,7 +114,6 @@ public class CreateTransactionFragment extends BaseFragment {
 
             @Override
             public void onFailure(@NonNull Call<TransactionBean> call, @NonNull Throwable t) {
-                Log.i("DownloadFlagSuccess", t.getMessage());
                 if (dialogToSaveData != null) {
                     CustomProgressDialog.dismissCustomProgressDialog(dialogToSaveData);
                 }
@@ -142,7 +140,6 @@ public class CreateTransactionFragment extends BaseFragment {
             @Override
             public void onResponse(@NonNull Call<GetCurrenciesResponseBean> call, @NonNull Response<GetCurrenciesResponseBean> response) {
                 if (response.body() != null) {
-                    Log.i("DownloadFlagSuccess", response.body().getResult().toString());
                     currenciesStringList = response.body().getResult();
                     ArrayAdapter<String> karant_adapter = new ArrayAdapter<>(getActivity(),
                             android.R.layout.simple_spinner_item, currenciesStringList);
@@ -160,7 +157,6 @@ public class CreateTransactionFragment extends BaseFragment {
 
             @Override
             public void onFailure(@NonNull Call<GetCurrenciesResponseBean> call, @NonNull Throwable t) {
-                Log.i("DownloadFlagSuccess", t.getMessage());
                 if (dialogToSaveData != null) {
                     CustomProgressDialog.dismissCustomProgressDialog(dialogToSaveData);
                 }
