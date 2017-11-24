@@ -19,6 +19,7 @@ import com.androidevlinux.percy.UTXO.ui.fragment.CreateTransactionFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.ExchangeAmountFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.ExtrasFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.GetStatusFragment;
+import com.androidevlinux.percy.UTXO.ui.fragment.GoogleSignInFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.MinAmountFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.SettingsFragment;
 import com.crashlytics.android.Crashlytics;
@@ -71,6 +72,9 @@ public class MainActivity extends AppCompatActivity
 
     private void displaySelectedScreen(int itemId) {
         switch (itemId) {
+            case R.id.nav_sign_in:
+                fragment = new GoogleSignInFragment();
+                break;
             case R.id.nav_get_min_amount:
                 fragment = new MinAmountFragment();
                 break;

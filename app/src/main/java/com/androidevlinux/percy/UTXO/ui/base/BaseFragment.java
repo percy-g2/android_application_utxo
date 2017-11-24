@@ -1,10 +1,13 @@
 package com.androidevlinux.percy.UTXO.ui.base;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 import android.support.v4.app.Fragment;
 
+import com.androidevlinux.percy.UTXO.R;
 import com.androidevlinux.percy.UTXO.data.network.BitfinexApiManager;
 import com.androidevlinux.percy.UTXO.data.network.ChangellyApiManager;
 
@@ -16,6 +19,31 @@ public class BaseFragment extends Fragment implements BaseView {
 
     protected BitfinexApiManager bitfinexApiManager;
     protected ChangellyApiManager changellyApiManager;
+
+    @VisibleForTesting
+    public ProgressDialog mProgressDialog;
+
+    public void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(getActivity());
+            mProgressDialog.setMessage(getString(R.string.loading));
+            mProgressDialog.setIndeterminate(true);
+        }
+
+        mProgressDialog.show();
+    }
+
+    public void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        hideProgressDialog();
+    }
 
 
     @Override
