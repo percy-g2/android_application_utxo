@@ -42,7 +42,7 @@ public abstract class BaseApiManager<T> {
     protected final T getClient(Class<T> t) {
         if (retrofit == null) {
             // set your desired log level
-            logging.setLevel(HttpLoggingInterceptor.Level.NONE);
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
             clientOkHttp = new OkHttpClient.Builder()
                     .connectTimeout(connectTimeOut, TimeUnit.SECONDS)

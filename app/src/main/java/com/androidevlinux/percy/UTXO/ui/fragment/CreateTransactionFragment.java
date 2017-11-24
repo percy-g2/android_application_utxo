@@ -1,6 +1,8 @@
 package com.androidevlinux.percy.UTXO.ui.fragment;
 
 import android.app.Dialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,6 +10,8 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.AppCompatTextView;
+import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +41,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.content.Context.CLIPBOARD_SERVICE;
+
 /**
  * Created by percy on 15/11/2017.
  */
@@ -58,6 +64,9 @@ public class CreateTransactionFragment extends BaseFragment {
     AppCompatTextView txtInfo;
     @BindView(R.id.edtUserPayOutAddress)
     AppCompatEditText edtUserPayOutAddress;
+    @BindView(R.id.txt_pay_in_address)
+    AppCompatTextView txtPayInAddress;
+
     @Override
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         assert inflater != null;
@@ -76,6 +85,7 @@ public class CreateTransactionFragment extends BaseFragment {
         txtInfo.setText(R.string.transaction_id);
         currenciesStringList = new ArrayList<>();
         Init();
+        registerForContextMenu(txtPayInAddress);
     }
 
     private void MinAmount(String From, String To, String amount, String address) {
@@ -105,7 +115,9 @@ public class CreateTransactionFragment extends BaseFragment {
                         Toast.makeText(getActivity(), response.body().getError().getMessage(), Toast.LENGTH_SHORT).show();
                     } else {
                         txtMinAmount.setText(response.body().getResult().getId());
+                        txtPayInAddress.setText(response.body().getResult().getPayinAddress());
                     }
+                    Log.i("Transaction", response.body().toString());
                 }
                 if (dialogToSaveData != null) {
                     CustomProgressDialog.dismissCustomProgressDialog(dialogToSaveData);
@@ -119,6 +131,15 @@ public class CreateTransactionFragment extends BaseFragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText("Pay In Address", txtPayInAddress.getText().toString());
+        if (clipboard != null) {
+            clipboard.setPrimaryClip(clip);
+        }
     }
 
     private void Init() {
@@ -173,7 +194,7 @@ public class CreateTransactionFragment extends BaseFragment {
     @OnClick(R.id.btn_get_amount)
     public void onClick() {
         if (Utils.isConnectingToInternet(getActivity())) {
-            if (spinnerFrom.getSelectedItem() !=null && spinnerTo.getSelectedItem() !=null && spinnerFrom.getSelectedItem().toString() != null && spinnerFrom.getSelectedItem().toString() != null && !edtAmount.getText().toString().isEmpty() && !edtUserPayOutAddress.getText().toString().isEmpty()) {
+            if (spinnerFrom.getSelectedItem() != null && spinnerTo.getSelectedItem() != null && spinnerFrom.getSelectedItem().toString() != null && spinnerFrom.getSelectedItem().toString() != null && !edtAmount.getText().toString().isEmpty() && !edtUserPayOutAddress.getText().toString().isEmpty()) {
                 MinAmount(spinnerFrom.getSelectedItem().toString(), spinnerTo.getSelectedItem().toString(), edtAmount.getText().toString(), edtUserPayOutAddress.getText().toString());
             } else {
                 Toast.makeText(getActivity(), "Empty Fields Please Check", Toast.LENGTH_LONG).show();

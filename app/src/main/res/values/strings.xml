@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">UTXO Beta</string>
+    <string name="app_name">UTXO</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -28,4 +28,5 @@
     <string name="zerovolume">0.00 Bitcoin</string>
     <string name="refresh">REFRESH</string>
     <string name="btc_price">BTC Price</string>
+    <string name="pay_in_address">PAY IN ADDRESS</string>
 </resources>
