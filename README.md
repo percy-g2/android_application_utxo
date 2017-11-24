@@ -38,3 +38,4 @@ More things will be added in the future versions.
 <img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/master/screenshots/6.png">
 <img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/master/screenshots/7.png">
 <img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/master/screenshots/8.png">
+<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/master/screenshots/9.png">
