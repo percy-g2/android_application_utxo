@@ -1,5 +1,6 @@
 package com.androidevlinux.percy.UTXO.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -32,6 +33,13 @@ public class MainActivity extends AppCompatActivity
 
     private Fragment fragment;
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+            fragment.onActivityResult(requestCode, resultCode, data);
+        }
+    }
     @customAnnotation
     @Override
     protected void onCreate(Bundle savedInstanceState) {

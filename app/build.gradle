@@ -71,19 +71,22 @@ dependencies {
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     implementation 'com.jakewharton:butterknife:8.8.1'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
+    implementation 'com.android.support:animated-vector-drawable:27.0.1'
+    implementation 'com.android.support:cardview-v7:27.0.1'
+    compile 'com.journeyapps:zxing-android-embedded:3.4.0'
+    // Firebase Authentication
+    implementation 'com.google.firebase:firebase-auth:11.6.0'
+    // Google Sign In SDK (only required for Google Sign In)
+    implementation 'com.google.android.gms:play-services-auth:11.6.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    annotationProcessor project(':processor')
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     compile('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
         transitive = true
     }
-    implementation 'com.android.support:animated-vector-drawable:27.0.1'
-    implementation 'com.android.support:cardview-v7:27.0.1'
-    // Firebase Authentication
-    compile 'com.google.firebase:firebase-auth:11.6.0'
-    // Google Sign In SDK (only required for Google Sign In)
-    compile 'com.google.android.gms:play-services-auth:11.6.0'
+
     /*
         * <div>Icons made by <a href="https://www.flaticon.com/authors/those-icons"
         * title="Those Icons">Those Icons</a>
@@ -91,8 +94,6 @@ dependencies {
         * title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/"
         * title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
         */
-// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.9.2'
-    annotationProcessor project(':processor')
+
 }
 apply plugin: 'com.google.gms.google-services'

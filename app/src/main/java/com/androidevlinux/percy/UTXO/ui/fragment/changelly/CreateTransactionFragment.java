@@ -3,6 +3,7 @@ package com.androidevlinux.percy.UTXO.ui.fragment.changelly;
 import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -29,6 +30,8 @@ import com.androidevlinux.percy.UTXO.utils.Constants;
 import com.androidevlinux.percy.UTXO.utils.CustomProgressDialog;
 import com.androidevlinux.percy.UTXO.utils.Utils;
 import com.google.gson.Gson;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +69,10 @@ public class CreateTransactionFragment extends BaseFragment {
     AppCompatEditText edtUserPayOutAddress;
     @BindView(R.id.txt_pay_in_address)
     AppCompatTextView txtPayInAddress;
-
+    @BindView(R.id.btn_scan_qr)
+    AppCompatButton btnScanQr;
+    //qr code scanner object
+    private IntentIntegrator qrScan;
     @Override
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         assert inflater != null;
@@ -86,6 +92,8 @@ public class CreateTransactionFragment extends BaseFragment {
         currenciesStringList = new ArrayList<>();
         Init();
         registerForContextMenu(txtPayInAddress);
+        //intializing scan object
+        qrScan = new IntentIntegrator(getActivity());
     }
 
     private void MinAmount(String From, String To, String amount, String address) {
@@ -191,16 +199,35 @@ public class CreateTransactionFragment extends BaseFragment {
         unbinder.unbind();
     }
 
-    @OnClick(R.id.btn_get_amount)
-    public void onClick() {
-        if (Utils.isConnectingToInternet(getActivity())) {
-            if (spinnerFrom.getSelectedItem() != null && spinnerTo.getSelectedItem() != null && spinnerFrom.getSelectedItem().toString() != null && spinnerFrom.getSelectedItem().toString() != null && !edtAmount.getText().toString().isEmpty() && !edtUserPayOutAddress.getText().toString().isEmpty()) {
-                MinAmount(spinnerFrom.getSelectedItem().toString(), spinnerTo.getSelectedItem().toString(), edtAmount.getText().toString(), edtUserPayOutAddress.getText().toString());
-            } else {
-                Toast.makeText(getActivity(), "Empty Fields Please Check", Toast.LENGTH_LONG).show();
+    @OnClick({R.id.btn_get_amount, R.id.btn_scan_qr})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_get_amount:
+                if (Utils.isConnectingToInternet(getActivity())) {
+                    if (spinnerFrom.getSelectedItem() != null && spinnerTo.getSelectedItem() != null && spinnerFrom.getSelectedItem().toString() != null && spinnerFrom.getSelectedItem().toString() != null && !edtAmount.getText().toString().isEmpty() && !edtUserPayOutAddress.getText().toString().isEmpty()) {
+                        MinAmount(spinnerFrom.getSelectedItem().toString(), spinnerTo.getSelectedItem().toString(), edtAmount.getText().toString(), edtUserPayOutAddress.getText().toString());
+                    } else {
+                        Toast.makeText(getActivity(), "Empty Fields Please Check", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(getActivity(), "No Internet", Toast.LENGTH_LONG).show();
+                }
+                break;
+            case R.id.btn_scan_qr:
+                qrScan.initiateScan();
+                break;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (result != null) {
+            if (result.getContents() != null) {
+                edtUserPayOutAddress.setText(result.getContents());
+                Toast.makeText(getActivity(), result.getContents(), Toast.LENGTH_LONG).show();
             }
-        } else {
-            Toast.makeText(getActivity(), "No Internet", Toast.LENGTH_LONG).show();
         }
     }
 }
