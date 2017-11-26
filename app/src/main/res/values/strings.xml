@@ -109,4 +109,7 @@
     <!-- TODO(developer): REPLACE -->
     <string name="twitter_consumer_key">REPLACE_ME</string>
     <string name="twitter_consumer_secret">REPLACE_ME</string>
+    <string name="bitmex_announcement">BITMEX ANNOUNCEMENT</string>
+    <string name="block_chain_explorer">BLOCK CHAIN EXPLORER</string>
+    <string name="news">NEWS</string>
 </resources>

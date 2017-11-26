@@ -1,4 +1,4 @@
-package com.androidevlinux.percy.UTXO.ui.fragment;
+package com.androidevlinux.percy.UTXO.ui.fragment.changelly;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -6,18 +6,14 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
-import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.AppCompatTextView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidevlinux.percy.UTXO.R;
-import com.androidevlinux.percy.UTXO.data.models.GetCurrenciesResponseBean;
 import com.androidevlinux.percy.UTXO.data.models.GetMinAmountReponseBean;
 import com.androidevlinux.percy.UTXO.data.models.MainBodyBean;
 import com.androidevlinux.percy.UTXO.data.models.ParamsBean;
@@ -26,9 +22,6 @@ import com.androidevlinux.percy.UTXO.utils.Constants;
 import com.androidevlinux.percy.UTXO.utils.CustomProgressDialog;
 import com.androidevlinux.percy.UTXO.utils.Utils;
 import com.google.gson.Gson;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,25 +35,20 @@ import retrofit2.Response;
  * Created by percy on 15/11/2017.
  */
 
-public class ExchangeAmountFragment extends BaseFragment {
-    @BindView(R.id.spinner_from)
-    AppCompatSpinner spinnerFrom;
-    @BindView(R.id.spinner_to)
-    AppCompatSpinner spinnerTo;
+public class GetStatusFragment  extends BaseFragment {
     @BindView(R.id.btn_get_amount)
     AppCompatButton btnGetAmount;
     @BindView(R.id.txt_min_amount)
     AppCompatTextView txtMinAmount;
     Unbinder unbinder;
-    List<String> currenciesStringList;
-    @BindView(R.id.edtAmount)
-    AppCompatEditText edtAmount;
     @BindView(R.id.txt_info)
     AppCompatTextView txtInfo;
+    @BindView(R.id.edtTransactionId)
+    AppCompatEditText edtTransactionId;
     @Override
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         assert inflater != null;
-        View view = inflater.inflate(R.layout.exchange_amount_fragment, container, false);
+        View view = inflater.inflate(R.layout.get_status_fragment, container, false);
         unbinder = ButterKnife.bind(this, view);
         return view;
 
@@ -72,20 +60,16 @@ public class ExchangeAmountFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         TextView Title = getActivity().findViewById(R.id.txtTitle);
         Title.setText(getResources().getString(R.string.exchange_amount));
-        txtInfo.setText(R.string.exchange_amount_info);
-        currenciesStringList = new ArrayList<>();
-        Init();
+        txtInfo.setText(R.string.get_status_info);
     }
 
-    private void MinAmount(String From, String To, String amount) {
+    private void MinAmount(String strTransactionId) {
         MainBodyBean testbean = new MainBodyBean();
         testbean.setId(1);
         testbean.setJsonrpc("2.0");
-        testbean.setMethod("getExchangeAmount");
+        testbean.setMethod("getStatus");
         ParamsBean params = new ParamsBean();
-        params.setFrom(From);
-        params.setTo(To);
-        params.setAmount(amount);
+        params.setId(strTransactionId);
         testbean.setParams(params);
         String sign = null;
         try {
@@ -95,6 +79,7 @@ public class ExchangeAmountFragment extends BaseFragment {
         }
 
         final Dialog dialogToSaveData =  CustomProgressDialog.showCustomProgressDialog(getActivity(), "Please Wait Fetching Data ...");
+
         changellyApiManager.getMinAmount(sign, testbean, new Callback<GetMinAmountReponseBean>() {
             @Override
             public void onResponse(@NonNull Call<GetMinAmountReponseBean> call, @NonNull Response<GetMinAmountReponseBean> response) {
@@ -105,6 +90,9 @@ public class ExchangeAmountFragment extends BaseFragment {
                         Toast.makeText(getActivity(), response.body().getResult(), Toast.LENGTH_SHORT).show();
                         txtMinAmount.setText(response.body().getResult());
                     }
+                }
+                if (response.code() == 401) {
+                    Toast.makeText(getActivity(), "Unauthorized! Please Check Your Keys", Toast.LENGTH_LONG).show();
                 }
                 if (dialogToSaveData != null) {
                     CustomProgressDialog.dismissCustomProgressDialog(dialogToSaveData);
@@ -120,49 +108,6 @@ public class ExchangeAmountFragment extends BaseFragment {
         });
     }
 
-    private void Init() {
-        MainBodyBean testbean = new MainBodyBean();
-        testbean.setId(1);
-        testbean.setJsonrpc("2.0");
-        testbean.setMethod("getCurrencies");
-        ParamsBean params = new ParamsBean();
-        testbean.setParams(params);
-        String sign = null;
-        try {
-            sign = Utils.hmacDigest(new Gson().toJson(testbean), Constants.secret_key);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        final Dialog dialogToSaveData =  CustomProgressDialog.showCustomProgressDialog(getActivity(), "Please Wait Loading Currencies ...");
-        changellyApiManager.getCurrencies(sign, testbean, new Callback<GetCurrenciesResponseBean>() {
-            @Override
-            public void onResponse(@NonNull Call<GetCurrenciesResponseBean> call, @NonNull Response<GetCurrenciesResponseBean> response) {
-                if (response.body() != null) {
-                    currenciesStringList = response.body().getResult();
-                    ArrayAdapter<String> karant_adapter = new ArrayAdapter<>(getActivity(),
-                            android.R.layout.simple_spinner_item, currenciesStringList);
-                    karant_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinnerFrom.setAdapter(karant_adapter);
-                    spinnerTo.setAdapter(karant_adapter);
-                }
-                if (dialogToSaveData != null) {
-                    CustomProgressDialog.dismissCustomProgressDialog(dialogToSaveData);
-                }
-                if (response.code() == 401) {
-                    Toast.makeText(getActivity(), "Unauthorized! Please Check Your Keys", Toast.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<GetCurrenciesResponseBean> call, @NonNull Throwable t) {
-                Log.i("DownloadFlagSuccess", t.getMessage());
-                if (dialogToSaveData != null) {
-                    CustomProgressDialog.dismissCustomProgressDialog(dialogToSaveData);
-                }
-            }
-        });
-    }
 
     @Override
     public void onDestroyView() {
@@ -173,14 +118,15 @@ public class ExchangeAmountFragment extends BaseFragment {
     @OnClick(R.id.btn_get_amount)
     public void onClick() {
         if (Utils.isConnectingToInternet(getActivity())) {
-            if (spinnerFrom.getSelectedItem() !=null && spinnerTo.getSelectedItem() !=null && spinnerFrom.getSelectedItem().toString() != null && spinnerFrom.getSelectedItem().toString() != null && !edtAmount.getText().toString().isEmpty()) {
-                MinAmount(spinnerFrom.getSelectedItem().toString(), spinnerTo.getSelectedItem().toString(), edtAmount.getText().toString());
+            if (!edtTransactionId.getText().toString().isEmpty()) {
+                MinAmount(edtTransactionId.getText().toString());
             } else {
-                Toast.makeText(getActivity(), "Empty Fields Please Check", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Empty Field Please Check", Toast.LENGTH_LONG).show();
             }
         } else {
             Toast.makeText(getActivity(), "No Internet", Toast.LENGTH_LONG).show();
         }
     }
 }
+
 
