@@ -16,9 +16,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.androidevlinux.percy.UTXO.R;
-import com.androidevlinux.percy.UTXO.ui.fragment.ExtrasFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.GoogleSignInFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.SettingsFragment;
+import com.androidevlinux.percy.UTXO.ui.fragment.bitfinex.PriceCheckFragment;
+import com.androidevlinux.percy.UTXO.ui.fragment.blocktrail.BlockChainExplorerFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.changelly.CreateTransactionFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.changelly.ExchangeAmountFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.changelly.GetStatusFragment;
@@ -70,7 +71,7 @@ public class MainActivity extends AppCompatActivity
         if (ACTION_SETTINGS.equalsIgnoreCase(getIntent().getAction())) {
             displaySelectedScreen(R.id.nav_settings);
         } else if (ACTION_BTC.equalsIgnoreCase(getIntent().getAction())) {
-            displaySelectedScreen(R.id.nav_extras);
+            displaySelectedScreen(R.id.nav_btc_price);
         } else if (ACTION_CREATE_TRANSACTION.equalsIgnoreCase(getIntent().getAction())) {
             displaySelectedScreen(R.id.nav_create_transaction);
         } else {
@@ -95,8 +96,11 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_get_status:
                 fragment = new GetStatusFragment();
                 break;
-            case R.id.nav_extras:
-                fragment = new ExtrasFragment();
+            case R.id.nav_btc_price:
+                fragment = new PriceCheckFragment();
+                break;
+            case R.id.nav_block_chain_explorer:
+                fragment = new BlockChainExplorerFragment();
                 break;
             case R.id.nav_settings:
                 fragment = new SettingsFragment();

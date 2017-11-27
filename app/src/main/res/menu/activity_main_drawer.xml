@@ -2,37 +2,49 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
-
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_sign_in"
-            android:icon="@drawable/sign_in"
-            android:title="@string/sign_in" />
-        <item
-            android:id="@+id/nav_get_min_amount"
-            android:icon="@mipmap/min_amount_icon"
-            android:title="@string/min_amount_check" />
-        <item
-            android:id="@+id/nav_exchange_amount"
-            android:icon="@mipmap/exchange_amount_icon"
-            android:title="@string/exchange_amount" />
-        <item
-            android:id="@+id/nav_create_transaction"
-            android:icon="@mipmap/ic_launcher"
-            android:visible="false"
-            android:title="@string/create_transaction" />
-        <item
-            android:id="@+id/nav_get_status"
-            android:icon="@mipmap/status_icon"
-            android:title="@string/get_status" />
-        <item
-            android:id="@+id/nav_extras"
-            android:icon="@mipmap/extras_icon"
-            android:title="@string/extras" />
-        <item
-            android:id="@+id/nav_settings"
-            android:icon="@mipmap/settings_icon"
-            android:title="@string/action_settings" />
-    </group>
-
+    <item android:title="@string/exchange">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_get_min_amount"
+                    android:icon="@mipmap/min_amount_icon"
+                    android:title="@string/min_amount_check" />
+                <item
+                    android:id="@+id/nav_exchange_amount"
+                    android:icon="@mipmap/exchange_amount_icon"
+                    android:title="@string/exchange_amount" />
+                <item
+                    android:id="@+id/nav_create_transaction"
+                    android:icon="@mipmap/ic_launcher"
+                    android:title="@string/create_transaction"
+                    android:visible="false" />
+                <item
+                    android:id="@+id/nav_get_status"
+                    android:icon="@mipmap/status_icon"
+                    android:title="@string/get_status" />
+            </group>
+        </menu>
+    </item>
+    <item android:title="@string/extras">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_btc_price"
+                    android:icon="@drawable/btc_price_icon"
+                    android:title="@string/btc_price" />
+                <item
+                    android:id="@+id/nav_block_chain_explorer"
+                    android:icon="@drawable/chain_explorer"
+                    android:title="@string/block_chain_explorer" />
+                <item
+                    android:id="@+id/nav_sign_in"
+                    android:icon="@drawable/sign_in"
+                    android:title="@string/sign_in" />
+                <item
+                    android:id="@+id/nav_settings"
+                    android:icon="@mipmap/settings_icon"
+                    android:title="@string/action_settings" />
+            </group>
+        </menu>
+    </item>
 </menu>

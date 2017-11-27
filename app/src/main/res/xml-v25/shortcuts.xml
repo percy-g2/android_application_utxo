@@ -14,7 +14,7 @@
 
     <shortcut
         android:shortcutId="BTC Price"
-        android:icon="@mipmap/extras_icon"
+        android:icon="@drawable/btc_price_icon"
         android:shortcutShortLabel="@string/btc_price"
         android:shortcutLongLabel="@string/btc_price"
         >

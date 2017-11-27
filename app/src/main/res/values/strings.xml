@@ -110,7 +110,7 @@
     <string name="twitter_consumer_key">REPLACE_ME</string>
     <string name="twitter_consumer_secret">REPLACE_ME</string>
     <string name="bitmex_announcement">BITMEX ANNOUNCEMENT</string>
-    <string name="block_chain_explorer">BLOCK CHAIN EXPLORER</string>
+    <string name="block_chain_explorer">Block Chain Explorer</string>
     <string name="news">NEWS</string>
     <string name="explore">EXPLORE</string>
     <string name="explore_data">EXPLORE DATA</string>
@@ -119,6 +119,7 @@
     <string name="enter_block">ENTER BLOCK</string>
     <string name="enter_transaction">ENTER TRANSACTION</string>
     <string name="scan">SCAN</string>
+    <string name="exchange">Exchange</string>
 
     <string-array name="spinner_explore_data">
         <item>Address</item>
