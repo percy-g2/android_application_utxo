@@ -3,6 +3,7 @@ package com.androidevlinux.percy.UTXO.utils;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
@@ -16,6 +17,9 @@ import javax.crypto.spec.SecretKeySpec;
  */
 
 public class Utils {
+
+    public static String TAG = "Utils";
+
     public static String hmacDigest(String msg, String keyString) {
         String algo = "HmacSHA512";
         String digest = null;
@@ -33,15 +37,44 @@ public class Utils {
                 hash.append(hex);
             }
             digest = hash.toString();
-        } catch (UnsupportedEncodingException ignored) {
-        } catch (InvalidKeyException ignored) {
-        } catch (NoSuchAlgorithmException ignored) {
+        } catch (UnsupportedEncodingException e) {
+            Log.e(TAG, e.getMessage());
+        } catch (InvalidKeyException e) {
+            Log.e(TAG, e.getMessage());
+        } catch (NoSuchAlgorithmException e) {
+            Log.e(TAG, e.getMessage());
+        }
+        return digest;
+    }
+
+    public static String hmacDigest256(String msg, String keyString) {
+        String algo = "HmacSHA256";
+        String digest = null;
+        try {
+            SecretKeySpec key = new SecretKeySpec((keyString).getBytes("UTF-8"), algo);
+            Mac mac = Mac.getInstance(algo);
+            mac.init(key);
+            byte[] bytes = mac.doFinal(msg.getBytes("ASCII"));
+            StringBuilder hash = new StringBuilder();
+            for (byte aByte : bytes) {
+                String hex = Integer.toHexString(0xFF & aByte);
+                if (hex.length() == 1) {
+                    hash.append('0');
+                }
+                hash.append(hex);
+            }
+            digest = hash.toString();
+        } catch (UnsupportedEncodingException e) {
+            Log.e(TAG, e.getMessage());
+        } catch (InvalidKeyException e) {
+            Log.e(TAG, e.getMessage());
+        } catch (NoSuchAlgorithmException e) {
+            Log.e(TAG, e.getMessage());
         }
         return digest;
     }
 
     public static boolean isConnectingToInternet(Context context) {
-
         ConnectivityManager cm =
                 (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 

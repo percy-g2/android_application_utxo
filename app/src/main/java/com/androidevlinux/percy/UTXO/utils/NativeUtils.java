@@ -16,5 +16,7 @@ public class NativeUtils {
 
     public static native String getBitfinexBaseUrl();
     public static native String getChangellyBaseUrl();
-
+    public static native String getBitmexBaseUrl();
+    public static native String getBitmexApiKey();
+    public static native String getBitmexSecretkey();
 }

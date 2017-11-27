@@ -11,10 +11,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.androidevlinux.percy.UTXO.R;
+import com.androidevlinux.percy.UTXO.generated.GeneratedClass;
+import com.androidevlinux.percy.UTXO.processor.customAnnotation;
 import com.androidevlinux.percy.UTXO.ui.fragment.CreateTransactionFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.ExchangeAmountFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.ExtrasFragment;
@@ -25,12 +28,13 @@ import com.androidevlinux.percy.UTXO.ui.fragment.SettingsFragment;
 import com.crashlytics.android.Crashlytics;
 
 import io.fabric.sdk.android.Fabric;
-
+@customAnnotation
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Fragment fragment;
 
+    @customAnnotation
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +72,8 @@ public class MainActivity extends AppCompatActivity
         } else {
             displaySelectedScreen(R.id.nav_get_min_amount);
         }
+        GeneratedClass generatedClass = new GeneratedClass();
+        Log.i("customAnnotation",generatedClass.getMessage());
     }
 
     private void displaySelectedScreen(int itemId) {
