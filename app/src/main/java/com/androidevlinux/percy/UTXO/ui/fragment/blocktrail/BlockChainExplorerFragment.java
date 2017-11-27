@@ -14,6 +14,7 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.AppCompatTextView;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -85,9 +86,12 @@ public class BlockChainExplorerFragment extends BaseFragment {
                 Log.i(TAG, item.toString());
                 if (item.toString().equalsIgnoreCase("Address")) {
                     edtDataToExplore.setHint(R.string.enter_address);
+                    edtDataToExplore.setInputType(InputType.TYPE_CLASS_TEXT);
                 } else if (item.toString().equalsIgnoreCase("Block")) {
                     edtDataToExplore.setHint(R.string.enter_block);
+                    edtDataToExplore.setInputType(InputType.TYPE_CLASS_NUMBER);
                 } else if (item.toString().equalsIgnoreCase("Transaction")) {
+                    edtDataToExplore.setInputType(InputType.TYPE_CLASS_TEXT);
                     edtDataToExplore.setHint(R.string.enter_transaction);
                 }
                 edtDataToExplore.getEditableText().clear();
