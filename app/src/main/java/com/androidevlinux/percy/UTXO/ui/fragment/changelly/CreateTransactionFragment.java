@@ -1,12 +1,17 @@
 package com.androidevlinux.percy.UTXO.ui.fragment.changelly;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatSpinner;
@@ -73,6 +78,8 @@ public class CreateTransactionFragment extends BaseFragment {
     AppCompatButton btnScanQr;
     //qr code scanner object
     private IntentIntegrator qrScan;
+    private static final int PERMISSION_REQUEST_CODE = 1;
+
     @Override
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         assert inflater != null;
@@ -214,10 +221,57 @@ public class CreateTransactionFragment extends BaseFragment {
                 }
                 break;
             case R.id.btn_scan_qr:
-                qrScan.initiateScan();
+                PermissionCheck();
                 break;
         }
     }
+
+    void PermissionCheck() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            //Check whether your app has access to the READ permission//
+            if (checkPermission()) {
+                //If your app has access to the device’s camera, then print the following message to Android Studio’s Logcat//
+                qrScan.initiateScan();
+                Log.i("permission", "Permission already granted.");
+            } else {
+                //If your app does not have permission to access camera, then call requestPermission//
+                requestPermission();
+            }
+        }
+    }
+
+    private boolean checkPermission() {
+        //Check for CAMERA access, using ContextCompat.checkSelfPermission()//
+        int result = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA);
+        //If the app does have this permission, then return true//
+        if (result == PackageManager.PERMISSION_GRANTED) {
+            Log.i(getActivity().getClass().getName(), "Permission Granted");
+            return true;
+        } else {
+            requestPermission();
+            return false;
+        }
+    }
+
+    private void requestPermission() {
+        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CODE);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_REQUEST_CODE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(getActivity(),
+                            "Permission accepted", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getActivity(),
+                            "Permission denied", Toast.LENGTH_LONG).show();
+                }
+                break;
+        }
+    }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
