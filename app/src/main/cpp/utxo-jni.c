@@ -5,14 +5,14 @@
 #include <jni.h>
 
 JNIEXPORT jstring JNICALL
-Java_com_androidevlinux_percy_UTXO_utils_NativeUtils_getApiKey(JNIEnv *env, jclass type) {
+Java_com_androidevlinux_percy_UTXO_utils_NativeUtils_getChangellyApiKey(JNIEnv *env, jclass type) {
 
     char * apiKey = "";
     return (*env)->NewStringUTF(env, apiKey);
 }
 
 JNIEXPORT jstring JNICALL
-Java_com_androidevlinux_percy_UTXO_utils_NativeUtils_getSecretKey(JNIEnv *env, jclass type) {
+Java_com_androidevlinux_percy_UTXO_utils_NativeUtils_getChangellySecretKey(JNIEnv *env, jclass type) {
 
     char * secretKey = "";
     return (*env)->NewStringUTF(env, secretKey);
@@ -33,22 +33,15 @@ Java_com_androidevlinux_percy_UTXO_utils_NativeUtils_getChangellyBaseUrl(JNIEnv 
 }
 
 JNIEXPORT jstring JNICALL
-Java_com_androidevlinux_percy_UTXO_utils_NativeUtils_getBitmexBaseUrl(JNIEnv *env, jclass type) {
-
-    char * baseUrl = "https://testnet.bitmex.com/";
+Java_com_androidevlinux_percy_UTXO_utils_NativeUtils_getBlocktrailBaseUrl(JNIEnv *env,
+                                                                          jclass type) {
+    char * baseUrl = "https://api.blocktrail.com/";
     return (*env)->NewStringUTF(env, baseUrl);
 }
 
 JNIEXPORT jstring JNICALL
-Java_com_androidevlinux_percy_UTXO_utils_NativeUtils_getBitmexApiKey(JNIEnv *env, jclass type) {
+Java_com_androidevlinux_percy_UTXO_utils_NativeUtils_getBlocktrailApiKey(JNIEnv *env, jclass type) {
 
     char * apiKey = "";
     return (*env)->NewStringUTF(env, apiKey);
-}
-
-JNIEXPORT jstring JNICALL
-Java_com_androidevlinux_percy_UTXO_utils_NativeUtils_getBitmexSecretkey(JNIEnv *env, jclass type) {
-
-    char * secretKey = "";
-    return (*env)->NewStringUTF(env, secretKey);
 }

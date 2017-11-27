@@ -10,15 +10,12 @@ public class NativeUtils {
         System.loadLibrary("utxo-jni");
     }
 
-    public static native String getApiKey();
+    public static native String getChangellyApiKey();
 
-    public static native String getSecretKey();
+    public static native String getChangellySecretKey();
 
     public static native String getBitfinexBaseUrl();
     public static native String getChangellyBaseUrl();
-    public static native String getBitmexBaseUrl();
-    public static native String getBitmexApiKey();
-    public static native String getBitmexSecretkey();
     public static native String getBlocktrailBaseUrl();
     public static native String getBlocktrailApiKey();
 }

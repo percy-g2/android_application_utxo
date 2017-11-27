@@ -28,8 +28,6 @@ public class ExtrasFragment extends BaseFragment {
     Unbinder unbinder;
     @BindView(R.id.btn_btc_price)
     AppCompatButton btn_btc_price;
-    @BindView(R.id.btn_bitmex_announcement)
-    AppCompatButton btnBitmexAnnouncement;
     @BindView(R.id.btn_block_chain_explorer)
     AppCompatButton btnBlockChainExplorer;
     @BindView(R.id.btn_news)
@@ -59,7 +57,7 @@ public class ExtrasFragment extends BaseFragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.btn_btc_price, R.id.btn_bitmex_announcement, R.id.btn_block_chain_explorer, R.id.btn_news})
+    @OnClick({R.id.btn_btc_price, R.id.btn_block_chain_explorer, R.id.btn_news})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_btc_price:
@@ -67,8 +65,6 @@ public class ExtrasFragment extends BaseFragment {
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.container, price_check);
                 ft.addToBackStack(null).commit();
-                break;
-            case R.id.btn_bitmex_announcement:
                 break;
             case R.id.btn_block_chain_explorer:
                 Fragment btn_block_chain_explorer = new BlockChainExplorerFragment();
