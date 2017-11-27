@@ -1,6 +1,8 @@
 package com.androidevlinux.percy.UTXO.data.network;
 
 import com.androidevlinux.percy.UTXO.data.models.blocktrail.AddressBean;
+import com.androidevlinux.percy.UTXO.data.models.blocktrail.BlockBean;
+import com.androidevlinux.percy.UTXO.data.models.blocktrail.TransactionBean;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -13,5 +15,11 @@ import retrofit2.http.Query;
 
 public interface BlocktrailAPI {
     @GET("/v1/btc/{query}/{data}")
-    Call<AddressBean> getBlockTrailData(@Path(value = "query", encoded = true) String query, @Path(value = "data", encoded = true) String data, @Query("api_key") String api_key);
+    Call<AddressBean> getBlockTrailAddressData(@Path(value = "query", encoded = true) String query, @Path(value = "data", encoded = true) String data, @Query("api_key") String api_key);
+
+    @GET("/v1/btc/{query}/{data}")
+    Call<BlockBean> getBlockTrailBlockData(@Path(value = "query", encoded = true) String query, @Path(value = "data", encoded = true) String data, @Query("api_key") String api_key);
+
+    @GET("/v1/btc/{query}/{data}")
+    Call<TransactionBean> getBlockTrailTransactionData(@Path(value = "query", encoded = true) String query, @Path(value = "data", encoded = true) String data, @Query("api_key") String api_key);
 }

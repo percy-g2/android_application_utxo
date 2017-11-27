@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import com.androidevlinux.percy.UTXO.R;
 import com.androidevlinux.percy.UTXO.data.models.blocktrail.AddressBean;
+import com.androidevlinux.percy.UTXO.data.models.blocktrail.BlockBean;
+import com.androidevlinux.percy.UTXO.data.models.blocktrail.TransactionBean;
 import com.androidevlinux.percy.UTXO.ui.base.BaseFragment;
 import com.androidevlinux.percy.UTXO.utils.CustomProgressDialog;
 import com.google.gson.Gson;
@@ -93,13 +95,19 @@ public class BlockChainExplorerFragment extends BaseFragment {
     @OnClick(R.id.btn_get_data)
     public void onClick() {
         if (!edtDataToExplore.getText().toString().isEmpty()) {
-            loadData(spinnerExplorer.getSelectedItem().toString().toLowerCase(), edtDataToExplore.getText().toString());
+            if (spinnerExplorer.getSelectedItem().toString().equalsIgnoreCase("Address")) {
+                loadAddressData(spinnerExplorer.getSelectedItem().toString().toLowerCase(), edtDataToExplore.getText().toString());
+            } else if (spinnerExplorer.getSelectedItem().toString().equalsIgnoreCase("Block")) {
+                loadBlockData(spinnerExplorer.getSelectedItem().toString().toLowerCase(), edtDataToExplore.getText().toString());
+            } else if (spinnerExplorer.getSelectedItem().toString().equalsIgnoreCase("Transaction")) {
+                loadTransactionData(spinnerExplorer.getSelectedItem().toString().toLowerCase(), edtDataToExplore.getText().toString());
+            }
         } else {
             Toast.makeText(getActivity(), spinnerExplorer.getSelectedItem().toString() + " Input Is Empty!", Toast.LENGTH_SHORT).show();
         }
     }
 
-    void loadData(String query, String data) {
+    void loadAddressData(String query, String data) {
         final Dialog dialogToSaveData = CustomProgressDialog.showCustomProgressDialog(getActivity(), "Please Wait Loading Data ...");
         blocktrailApiManager.getBlockTrailAddressData(query,data,new Callback<AddressBean>() {
             @Override
@@ -116,6 +124,54 @@ public class BlockChainExplorerFragment extends BaseFragment {
 
             @Override
             public void onFailure(@NonNull Call<AddressBean> call, @NonNull Throwable t) {
+                if (dialogToSaveData != null) {
+                    CustomProgressDialog.dismissCustomProgressDialog(dialogToSaveData);
+                }
+            }
+        });
+    }
+
+    void loadBlockData(String query, String data) {
+        final Dialog dialogToSaveData = CustomProgressDialog.showCustomProgressDialog(getActivity(), "Please Wait Loading Data ...");
+        blocktrailApiManager.getBlockTrailBlockData(query,data,new Callback<BlockBean>() {
+            @Override
+            public void onResponse(@NonNull Call<BlockBean> call, @NonNull Response<BlockBean> response) {
+                if (response.body()!=null) {
+                    txtResponseData.setText(new Gson().toJson(response.body()));
+                } else {
+                    Toast.makeText(getActivity(), "Check Your Input", Toast.LENGTH_SHORT).show();
+                }
+                if (dialogToSaveData != null) {
+                    CustomProgressDialog.dismissCustomProgressDialog(dialogToSaveData);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<BlockBean> call, @NonNull Throwable t) {
+                if (dialogToSaveData != null) {
+                    CustomProgressDialog.dismissCustomProgressDialog(dialogToSaveData);
+                }
+            }
+        });
+    }
+
+    void loadTransactionData(String query, String data) {
+        final Dialog dialogToSaveData = CustomProgressDialog.showCustomProgressDialog(getActivity(), "Please Wait Loading Data ...");
+        blocktrailApiManager.getBlockTrailTransactionData(query,data,new Callback<TransactionBean>() {
+            @Override
+            public void onResponse(@NonNull Call<TransactionBean> call, @NonNull Response<TransactionBean> response) {
+                if (response.body()!=null) {
+                    txtResponseData.setText(new Gson().toJson(response.body()));
+                } else {
+                    Toast.makeText(getActivity(), "Check Your Input", Toast.LENGTH_SHORT).show();
+                }
+                if (dialogToSaveData != null) {
+                    CustomProgressDialog.dismissCustomProgressDialog(dialogToSaveData);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<TransactionBean> call, @NonNull Throwable t) {
                 if (dialogToSaveData != null) {
                     CustomProgressDialog.dismissCustomProgressDialog(dialogToSaveData);
                 }
