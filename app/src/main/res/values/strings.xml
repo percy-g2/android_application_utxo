@@ -118,6 +118,7 @@
     <string name="enter_address">ENTER ADDRESS</string>
     <string name="enter_block">ENTER BLOCK</string>
     <string name="enter_transaction">ENTER TRANSACTION</string>
+    <string name="scan">SCAN</string>
 
     <string-array name="spinner_explore_data">
         <item>Address</item>

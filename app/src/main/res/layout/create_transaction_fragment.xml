@@ -115,13 +115,21 @@
                     android:inputType="text"
                     android:textStyle="bold" />
             </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btn_scan_qr"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight=".2"
-                android:text="SCAN"/>
+                android:text="@string/scan" />
         </LinearLayout>
 
         <LinearLayout
@@ -192,9 +200,9 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:textIsSelectable="true"
                 android:gravity="center"
-                android:text="null" />
+                android:text="null"
+                android:textIsSelectable="true" />
         </LinearLayout>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

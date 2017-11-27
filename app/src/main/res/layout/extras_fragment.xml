@@ -15,9 +15,9 @@
             android:id="@+id/btn_btc_price"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
             android:layout_gravity="center"
             android:layout_margin="2dp"
+            android:layout_weight="1"
             android:background="@color/colorPrimaryDark"
             android:gravity="center"
             android:text="@string/btc_price"
@@ -28,22 +28,23 @@
             android:id="@+id/btn_bitmex_announcement"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
             android:layout_gravity="center"
             android:layout_margin="2dp"
+            android:layout_weight="1"
             android:background="@color/colorPrimaryDark"
             android:gravity="center"
             android:text="@string/bitmex_announcement"
             android:textColor="@android:color/white"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="gone" />
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_block_chain_explorer"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
             android:layout_gravity="center"
             android:layout_margin="2dp"
+            android:layout_weight="1"
             android:background="@color/colorPrimaryDark"
             android:gravity="center"
             android:text="@string/block_chain_explorer"
@@ -54,13 +55,14 @@
             android:id="@+id/btn_news"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
             android:layout_gravity="center"
             android:layout_margin="2dp"
+            android:layout_weight="1"
             android:background="@color/colorPrimaryDark"
             android:gravity="center"
             android:text="@string/news"
             android:textColor="@android:color/white"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="gone" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

@@ -17,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 
-public abstract class BaseApiManager<T> {
+abstract class BaseApiManager<T> {
 
 
     private static final long connectTimeOut = 120;
@@ -31,20 +31,18 @@ public abstract class BaseApiManager<T> {
     private String baseUrl;
     private Retrofit retrofit = null;
 
-    private OkHttpClient clientOkHttp;
+    final String CONTENT_TYPE="application/json";
 
-    protected  final String CONTENT_TYPE="application/json";
-
-    protected void setBaseUrl(String url) {
+    void setBaseUrl(String url) {
         baseUrl = url;
     }
 
-    protected final T getClient(Class<T> t) {
+    final T getClient(Class<T> t) {
         if (retrofit == null) {
             // set your desired log level
-            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+            logging.setLevel(HttpLoggingInterceptor.Level.NONE);
 
-            clientOkHttp = new OkHttpClient.Builder()
+            OkHttpClient clientOkHttp = new OkHttpClient.Builder()
                     .connectTimeout(connectTimeOut, TimeUnit.SECONDS)
                     .writeTimeout(writeTimeOut, TimeUnit.SECONDS)
                     .readTimeout(readTimeOut, TimeUnit.SECONDS).addInterceptor(logging)

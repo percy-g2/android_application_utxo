@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.AppCompatTextView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -152,7 +151,6 @@ public class MinAmountFragment extends BaseFragment {
 
             @Override
             public void onFailure(@NonNull Call<GetCurrenciesResponseBean> call, @NonNull Throwable t) {
-                Log.i("DownloadFlagFail", t.getMessage());
                 if (dialogToSaveData != null) {
                     CustomProgressDialog.dismissCustomProgressDialog(dialogToSaveData);
                 }
