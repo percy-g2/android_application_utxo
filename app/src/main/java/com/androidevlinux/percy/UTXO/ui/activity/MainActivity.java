@@ -1,19 +1,26 @@
 package com.androidevlinux.percy.UTXO.ui.activity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.androidevlinux.percy.UTXO.R;
 import com.androidevlinux.percy.UTXO.processor.customAnnotation;
@@ -30,7 +37,7 @@ import io.fabric.sdk.android.Fabric;
 @customAnnotation
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    private static final int PERMISSION_REQUEST_CODE = 1;
     private Fragment fragment;
 
     @Override
@@ -78,6 +85,7 @@ public class MainActivity extends AppCompatActivity
         } else {
             displaySelectedScreen(R.id.nav_get_min_amount);
         }
+        PermissionCheck();
         /*GeneratedClass generatedClass = new GeneratedClass();
         Log.i("customAnnotation",generatedClass.getMessage());*/
     }
@@ -115,6 +123,53 @@ public class MainActivity extends AppCompatActivity
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+    }
+
+    void PermissionCheck() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            //Check whether your app has access to the READ permission//
+            if (checkPermission()) {
+                //If your app has access to the device’s storage, then print the following message to Android Studio’s Logcat//
+                Log.i("permission", "Permission already granted.");
+            } else {
+                //If your app does not have permission to access external storage, then call requestPermission//
+                requestPermission();
+            }
+        }
+    }
+
+    private void requestPermission() {
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CODE);
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_REQUEST_CODE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(MainActivity.this,
+                            "Permission accepted", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(MainActivity.this,
+                            "Permission denied", Toast.LENGTH_LONG).show();
+                }
+                break;
+        }
+    }
+
+
+    private boolean checkPermission() {
+        //Check for READ_EXTERNAL_STORAGE access, using ContextCompat.checkSelfPermission()//
+        int result = ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA);
+        //If the app does have this permission, then return true//
+        if (result == PackageManager.PERMISSION_GRANTED) {
+            Log.i(MainActivity.this.getClass().getName(), "Permission Granted");
+            return true;
+        } else {
+            requestPermission();
+            return false;
+        }
     }
 
     @Override
