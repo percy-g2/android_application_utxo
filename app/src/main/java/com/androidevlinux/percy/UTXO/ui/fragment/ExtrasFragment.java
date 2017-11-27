@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.androidevlinux.percy.UTXO.R;
 import com.androidevlinux.percy.UTXO.ui.base.BaseFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.bitfinex.PriceCheckFragment;
+import com.androidevlinux.percy.UTXO.ui.fragment.blocktrail.BlockChainExplorerFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,6 +71,10 @@ public class ExtrasFragment extends BaseFragment {
             case R.id.btn_bitmex_announcement:
                 break;
             case R.id.btn_block_chain_explorer:
+                Fragment btn_block_chain_explorer = new BlockChainExplorerFragment();
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.container, btn_block_chain_explorer);
+                fragmentTransaction.addToBackStack(null).commit();
                 break;
             case R.id.btn_news:
                 break;

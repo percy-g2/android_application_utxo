@@ -19,4 +19,6 @@ public class NativeUtils {
     public static native String getBitmexBaseUrl();
     public static native String getBitmexApiKey();
     public static native String getBitmexSecretkey();
+    public static native String getBlocktrailBaseUrl();
+    public static native String getBlocktrailApiKey();
 }

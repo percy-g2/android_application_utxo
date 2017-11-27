@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import com.androidevlinux.percy.UTXO.R;
 import com.androidevlinux.percy.UTXO.data.network.BitfinexApiManager;
 import com.androidevlinux.percy.UTXO.data.network.BitmexApiManager;
+import com.androidevlinux.percy.UTXO.data.network.BlocktrailApiManager;
 import com.androidevlinux.percy.UTXO.data.network.ChangellyApiManager;
 
 /**
@@ -21,6 +22,7 @@ public class BaseFragment extends Fragment implements BaseView {
     protected BitfinexApiManager bitfinexApiManager;
     protected ChangellyApiManager changellyApiManager;
     protected BitmexApiManager bitmexApiManager;
+    protected BlocktrailApiManager blocktrailApiManager;
 
     @VisibleForTesting
     public ProgressDialog mProgressDialog;
@@ -54,6 +56,7 @@ public class BaseFragment extends Fragment implements BaseView {
         bitfinexApiManager = BitfinexApiManager.getInstance();
         changellyApiManager = ChangellyApiManager.getInstance();
         bitmexApiManager = BitmexApiManager.getInstance();
+        blocktrailApiManager = BlocktrailApiManager.getInstance();
     }
 
     @Override

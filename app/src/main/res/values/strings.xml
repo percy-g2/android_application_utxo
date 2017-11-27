@@ -112,4 +112,16 @@
     <string name="bitmex_announcement">BITMEX ANNOUNCEMENT</string>
     <string name="block_chain_explorer">BLOCK CHAIN EXPLORER</string>
     <string name="news">NEWS</string>
+    <string name="explore">EXPLORE</string>
+    <string name="explore_data">EXPLORE DATA</string>
+    <string name="response_data">RESPONSE DATA</string>
+    <string name="enter_address">ENTER ADDRESS</string>
+    <string name="enter_block">ENTER BLOCK</string>
+    <string name="enter_transaction">ENTER TRANSACTION</string>
+
+    <string-array name="spinner_explore_data">
+        <item>Address</item>
+        <item>Block</item>
+        <item>Transaction</item>
+    </string-array>
 </resources>
