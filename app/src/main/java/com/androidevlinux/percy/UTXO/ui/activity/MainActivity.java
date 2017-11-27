@@ -16,7 +16,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.androidevlinux.percy.UTXO.R;
-import com.androidevlinux.percy.UTXO.processor.customAnnotation;
 import com.androidevlinux.percy.UTXO.ui.fragment.ExtrasFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.GoogleSignInFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.SettingsFragment;
@@ -27,7 +26,7 @@ import com.androidevlinux.percy.UTXO.ui.fragment.changelly.MinAmountFragment;
 import com.crashlytics.android.Crashlytics;
 
 import io.fabric.sdk.android.Fabric;
-@customAnnotation
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private Fragment fragment;
@@ -39,7 +38,7 @@ public class MainActivity extends AppCompatActivity
             fragment.onActivityResult(requestCode, resultCode, data);
         }
     }
-    @customAnnotation
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,8 +76,6 @@ public class MainActivity extends AppCompatActivity
         } else {
             displaySelectedScreen(R.id.nav_get_min_amount);
         }
-        /*GeneratedClass generatedClass = new GeneratedClass();
-        Log.i("customAnnotation",generatedClass.getMessage());*/
     }
 
     private void displaySelectedScreen(int itemId) {
@@ -159,6 +156,4 @@ public class MainActivity extends AppCompatActivity
         displaySelectedScreen(item.getItemId());
         return true;
     }
-
-
 }
