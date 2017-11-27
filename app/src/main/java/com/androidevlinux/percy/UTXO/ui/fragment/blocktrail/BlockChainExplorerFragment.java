@@ -18,11 +18,11 @@ import android.widget.Toast;
 
 import com.androidevlinux.percy.UTXO.R;
 import com.androidevlinux.percy.UTXO.data.models.blocktrail.AddressBean;
-import com.androidevlinux.percy.UTXO.data.models.blocktrail.BlockBean;
 import com.androidevlinux.percy.UTXO.data.models.blocktrail.TransactionBean;
 import com.androidevlinux.percy.UTXO.ui.base.BaseFragment;
 import com.androidevlinux.percy.UTXO.utils.CustomProgressDialog;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,6 +48,7 @@ public class BlockChainExplorerFragment extends BaseFragment {
     AppCompatTextView txtResponseData;
     Unbinder unbinder;
     protected static String TAG = "BlockChainExplorerFragment";
+
     @Override
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         assert inflater != null;
@@ -109,10 +110,11 @@ public class BlockChainExplorerFragment extends BaseFragment {
 
     void loadAddressData(String query, String data) {
         final Dialog dialogToSaveData = CustomProgressDialog.showCustomProgressDialog(getActivity(), "Please Wait Loading Data ...");
-        blocktrailApiManager.getBlockTrailAddressData(query,data,new Callback<AddressBean>() {
+        blocktrailApiManager.getBlockTrailAddressData(query, data, new Callback<AddressBean>() {
             @Override
             public void onResponse(@NonNull Call<AddressBean> call, @NonNull Response<AddressBean> response) {
-                if (response.body()!=null) {
+                if (response.body() != null) {
+                    Log.i(TAG, new Gson().toJson(response.body()));
                     txtResponseData.setText(new Gson().toJson(response.body()));
                 } else {
                     Toast.makeText(getActivity(), "Check Your Input", Toast.LENGTH_SHORT).show();
@@ -133,10 +135,11 @@ public class BlockChainExplorerFragment extends BaseFragment {
 
     void loadBlockData(String query, String data) {
         final Dialog dialogToSaveData = CustomProgressDialog.showCustomProgressDialog(getActivity(), "Please Wait Loading Data ...");
-        blocktrailApiManager.getBlockTrailBlockData(query,data,new Callback<BlockBean>() {
+        blocktrailApiManager.getBlockTrailBlockData(query, data, new Callback<JsonObject>() {
             @Override
-            public void onResponse(@NonNull Call<BlockBean> call, @NonNull Response<BlockBean> response) {
-                if (response.body()!=null) {
+            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
+                if (response.body() != null) {
+                    Log.i(TAG, new Gson().toJson(response.body()));
                     txtResponseData.setText(new Gson().toJson(response.body()));
                 } else {
                     Toast.makeText(getActivity(), "Check Your Input", Toast.LENGTH_SHORT).show();
@@ -147,7 +150,7 @@ public class BlockChainExplorerFragment extends BaseFragment {
             }
 
             @Override
-            public void onFailure(@NonNull Call<BlockBean> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
                 if (dialogToSaveData != null) {
                     CustomProgressDialog.dismissCustomProgressDialog(dialogToSaveData);
                 }
@@ -157,10 +160,11 @@ public class BlockChainExplorerFragment extends BaseFragment {
 
     void loadTransactionData(String query, String data) {
         final Dialog dialogToSaveData = CustomProgressDialog.showCustomProgressDialog(getActivity(), "Please Wait Loading Data ...");
-        blocktrailApiManager.getBlockTrailTransactionData(query,data,new Callback<TransactionBean>() {
+        blocktrailApiManager.getBlockTrailTransactionData(query, data, new Callback<TransactionBean>() {
             @Override
             public void onResponse(@NonNull Call<TransactionBean> call, @NonNull Response<TransactionBean> response) {
-                if (response.body()!=null) {
+                if (response.body() != null) {
+                    Log.i(TAG, new Gson().toJson(response.body()));
                     txtResponseData.setText(new Gson().toJson(response.body()));
                 } else {
                     Toast.makeText(getActivity(), "Check Your Input", Toast.LENGTH_SHORT).show();
