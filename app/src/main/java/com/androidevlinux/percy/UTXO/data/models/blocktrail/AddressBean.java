@@ -5,10 +5,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-/**
- * Created by percy on 27/11/17.
- */
-
 public class AddressBean implements Serializable
 {
 
@@ -27,6 +23,12 @@ public class AddressBean implements Serializable
     @SerializedName("sent")
     @Expose
     private Integer sent;
+    @SerializedName("transactions")
+    @Expose
+    private Integer transactions;
+    @SerializedName("utxos")
+    @Expose
+    private Integer utxos;
     @SerializedName("unconfirmed_received")
     @Expose
     private Integer unconfirmedReceived;
@@ -36,6 +38,9 @@ public class AddressBean implements Serializable
     @SerializedName("unconfirmed_transactions")
     @Expose
     private Integer unconfirmedTransactions;
+    @SerializedName("unconfirmed_utxos")
+    @Expose
+    private Integer unconfirmedUtxos;
     @SerializedName("total_transactions_in")
     @Expose
     private Integer totalTransactionsIn;
@@ -44,11 +49,17 @@ public class AddressBean implements Serializable
     private Integer totalTransactionsOut;
     @SerializedName("category")
     @Expose
-    private String category;
+    private Object category;
     @SerializedName("tag")
     @Expose
-    private String tag;
-    private final static long serialVersionUID = -1927335115528818012L;
+    private Object tag;
+    @SerializedName("first_seen")
+    @Expose
+    private Object firstSeen;
+    @SerializedName("last_seen")
+    @Expose
+    private Object lastSeen;
+    private final static long serialVersionUID = 1204703229998514129L;
 
     public String getAddress() {
         return address;
@@ -90,6 +101,22 @@ public class AddressBean implements Serializable
         this.sent = sent;
     }
 
+    public Integer getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(Integer transactions) {
+        this.transactions = transactions;
+    }
+
+    public Integer getUtxos() {
+        return utxos;
+    }
+
+    public void setUtxos(Integer utxos) {
+        this.utxos = utxos;
+    }
+
     public Integer getUnconfirmedReceived() {
         return unconfirmedReceived;
     }
@@ -114,6 +141,14 @@ public class AddressBean implements Serializable
         this.unconfirmedTransactions = unconfirmedTransactions;
     }
 
+    public Integer getUnconfirmedUtxos() {
+        return unconfirmedUtxos;
+    }
+
+    public void setUnconfirmedUtxos(Integer unconfirmedUtxos) {
+        this.unconfirmedUtxos = unconfirmedUtxos;
+    }
+
     public Integer getTotalTransactionsIn() {
         return totalTransactionsIn;
     }
@@ -130,20 +165,36 @@ public class AddressBean implements Serializable
         this.totalTransactionsOut = totalTransactionsOut;
     }
 
-    public String getCategory() {
+    public Object getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Object category) {
         this.category = category;
     }
 
-    public String getTag() {
+    public Object getTag() {
         return tag;
     }
 
-    public void setTag(String tag) {
+    public void setTag(Object tag) {
         this.tag = tag;
+    }
+
+    public Object getFirstSeen() {
+        return firstSeen;
+    }
+
+    public void setFirstSeen(Object firstSeen) {
+        this.firstSeen = firstSeen;
+    }
+
+    public Object getLastSeen() {
+        return lastSeen;
+    }
+
+    public void setLastSeen(Object lastSeen) {
+        this.lastSeen = lastSeen;
     }
 
 }

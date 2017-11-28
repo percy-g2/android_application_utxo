@@ -13,7 +13,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatSpinner;
-import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,12 +27,17 @@ import android.widget.Toast;
 import com.androidevlinux.percy.UTXO.R;
 import com.androidevlinux.percy.UTXO.data.models.blocktrail.AddressBean;
 import com.androidevlinux.percy.UTXO.data.models.blocktrail.TransactionBean;
+import com.androidevlinux.percy.UTXO.ui.adapter.BlockChainExplorerAddressAdapter;
+import com.androidevlinux.percy.UTXO.ui.adapter.BlockChainExplorerBlockAdapter;
+import com.androidevlinux.percy.UTXO.ui.adapter.BlockChainExplorerTransactionAdapter;
 import com.androidevlinux.percy.UTXO.ui.base.BaseFragment;
 import com.androidevlinux.percy.UTXO.utils.CustomProgressDialog;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,8 +59,8 @@ public class BlockChainExplorerFragment extends BaseFragment {
     AppCompatEditText edtDataToExplore;
     @BindView(R.id.btn_get_data)
     AppCompatButton btnGetData;
-    @BindView(R.id.txt_response_data)
-    AppCompatTextView txtResponseData;
+    @BindView(R.id.response_data_recyclerView)
+    RecyclerView response_data_recyclerView;
     Unbinder unbinder;
     @BindView(R.id.btn_scan_qr)
     AppCompatButton btnScanQr;
@@ -62,7 +68,8 @@ public class BlockChainExplorerFragment extends BaseFragment {
     private IntentIntegrator qrScan;
     private static final int PERMISSION_REQUEST_CODE = 1;
     protected static String TAG = "BlockChainExplorerFragment";
-
+    protected ArrayList<AddressBean> addressBeanArrayList;
+    protected ArrayList<TransactionBean> transactionBeanArrayList;
     @Override
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         assert inflater != null;
@@ -79,6 +86,10 @@ public class BlockChainExplorerFragment extends BaseFragment {
         TextView Title = getActivity().findViewById(R.id.txtTitle);
         Title.setText(getResources().getString(R.string.block_chain_explorer));
 
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        response_data_recyclerView.setLayoutManager(linearLayoutManager);
+        addressBeanArrayList = new ArrayList<>();
+        transactionBeanArrayList = new ArrayList<>();
         spinnerExplorer.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -142,7 +153,9 @@ public class BlockChainExplorerFragment extends BaseFragment {
             public void onResponse(@NonNull Call<AddressBean> call, @NonNull Response<AddressBean> response) {
                 if (response.body() != null) {
                     Log.i(TAG, new Gson().toJson(response.body()));
-                    txtResponseData.setText(new Gson().toJson(response.body()));
+                    addressBeanArrayList.add(response.body());
+                    BlockChainExplorerAddressAdapter blockChainExplorerAddressAdapter = new BlockChainExplorerAddressAdapter(addressBeanArrayList, getActivity());
+                    response_data_recyclerView.setAdapter(blockChainExplorerAddressAdapter);
                 } else {
                     Toast.makeText(getActivity(), "Check Your Input", Toast.LENGTH_SHORT).show();
                 }
@@ -166,8 +179,11 @@ public class BlockChainExplorerFragment extends BaseFragment {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
                 if (response.body() != null) {
-                    Log.i(TAG, new Gson().toJson(response.body()));
-                    txtResponseData.setText(new Gson().toJson(response.body()));
+                    Log.i(TAG, response.body().toString());
+                    ArrayList<JsonObject> jsonObjectArrayList = new ArrayList<>();
+                    jsonObjectArrayList.add(response.body());
+                    BlockChainExplorerBlockAdapter blockChainExplorerBlockAdapter = new BlockChainExplorerBlockAdapter(jsonObjectArrayList, getActivity());
+                    response_data_recyclerView.setAdapter(blockChainExplorerBlockAdapter);
                 } else {
                     Toast.makeText(getActivity(), "Check Your Input", Toast.LENGTH_SHORT).show();
                 }
@@ -192,7 +208,9 @@ public class BlockChainExplorerFragment extends BaseFragment {
             public void onResponse(@NonNull Call<TransactionBean> call, @NonNull Response<TransactionBean> response) {
                 if (response.body() != null) {
                     Log.i(TAG, new Gson().toJson(response.body()));
-                    txtResponseData.setText(new Gson().toJson(response.body()));
+                    transactionBeanArrayList.add(response.body());
+                    BlockChainExplorerTransactionAdapter blockChainExplorerTransactionAdapter = new BlockChainExplorerTransactionAdapter(transactionBeanArrayList, getActivity());
+                    response_data_recyclerView.setAdapter(blockChainExplorerTransactionAdapter);
                 } else {
                     Toast.makeText(getActivity(), "Check Your Input", Toast.LENGTH_SHORT).show();
                 }

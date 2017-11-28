@@ -26,9 +26,9 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:textAlignment="center"
                 android:entries="@array/spinner_explore_data"
-                android:gravity="center" />
+                android:gravity="center"
+                android:textAlignment="center" />
         </LinearLayout>
 
         <LinearLayout
@@ -90,16 +90,14 @@
             android:layout_height="0dp"
             android:layout_margin="2dp"
             android:layout_weight="5"
-            android:background="@drawable/background"
             android:orientation="horizontal">
 
-            <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/txt_response_data"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/response_data_recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="@string/response_data" />
+                android:layout_height="match_parent" />
         </LinearLayout>
+
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

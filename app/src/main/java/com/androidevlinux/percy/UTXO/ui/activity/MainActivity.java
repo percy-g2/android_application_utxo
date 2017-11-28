@@ -31,7 +31,7 @@ import io.fabric.sdk.android.Fabric;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private Fragment fragment;
-
+    FloatingActionButton fab;
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+        fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
             fragment = new CreateTransactionFragment();
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -82,27 +82,35 @@ public class MainActivity extends AppCompatActivity
     private void displaySelectedScreen(int itemId) {
         switch (itemId) {
             case R.id.nav_sign_in:
+                fab.hide();
                 fragment = new GoogleSignInFragment();
                 break;
             case R.id.nav_get_min_amount:
+                fab.show();
                 fragment = new MinAmountFragment();
                 break;
             case R.id.nav_exchange_amount:
+                fab.show();
                 fragment = new ExchangeAmountFragment();
                 break;
             case R.id.nav_create_transaction:
+                fab.show();
                 fragment = new CreateTransactionFragment();
                 break;
             case R.id.nav_get_status:
+                fab.show();
                 fragment = new GetStatusFragment();
                 break;
             case R.id.nav_btc_price:
+                fab.hide();
                 fragment = new PriceCheckFragment();
                 break;
             case R.id.nav_block_chain_explorer:
+                fab.hide();
                 fragment = new BlockChainExplorerFragment();
                 break;
             case R.id.nav_settings:
+                fab.hide();
                 fragment = new SettingsFragment();
                 break;
         }
