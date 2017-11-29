@@ -30,6 +30,9 @@ More things will be added in the future versions.
 1. You can drop me a proxthehacker@gmail.com here for any queries.
 2. Buy me a beer, BTC  wallet address :- 32nRfmpUazZQBK7aFCK6YVuFsr2RzdzZrE
 
+**Privacy Policy**
+1. Read Here [privacy policy](https://github.com/percy-g2/android_application_utxo/blob/master/privacy_policy.html)
+
 **ScreenShots**
 
 <img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/master/screenshots/1.png"><img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/master/screenshots/2.png">
