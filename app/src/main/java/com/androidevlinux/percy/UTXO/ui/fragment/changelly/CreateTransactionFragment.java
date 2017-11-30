@@ -136,7 +136,7 @@ public class CreateTransactionFragment extends BaseFragment {
             e.printStackTrace();
         }
 
-        final Dialog dialogToSaveData = CustomProgressDialog.showCustomProgressDialog(mActivity, "Please Wait Creating Transaction ...");
+        final Dialog dialogToSaveData = CustomProgressDialog.showCustomProgressDialog(mActivity, "Please Wait ...");
         changellyApiManager.createTransaction(sign, testbean, new Callback<TransactionBean>() {
             @Override
             public void onResponse(@NonNull Call<TransactionBean> call, @NonNull Response<TransactionBean> response) {

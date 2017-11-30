@@ -27,7 +27,7 @@
     <string name="twentyfourhoursvolume">24 Hr\'s Volume</string>
     <string name="zerovolume">0.00 Bitcoin</string>
     <string name="refresh">REFRESH</string>
-    <string name="btc_price">BTC Price</string>
+    <string name="btc_price">Bitcoin Price</string>
     <string name="pay_in_address">PAY IN ADDRESS</string>
 
     <string name="label_google_sign_in">Google Sign In</string>
@@ -110,7 +110,7 @@
     <string name="twitter_consumer_key">REPLACE_ME</string>
     <string name="twitter_consumer_secret">REPLACE_ME</string>
     <string name="bitmex_announcement">BITMEX ANNOUNCEMENT</string>
-    <string name="block_chain_explorer">BTC Block Chain Explorer</string>
+    <string name="block_chain_explorer">BTC Blockchain Explorer</string>
     <string name="news">NEWS</string>
     <string name="explore">EXPLORE</string>
     <string name="explore_data">EXPLORE DATA</string>

@@ -116,7 +116,7 @@ public class PriceCheckFragment extends BaseFragment {
     }
 
     private void getBitfinexPubTicker() {
-        final Dialog dialogToSaveData = CustomProgressDialog.showCustomProgressDialog(mActivity, "Please Wait Loading Bitcoin Last Price ...");
+        final Dialog dialogToSaveData = CustomProgressDialog.showCustomProgressDialog(mActivity, "Please Wait ...");
         bitfinexApiManager.getBitfinexPubTicker(new Callback<BitfinexPubTickerResponseBean>() {
             @Override
             public void onResponse(@NonNull Call<BitfinexPubTickerResponseBean> call, @NonNull Response<BitfinexPubTickerResponseBean> response) {

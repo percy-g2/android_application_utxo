@@ -110,7 +110,7 @@ public class ExchangeAmountFragment extends BaseFragment {
             e.printStackTrace();
         }
 
-        final Dialog dialogToSaveData =  CustomProgressDialog.showCustomProgressDialog(mActivity, "Please Wait Fetching Data ...");
+        final Dialog dialogToSaveData =  CustomProgressDialog.showCustomProgressDialog(mActivity, "Please Wait ...");
         changellyApiManager.getMinAmount(sign, testbean, new Callback<GetMinAmountReponseBean>() {
             @Override
             public void onResponse(@NonNull Call<GetMinAmountReponseBean> call, @NonNull Response<GetMinAmountReponseBean> response) {

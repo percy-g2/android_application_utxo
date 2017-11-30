@@ -145,7 +145,7 @@ public class MinAmountFragment extends BaseFragment {
             e.printStackTrace();
         }
 
-        final Dialog dialogToSaveData = CustomProgressDialog.showCustomProgressDialog(mActivity, "Please Wait Loading Currencies ...");
+        final Dialog dialogToSaveData = CustomProgressDialog.showCustomProgressDialog(mActivity, "Please Wait ...");
         changellyApiManager.getCurrencies(sign, testbean, new Callback<GetCurrenciesResponseBean>() {
             @Override
             public void onResponse(@NonNull Call<GetCurrenciesResponseBean> call, @NonNull Response<GetCurrenciesResponseBean> response) {
