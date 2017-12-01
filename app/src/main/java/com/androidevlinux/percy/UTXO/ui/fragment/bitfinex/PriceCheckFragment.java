@@ -1,6 +1,8 @@
 package com.androidevlinux.percy.UTXO.ui.fragment.bitfinex;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,7 +21,6 @@ import android.widget.TextView;
 import com.androidevlinux.percy.UTXO.R;
 import com.androidevlinux.percy.UTXO.data.models.BitfinexPubTickerResponseBean;
 import com.androidevlinux.percy.UTXO.ui.base.BaseFragment;
-import com.androidevlinux.percy.UTXO.ui.fragment.ExtrasFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.SettingsFragment;
 import com.androidevlinux.percy.UTXO.utils.Constants;
 import com.androidevlinux.percy.UTXO.utils.CustomProgressDialog;
@@ -52,6 +53,20 @@ public class PriceCheckFragment extends BaseFragment {
     SharedPreferences mSharedPreferences;
     @BindView(R.id.btn_refresh)
     AppCompatButton btnRefresh;
+    private Activity mActivity;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mActivity = (Activity) context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        this.mActivity = null;
+    }
+
     @Override
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         assert inflater != null;
@@ -65,7 +80,7 @@ public class PriceCheckFragment extends BaseFragment {
     public void onViewCreated(@Nullable View view, @Nullable Bundle savedInstanceState) {
         assert view != null;
         super.onViewCreated(view, savedInstanceState);
-        TextView Title = getActivity().findViewById(R.id.txtTitle);
+        TextView Title = mActivity.findViewById(R.id.txtTitle);
         Title.setText(getResources().getString(R.string.btc_price));
         getBitfinexPubTicker();
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -101,7 +116,7 @@ public class PriceCheckFragment extends BaseFragment {
     }
 
     private void getBitfinexPubTicker() {
-        final Dialog dialogToSaveData = CustomProgressDialog.showCustomProgressDialog(getActivity(), "Please Wait Loading Bitcoin Last Price ...");
+        final Dialog dialogToSaveData = CustomProgressDialog.showCustomProgressDialog(mActivity, "Please Wait Loading Bitcoin Last Price ...");
         bitfinexApiManager.getBitfinexPubTicker(new Callback<BitfinexPubTickerResponseBean>() {
             @Override
             public void onResponse(@NonNull Call<BitfinexPubTickerResponseBean> call, @NonNull Response<BitfinexPubTickerResponseBean> response) {
@@ -123,7 +138,7 @@ public class PriceCheckFragment extends BaseFragment {
 
             @Override
             public void onFailure(@NonNull Call<BitfinexPubTickerResponseBean> call, @NonNull Throwable t) {
-                if (getVisibleFragment() instanceof ExtrasFragment) {
+                if (getVisibleFragment() instanceof PriceCheckFragment) {
                     bitfinexLastPrice.setText(Constants.btc_price);
                     bitfinexLowPrice.setText(getString(R.string.zerodotzerozero));
                     bitfinexHighPrice.setText(getString(R.string.zerodotzerozero));

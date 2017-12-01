@@ -1,6 +1,8 @@
 package com.androidevlinux.percy.UTXO.ui.fragment.changelly;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -45,6 +47,20 @@ public class GetStatusFragment  extends BaseFragment {
     AppCompatTextView txtInfo;
     @BindView(R.id.edtTransactionId)
     AppCompatEditText edtTransactionId;
+    private Activity mActivity;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mActivity = (Activity) context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        this.mActivity = null;
+    }
+
     @Override
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         assert inflater != null;
@@ -58,7 +74,7 @@ public class GetStatusFragment  extends BaseFragment {
     public void onViewCreated(@Nullable View view, @Nullable Bundle savedInstanceState) {
         assert view != null;
         super.onViewCreated(view, savedInstanceState);
-        TextView Title = getActivity().findViewById(R.id.txtTitle);
+        TextView Title = mActivity.findViewById(R.id.txtTitle);
         Title.setText(getResources().getString(R.string.exchange_amount));
         txtInfo.setText(R.string.get_status_info);
     }
@@ -78,21 +94,21 @@ public class GetStatusFragment  extends BaseFragment {
             e.printStackTrace();
         }
 
-        final Dialog dialogToSaveData =  CustomProgressDialog.showCustomProgressDialog(getActivity(), "Please Wait Fetching Data ...");
+        final Dialog dialogToSaveData =  CustomProgressDialog.showCustomProgressDialog(mActivity, "Please Wait Fetching Data ...");
 
         changellyApiManager.getMinAmount(sign, testbean, new Callback<GetMinAmountReponseBean>() {
             @Override
             public void onResponse(@NonNull Call<GetMinAmountReponseBean> call, @NonNull Response<GetMinAmountReponseBean> response) {
                 if (response.body() != null) {
                     if (response.body().getError() != null) {
-                        Toast.makeText(getActivity(), response.body().getError().getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mActivity, response.body().getError().getMessage(), Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(getActivity(), response.body().getResult(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mActivity, response.body().getResult(), Toast.LENGTH_SHORT).show();
                         txtMinAmount.setText(response.body().getResult());
                     }
                 }
                 if (response.code() == 401) {
-                    Toast.makeText(getActivity(), "Unauthorized! Please Check Your Keys", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mActivity, "Unauthorized! Please Check Your Keys", Toast.LENGTH_LONG).show();
                 }
                 if (dialogToSaveData != null) {
                     CustomProgressDialog.dismissCustomProgressDialog(dialogToSaveData);
@@ -121,10 +137,10 @@ public class GetStatusFragment  extends BaseFragment {
             if (!edtTransactionId.getText().toString().isEmpty()) {
                 MinAmount(edtTransactionId.getText().toString());
             } else {
-                Toast.makeText(getActivity(), "Empty Field Please Check", Toast.LENGTH_LONG).show();
+                Toast.makeText(mActivity, "Empty Field Please Check", Toast.LENGTH_LONG).show();
             }
         } else {
-            Toast.makeText(getActivity(), "No Internet", Toast.LENGTH_LONG).show();
+            Toast.makeText(mActivity, "No Internet", Toast.LENGTH_LONG).show();
         }
     }
 }

@@ -1,9 +1,11 @@
 package com.androidevlinux.percy.UTXO.ui.fragment.changelly;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -79,6 +81,19 @@ public class CreateTransactionFragment extends BaseFragment {
     //qr code scanner object
     private IntentIntegrator qrScan;
     private static final int PERMISSION_REQUEST_CODE = 1;
+    private Activity mActivity;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mActivity = (Activity) context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        this.mActivity = null;
+    }
 
     @Override
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -93,7 +108,7 @@ public class CreateTransactionFragment extends BaseFragment {
     public void onViewCreated(@Nullable View view, @Nullable Bundle savedInstanceState) {
         assert view != null;
         super.onViewCreated(view, savedInstanceState);
-        TextView Title = getActivity().findViewById(R.id.txtTitle);
+        TextView Title = mActivity.findViewById(R.id.txtTitle);
         Title.setText(getResources().getString(R.string.create_transaction));
         txtInfo.setText(R.string.transaction_id);
         currenciesStringList = new ArrayList<>();
@@ -121,13 +136,13 @@ public class CreateTransactionFragment extends BaseFragment {
             e.printStackTrace();
         }
 
-        final Dialog dialogToSaveData = CustomProgressDialog.showCustomProgressDialog(getActivity(), "Please Wait Creating Transaction ...");
+        final Dialog dialogToSaveData = CustomProgressDialog.showCustomProgressDialog(mActivity, "Please Wait Creating Transaction ...");
         changellyApiManager.createTransaction(sign, testbean, new Callback<TransactionBean>() {
             @Override
             public void onResponse(@NonNull Call<TransactionBean> call, @NonNull Response<TransactionBean> response) {
                 if (response.body() != null) {
                     if (response.body().getError() != null) {
-                        Toast.makeText(getActivity(), response.body().getError().getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mActivity, response.body().getError().getMessage(), Toast.LENGTH_SHORT).show();
                     } else {
                         txtMinAmount.setText(response.body().getResult().getId());
                         txtPayInAddress.setText(response.body().getResult().getPayinAddress());
@@ -150,7 +165,7 @@ public class CreateTransactionFragment extends BaseFragment {
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(CLIPBOARD_SERVICE);
+        ClipboardManager clipboard = (ClipboardManager) mActivity.getSystemService(CLIPBOARD_SERVICE);
         ClipData clip = ClipData.newPlainText("Pay In Address", txtPayInAddress.getText().toString());
         if (clipboard != null) {
             clipboard.setPrimaryClip(clip);
@@ -171,13 +186,13 @@ public class CreateTransactionFragment extends BaseFragment {
             e.printStackTrace();
         }
 
-        final Dialog dialogToSaveData = CustomProgressDialog.showCustomProgressDialog(getActivity(), "Please Wait Loading Currencies ...");
+        final Dialog dialogToSaveData = CustomProgressDialog.showCustomProgressDialog(mActivity, "Please Wait Loading Currencies ...");
         changellyApiManager.getCurrencies(sign, testbean, new Callback<GetCurrenciesResponseBean>() {
             @Override
             public void onResponse(@NonNull Call<GetCurrenciesResponseBean> call, @NonNull Response<GetCurrenciesResponseBean> response) {
                 if (response.body() != null) {
                     currenciesStringList = response.body().getResult();
-                    ArrayAdapter<String> karant_adapter = new ArrayAdapter<>(getActivity(),
+                    ArrayAdapter<String> karant_adapter = new ArrayAdapter<>(mActivity,
                             android.R.layout.simple_spinner_item, currenciesStringList);
                     karant_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinnerFrom.setAdapter(karant_adapter);
@@ -187,7 +202,7 @@ public class CreateTransactionFragment extends BaseFragment {
                     CustomProgressDialog.dismissCustomProgressDialog(dialogToSaveData);
                 }
                 if (response.code() == 401) {
-                    Toast.makeText(getActivity(), "Unauthorized! Please Check Your Keys", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mActivity, "Unauthorized! Please Check Your Keys", Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -214,10 +229,10 @@ public class CreateTransactionFragment extends BaseFragment {
                     if (spinnerFrom.getSelectedItem() != null && spinnerTo.getSelectedItem() != null && spinnerFrom.getSelectedItem().toString() != null && spinnerFrom.getSelectedItem().toString() != null && !edtAmount.getText().toString().isEmpty() && !edtUserPayOutAddress.getText().toString().isEmpty()) {
                         MinAmount(spinnerFrom.getSelectedItem().toString(), spinnerTo.getSelectedItem().toString(), edtAmount.getText().toString(), edtUserPayOutAddress.getText().toString());
                     } else {
-                        Toast.makeText(getActivity(), "Empty Fields Please Check", Toast.LENGTH_LONG).show();
+                        Toast.makeText(mActivity, "Empty Fields Please Check", Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(getActivity(), "No Internet", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mActivity, "No Internet", Toast.LENGTH_LONG).show();
                 }
                 break;
             case R.id.btn_scan_qr:
@@ -237,15 +252,17 @@ public class CreateTransactionFragment extends BaseFragment {
                 //If your app does not have permission to access camera, then call requestPermission//
                 requestPermission();
             }
+        } else {
+            qrScan.initiateScan();
         }
     }
 
     private boolean checkPermission() {
         //Check for CAMERA access, using ContextCompat.checkSelfPermission()//
-        int result = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA);
+        int result = ContextCompat.checkSelfPermission(mActivity, Manifest.permission.CAMERA);
         //If the app does have this permission, then return true//
         if (result == PackageManager.PERMISSION_GRANTED) {
-            Log.i(getActivity().getClass().getName(), "Permission Granted");
+            Log.i(mActivity.getClass().getName(), "Permission Granted");
             return true;
         } else {
             requestPermission();
@@ -254,7 +271,7 @@ public class CreateTransactionFragment extends BaseFragment {
     }
 
     private void requestPermission() {
-        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CODE);
+        ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CODE);
     }
 
     @Override
@@ -262,10 +279,10 @@ public class CreateTransactionFragment extends BaseFragment {
         switch (requestCode) {
             case PERMISSION_REQUEST_CODE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(getActivity(),
+                    Toast.makeText(mActivity,
                             "Permission accepted", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(getActivity(),
+                    Toast.makeText(mActivity,
                             "Permission denied", Toast.LENGTH_LONG).show();
                 }
                 break;
@@ -280,7 +297,7 @@ public class CreateTransactionFragment extends BaseFragment {
         if (result != null) {
             if (result.getContents() != null) {
                 edtUserPayOutAddress.setText(result.getContents());
-                Toast.makeText(getActivity(), result.getContents(), Toast.LENGTH_LONG).show();
+                Toast.makeText(mActivity, result.getContents(), Toast.LENGTH_LONG).show();
             }
         }
     }

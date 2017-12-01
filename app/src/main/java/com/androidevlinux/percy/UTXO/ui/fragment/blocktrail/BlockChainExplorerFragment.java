@@ -1,7 +1,9 @@
 package com.androidevlinux.percy.UTXO.ui.fragment.blocktrail;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -70,6 +72,20 @@ public class BlockChainExplorerFragment extends BaseFragment {
     protected static String TAG = "BlockChainExplorerFragment";
     protected ArrayList<AddressBean> addressBeanArrayList;
     protected ArrayList<TransactionBean> transactionBeanArrayList;
+    private Activity mActivity;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mActivity = (Activity) context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        this.mActivity = null;
+    }
+
     @Override
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         assert inflater != null;
@@ -83,7 +99,7 @@ public class BlockChainExplorerFragment extends BaseFragment {
     public void onViewCreated(@Nullable View view, @Nullable Bundle savedInstanceState) {
         assert view != null;
         super.onViewCreated(view, savedInstanceState);
-        TextView Title = getActivity().findViewById(R.id.txtTitle);
+        TextView Title = mActivity.findViewById(R.id.txtTitle);
         Title.setText(getResources().getString(R.string.block_chain_explorer));
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -137,7 +153,7 @@ public class BlockChainExplorerFragment extends BaseFragment {
                         loadTransactionData(spinnerExplorer.getSelectedItem().toString().toLowerCase(), edtDataToExplore.getText().toString());
                     }
                 } else {
-                    Toast.makeText(getActivity(), spinnerExplorer.getSelectedItem().toString() + " Input Is Empty!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mActivity, spinnerExplorer.getSelectedItem().toString() + " Input Is Empty!", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.btn_scan_qr:
@@ -147,7 +163,7 @@ public class BlockChainExplorerFragment extends BaseFragment {
     }
 
     void loadAddressData(String query, String data) {
-        final Dialog dialogToSaveData = CustomProgressDialog.showCustomProgressDialog(getActivity(), "Please Wait Loading Data ...");
+        final Dialog dialogToSaveData = CustomProgressDialog.showCustomProgressDialog(mActivity, "Please Wait Loading Data ...");
         blocktrailApiManager.getBlockTrailAddressData(query, data, new Callback<AddressBean>() {
             @Override
             public void onResponse(@NonNull Call<AddressBean> call, @NonNull Response<AddressBean> response) {
@@ -157,7 +173,7 @@ public class BlockChainExplorerFragment extends BaseFragment {
                     BlockChainExplorerAddressAdapter blockChainExplorerAddressAdapter = new BlockChainExplorerAddressAdapter(addressBeanArrayList, getActivity());
                     response_data_recyclerView.setAdapter(blockChainExplorerAddressAdapter);
                 } else {
-                    Toast.makeText(getActivity(), "Check Your Input", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mActivity, "Check Your Input", Toast.LENGTH_SHORT).show();
                 }
                 if (dialogToSaveData != null) {
                     CustomProgressDialog.dismissCustomProgressDialog(dialogToSaveData);
@@ -174,7 +190,7 @@ public class BlockChainExplorerFragment extends BaseFragment {
     }
 
     void loadBlockData(String query, String data) {
-        final Dialog dialogToSaveData = CustomProgressDialog.showCustomProgressDialog(getActivity(), "Please Wait Loading Data ...");
+        final Dialog dialogToSaveData = CustomProgressDialog.showCustomProgressDialog(mActivity, "Please Wait Loading Data ...");
         blocktrailApiManager.getBlockTrailBlockData(query, data, new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
@@ -185,7 +201,7 @@ public class BlockChainExplorerFragment extends BaseFragment {
                     BlockChainExplorerBlockAdapter blockChainExplorerBlockAdapter = new BlockChainExplorerBlockAdapter(jsonObjectArrayList, getActivity());
                     response_data_recyclerView.setAdapter(blockChainExplorerBlockAdapter);
                 } else {
-                    Toast.makeText(getActivity(), "Check Your Input", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mActivity, "Check Your Input", Toast.LENGTH_SHORT).show();
                 }
                 if (dialogToSaveData != null) {
                     CustomProgressDialog.dismissCustomProgressDialog(dialogToSaveData);
@@ -202,7 +218,7 @@ public class BlockChainExplorerFragment extends BaseFragment {
     }
 
     void loadTransactionData(String query, String data) {
-        final Dialog dialogToSaveData = CustomProgressDialog.showCustomProgressDialog(getActivity(), "Please Wait Loading Data ...");
+        final Dialog dialogToSaveData = CustomProgressDialog.showCustomProgressDialog(mActivity, "Please Wait Loading Data ...");
         blocktrailApiManager.getBlockTrailTransactionData(query, data, new Callback<TransactionBean>() {
             @Override
             public void onResponse(@NonNull Call<TransactionBean> call, @NonNull Response<TransactionBean> response) {
@@ -212,7 +228,7 @@ public class BlockChainExplorerFragment extends BaseFragment {
                     BlockChainExplorerTransactionAdapter blockChainExplorerTransactionAdapter = new BlockChainExplorerTransactionAdapter(transactionBeanArrayList, getActivity());
                     response_data_recyclerView.setAdapter(blockChainExplorerTransactionAdapter);
                 } else {
-                    Toast.makeText(getActivity(), "Check Your Input", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mActivity, "Check Your Input", Toast.LENGTH_SHORT).show();
                 }
                 if (dialogToSaveData != null) {
                     CustomProgressDialog.dismissCustomProgressDialog(dialogToSaveData);
@@ -239,15 +255,17 @@ public class BlockChainExplorerFragment extends BaseFragment {
                 //If your app does not have permission to access camera, then call requestPermission//
                 requestPermission();
             }
+        } else {
+            qrScan.initiateScan();
         }
     }
 
     private boolean checkPermission() {
         //Check for CAMERA access, using ContextCompat.checkSelfPermission()//
-        int result = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA);
+        int result = ContextCompat.checkSelfPermission(mActivity, Manifest.permission.CAMERA);
         //If the app does have this permission, then return true//
         if (result == PackageManager.PERMISSION_GRANTED) {
-            Log.i(getActivity().getClass().getName(), "Permission Granted");
+            Log.i(mActivity.getClass().getName(), "Permission Granted");
             return true;
         } else {
             requestPermission();
@@ -256,7 +274,7 @@ public class BlockChainExplorerFragment extends BaseFragment {
     }
 
     private void requestPermission() {
-        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CODE);
+        ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CODE);
     }
 
     @Override
@@ -264,10 +282,10 @@ public class BlockChainExplorerFragment extends BaseFragment {
         switch (requestCode) {
             case PERMISSION_REQUEST_CODE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(getActivity(),
+                    Toast.makeText(mActivity,
                             "Permission accepted", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(getActivity(),
+                    Toast.makeText(mActivity,
                             "Permission denied", Toast.LENGTH_LONG).show();
                 }
                 break;
@@ -282,7 +300,7 @@ public class BlockChainExplorerFragment extends BaseFragment {
         if (result != null) {
             if (result.getContents() != null) {
                 edtDataToExplore.setText(result.getContents());
-                Toast.makeText(getActivity(), result.getContents(), Toast.LENGTH_LONG).show();
+                Toast.makeText(mActivity, result.getContents(), Toast.LENGTH_LONG).show();
             }
         }
     }
