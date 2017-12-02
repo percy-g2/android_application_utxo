@@ -1,9 +1,9 @@
 package com.androidevlinux.percy.UTXO.data.network;
 
-import com.androidevlinux.percy.UTXO.data.models.GetCurrenciesResponseBean;
-import com.androidevlinux.percy.UTXO.data.models.GetMinAmountReponseBean;
-import com.androidevlinux.percy.UTXO.data.models.MainBodyBean;
-import com.androidevlinux.percy.UTXO.data.models.TransactionBean;
+import com.androidevlinux.percy.UTXO.data.models.changelly.GetCurrenciesResponseBean;
+import com.androidevlinux.percy.UTXO.data.models.changelly.GetMinAmountReponseBean;
+import com.androidevlinux.percy.UTXO.data.models.changelly.MainBodyBean;
+import com.androidevlinux.percy.UTXO.data.models.changelly.TransactionBean;
 import com.androidevlinux.percy.UTXO.utils.Constants;
 import com.androidevlinux.percy.UTXO.utils.NativeUtils;
 

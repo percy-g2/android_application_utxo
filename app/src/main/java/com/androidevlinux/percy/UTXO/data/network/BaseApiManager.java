@@ -57,7 +57,6 @@ abstract class BaseApiManager<T> {
                     .baseUrl(baseUrl)
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create(gson))
-
                     .client(clientOkHttp)
                     .build();
         }

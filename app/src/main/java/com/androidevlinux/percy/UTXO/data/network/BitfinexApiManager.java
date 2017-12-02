@@ -1,6 +1,6 @@
 package com.androidevlinux.percy.UTXO.data.network;
 
-import com.androidevlinux.percy.UTXO.data.models.BitfinexPubTickerResponseBean;
+import com.androidevlinux.percy.UTXO.data.models.bitfinex.BitfinexPubTickerResponseBean;
 import com.androidevlinux.percy.UTXO.utils.NativeUtils;
 
 import retrofit2.Callback;

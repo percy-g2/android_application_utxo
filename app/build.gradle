@@ -47,7 +47,7 @@ android {
         }
     }
     aaptOptions {
-        cruncherEnabled = false
+        cruncherEnabled = true
     }
     dexOptions {
         javaMaxHeapSize "4g"

@@ -1,4 +1,4 @@
-package com.androidevlinux.percy.UTXO.data.models;
+package com.androidevlinux.percy.UTXO.data.models.bitfinex;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

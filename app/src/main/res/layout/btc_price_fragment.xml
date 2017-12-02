@@ -126,11 +126,11 @@
             android:weightSum="1">
 
             <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txt_source"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="Source: Bitfinex"
                 android:textColor="@android:color/black" />
         </LinearLayout>
 

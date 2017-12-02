@@ -11,6 +11,7 @@ import com.androidevlinux.percy.UTXO.R;
 import com.androidevlinux.percy.UTXO.data.network.BitfinexApiManager;
 import com.androidevlinux.percy.UTXO.data.network.BlocktrailApiManager;
 import com.androidevlinux.percy.UTXO.data.network.ChangellyApiManager;
+import com.androidevlinux.percy.UTXO.data.network.CoinsecureApiManager;
 
 /**
  * Created by percy on 22/11/17.
@@ -21,6 +22,7 @@ public class BaseFragment extends Fragment implements BaseView {
     protected BitfinexApiManager bitfinexApiManager;
     protected ChangellyApiManager changellyApiManager;
     protected BlocktrailApiManager blocktrailApiManager;
+    protected CoinsecureApiManager coinsecureApiManager;
 
     @VisibleForTesting
     public ProgressDialog mProgressDialog;
@@ -54,6 +56,7 @@ public class BaseFragment extends Fragment implements BaseView {
         bitfinexApiManager = BitfinexApiManager.getInstance();
         changellyApiManager = ChangellyApiManager.getInstance();
         blocktrailApiManager = BlocktrailApiManager.getInstance();
+        coinsecureApiManager = CoinsecureApiManager.getInstance();
     }
 
     @Override

@@ -17,10 +17,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidevlinux.percy.UTXO.R;
-import com.androidevlinux.percy.UTXO.data.models.GetCurrenciesResponseBean;
-import com.androidevlinux.percy.UTXO.data.models.GetMinAmountReponseBean;
-import com.androidevlinux.percy.UTXO.data.models.MainBodyBean;
-import com.androidevlinux.percy.UTXO.data.models.ParamsBean;
+import com.androidevlinux.percy.UTXO.data.models.changelly.GetCurrenciesResponseBean;
+import com.androidevlinux.percy.UTXO.data.models.changelly.GetMinAmountReponseBean;
+import com.androidevlinux.percy.UTXO.data.models.changelly.MainBodyBean;
+import com.androidevlinux.percy.UTXO.data.models.changelly.ParamsBean;
 import com.androidevlinux.percy.UTXO.ui.base.BaseFragment;
 import com.androidevlinux.percy.UTXO.utils.Constants;
 import com.androidevlinux.percy.UTXO.utils.CustomProgressDialog;

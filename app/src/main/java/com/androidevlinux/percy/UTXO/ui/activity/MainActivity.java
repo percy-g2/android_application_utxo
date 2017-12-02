@@ -16,8 +16,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.androidevlinux.percy.UTXO.R;
+import com.androidevlinux.percy.UTXO.ui.fragment.PriceCheckFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.SettingsFragment;
-import com.androidevlinux.percy.UTXO.ui.fragment.bitfinex.PriceCheckFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.blocktrail.BlockChainExplorerFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.changelly.CreateTransactionFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.changelly.ExchangeAmountFragment;
