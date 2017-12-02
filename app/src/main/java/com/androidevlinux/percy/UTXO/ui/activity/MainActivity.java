@@ -16,7 +16,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.androidevlinux.percy.UTXO.R;
-import com.androidevlinux.percy.UTXO.ui.fragment.GoogleSignInFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.SettingsFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.bitfinex.PriceCheckFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.blocktrail.BlockChainExplorerFragment;
@@ -81,10 +80,6 @@ public class MainActivity extends AppCompatActivity
 
     private void displaySelectedScreen(int itemId) {
         switch (itemId) {
-            case R.id.nav_sign_in:
-                fab.hide();
-                fragment = new GoogleSignInFragment();
-                break;
             case R.id.nav_get_min_amount:
                 fab.show();
                 fragment = new MinAmountFragment();
