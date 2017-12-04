@@ -6,11 +6,4 @@
             android:defaultValue="false"
             android:summary="Enable refresh button for BTC Price"
             android:title="Refresh Button" />
-        <ListPreference
-            android:key="price_list_pref_key"
-            android:title="Select Source For Price Check"
-            android:summary="%s"
-            android:defaultValue="Bitfinex"
-            android:entries="@array/price_list_entries"
-            android:entryValues="@array/price_list_entries" />
 </PreferenceScreen>

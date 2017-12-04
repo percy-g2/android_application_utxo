@@ -12,6 +12,7 @@ import com.androidevlinux.percy.UTXO.data.network.BitfinexApiManager;
 import com.androidevlinux.percy.UTXO.data.network.BlocktrailApiManager;
 import com.androidevlinux.percy.UTXO.data.network.ChangellyApiManager;
 import com.androidevlinux.percy.UTXO.data.network.CoinsecureApiManager;
+import com.androidevlinux.percy.UTXO.data.network.ZebpayApiManager;
 
 /**
  * Created by percy on 22/11/17.
@@ -23,6 +24,7 @@ public class BaseFragment extends Fragment implements BaseView {
     protected ChangellyApiManager changellyApiManager;
     protected BlocktrailApiManager blocktrailApiManager;
     protected CoinsecureApiManager coinsecureApiManager;
+    protected ZebpayApiManager zebpayApiManager;
 
     @VisibleForTesting
     public ProgressDialog mProgressDialog;
@@ -57,6 +59,7 @@ public class BaseFragment extends Fragment implements BaseView {
         changellyApiManager = ChangellyApiManager.getInstance();
         blocktrailApiManager = BlocktrailApiManager.getInstance();
         coinsecureApiManager = CoinsecureApiManager.getInstance();
+        zebpayApiManager = ZebpayApiManager.getInstance();
     }
 
     @Override

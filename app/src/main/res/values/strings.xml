@@ -21,7 +21,7 @@
     <string name="get_status_info">STATUS :</string>
     <string name="extras">Extras</string>
     <string name="bitfinex_last_price">Bitcoin Price</string>
-    <string name="zerodotzerozero">$ 0.00</string>
+    <string name="zerodotzerozero">0.00</string>
     <string name="twentyfourhourslow">24 Hr\'s Low</string>
     <string name="twentyfourhourshigh">24 Hr\'s High</string>
     <string name="twentyfourhoursvolume">24 Hr\'s Volume</string>
@@ -97,10 +97,5 @@
         <item>Address</item>
         <item>Block</item>
         <item>Transaction</item>
-    </string-array>
-
-    <string-array name="price_list_entries">
-        <item>Bitfinex</item>
-        <item>Coinsecure</item>
     </string-array>
 </resources>

@@ -4,15 +4,15 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,13 +21,15 @@ import android.widget.TextView;
 
 import com.androidevlinux.percy.UTXO.R;
 import com.androidevlinux.percy.UTXO.data.models.bitfinex.BitfinexPubTickerResponseBean;
+import com.androidevlinux.percy.UTXO.data.models.price.PriceBean;
+import com.androidevlinux.percy.UTXO.data.models.price.ZebPayBean;
+import com.androidevlinux.percy.UTXO.ui.adapter.PriceAdapter;
 import com.androidevlinux.percy.UTXO.ui.base.BaseFragment;
 import com.androidevlinux.percy.UTXO.utils.Constants;
 import com.androidevlinux.percy.UTXO.utils.CustomProgressDialog;
 import com.google.gson.JsonObject;
 
-import java.text.MessageFormat;
-import java.util.List;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,22 +44,16 @@ import retrofit2.Response;
  */
 
 public class PriceCheckFragment extends BaseFragment {
-    @BindView(R.id.bitfinex_last_price)
-    AppCompatTextView bitfinexLastPrice;
     Unbinder unbinder;
-    @BindView(R.id.bitfinex_low_price)
-    AppCompatTextView bitfinexLowPrice;
-    @BindView(R.id.bitfinex_high_price)
-    AppCompatTextView bitfinexHighPrice;
-    @BindView(R.id.bitfinex_volume_price)
-    AppCompatTextView bitfinexVolumePrice;
     SharedPreferences mSharedPreferences;
     @BindView(R.id.btn_refresh)
     AppCompatButton btnRefresh;
-    @BindView(R.id.txt_source)
-    AppCompatTextView txtSource;
+    @BindView(R.id.price_list_recycler_view)
+    RecyclerView priceListRecyclerView;
     private Activity mActivity;
-    String price_list_source, TAG = "PriceCheckFragment", strCurrencySymbol;
+    String TAG = "PriceCheckFragment", strRuppeSymbol = "\u20B9", strDollarSymbol = "$";
+    ArrayList<PriceBean> priceBeanArrayList;
+    PriceAdapter priceAdapter;
 
     @Override
     public void onAttach(Context context) {
@@ -85,28 +81,21 @@ public class PriceCheckFragment extends BaseFragment {
         assert view != null;
         super.onViewCreated(view, savedInstanceState);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
-        price_list_source = mSharedPreferences.getString(SettingsFragment.price_list_key, "Bitfinex");
         TextView Title = mActivity.findViewById(R.id.txtTitle);
         Title.setText(getResources().getString(R.string.btc_price));
-        if (price_list_source.equalsIgnoreCase("Bitfinex")) {
-            strCurrencySymbol = "$";
-            getBitfinexPubTicker();
-        } else {
-            strCurrencySymbol = "\u20B9";
-            getCoinsecureTicker();
-        }
-        txtSource.setText(MessageFormat.format("SOURCE : {0}", price_list_source));
+        priceBeanArrayList = new ArrayList<>();
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        priceListRecyclerView.setLayoutManager(linearLayoutManager);
+        priceAdapter = new PriceAdapter(priceBeanArrayList, mActivity);
+        priceListRecyclerView.setAdapter(priceAdapter);
+        getBitfinexPubTicker();
+        getCoinsecureTicker();
+        getZebpayTicker();
         boolean isRefreshButtonEnabled = mSharedPreferences.getBoolean(SettingsFragment.refresh_btc_price_button_key, false);
         if (!isRefreshButtonEnabled) {
             handler.postDelayed(runnable, 60000);
-            bitfinexLastPrice.setText(MessageFormat.format(strCurrencySymbol +" {0}", Constants.btc_price));
-            bitfinexLowPrice.setText(MessageFormat.format(strCurrencySymbol +" {0}", Constants.btc_price_low));
-            bitfinexHighPrice.setText(MessageFormat.format(strCurrencySymbol +" {0}", Constants.btc_price_high));
         } else {
             btnRefresh.setVisibility(View.VISIBLE);
-            bitfinexLastPrice.setText(MessageFormat.format(strCurrencySymbol +" {0}", Constants.btc_price));
-            bitfinexLowPrice.setText(MessageFormat.format(strCurrencySymbol +" {0}", Constants.btc_price_low));
-            bitfinexHighPrice.setText(MessageFormat.format(strCurrencySymbol +" {0}", Constants.btc_price_high));
         }
     }
 
@@ -115,11 +104,10 @@ public class PriceCheckFragment extends BaseFragment {
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            if (price_list_source.equalsIgnoreCase("Bitfinex")) {
-                getBitfinexPubTicker();
-            } else {
-                getCoinsecureTicker();
-            }
+            priceBeanArrayList.clear();
+            getBitfinexPubTicker();
+            getCoinsecureTicker();
+            getZebpayTicker();
             handler.postDelayed(this, 60000);
         }
     };
@@ -132,39 +120,27 @@ public class PriceCheckFragment extends BaseFragment {
     }
 
     private void getCoinsecureTicker() {
-        final Dialog dialogToSaveData = CustomProgressDialog.showCustomProgressDialog(mActivity, "Please Wait ...");
         coinsecureApiManager.getCoinsecureTicker(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
                 if (response.body() != null) {
-                    if (getVisibleFragment() instanceof PriceCheckFragment) {
                         Log.i(TAG, response.body().toString());
                         JsonObject jsonObject = response.body().getAsJsonObject("message");
                         Constants.btc_price = String.valueOf(jsonObject.get("lastPrice"));
                         Constants.btc_price_low = String.valueOf(jsonObject.get("low"));
                         Constants.btc_price_high = String.valueOf(jsonObject.get("high"));
-                        bitfinexLastPrice.setText(MessageFormat.format(strCurrencySymbol +" {0}", rupeeFormat(Constants.btc_price.substring(0, Constants.btc_price.length() - 2))));
-                        bitfinexLowPrice.setText(MessageFormat.format(strCurrencySymbol +" {0}", rupeeFormat(Constants.btc_price_low.substring(0, Constants.btc_price.length() - 2))));
-                        bitfinexHighPrice.setText(MessageFormat.format(strCurrencySymbol +" {0}", rupeeFormat(Constants.btc_price_high.substring(0, Constants.btc_price.length() - 2))));
-                        //bitfinexVolumePrice.setText(MessageFormat.format("Bitcoin {0}", response.body().getMessage().getCoinvolume()));
-                    }
-                }
-                if (dialogToSaveData != null) {
-                    CustomProgressDialog.dismissCustomProgressDialog(dialogToSaveData);
+                        PriceBean priceBean = new PriceBean();
+                        priceBean.setTitle("Coinsecure");
+                        priceBean.setPrice(strRuppeSymbol + rupeeFormat(Constants.btc_price.substring(0, Constants.btc_price.length() - 2)));
+                        priceBean.setLow_price(strRuppeSymbol + rupeeFormat(Constants.btc_price_low.substring(0, Constants.btc_price.length() - 2)));
+                        priceBean.setHigh_price(strRuppeSymbol + rupeeFormat(Constants.btc_price_high.substring(0, Constants.btc_price.length() - 2)));
+                        priceBeanArrayList.add(priceBean);
+                        priceAdapter.notifyDataSetChanged();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                if (getVisibleFragment() instanceof PriceCheckFragment) {
-                    bitfinexLastPrice.setText(Constants.btc_price);
-                    bitfinexLowPrice.setText(getString(R.string.zerodotzerozero));
-                    bitfinexHighPrice.setText(getString(R.string.zerodotzerozero));
-                    bitfinexVolumePrice.setText(R.string.zerovolume);
-                    if (dialogToSaveData != null) {
-                        CustomProgressDialog.dismissCustomProgressDialog(dialogToSaveData);
-                    }
-                }
             }
         });
     }
@@ -187,57 +163,83 @@ public class PriceCheckFragment extends BaseFragment {
     }
 
     private void getBitfinexPubTicker() {
-        final Dialog dialogToSaveData = CustomProgressDialog.showCustomProgressDialog(mActivity, "Please Wait ...");
         bitfinexApiManager.getBitfinexPubTicker(new Callback<BitfinexPubTickerResponseBean>() {
             @Override
             public void onResponse(@NonNull Call<BitfinexPubTickerResponseBean> call, @NonNull Response<BitfinexPubTickerResponseBean> response) {
                 if (response.body() != null) {
-                    if (getVisibleFragment() instanceof PriceCheckFragment) {
                         Constants.btc_price = response.body().getLastPrice();
                         Constants.btc_price_low = response.body().getLow();
                         Constants.btc_price_high = response.body().getHigh();
-                        bitfinexLastPrice.setText(MessageFormat.format(strCurrencySymbol +" {0}", Constants.btc_price));
-                        bitfinexLowPrice.setText(MessageFormat.format(strCurrencySymbol +" {0}", Constants.btc_price_low));
-                        bitfinexHighPrice.setText(MessageFormat.format(strCurrencySymbol +" {0}", Constants.btc_price_high));
-                        bitfinexVolumePrice.setText(MessageFormat.format("Bitcoin {0}", response.body().getVolume()));
-                    }
-                }
-                if (dialogToSaveData != null) {
-                    CustomProgressDialog.dismissCustomProgressDialog(dialogToSaveData);
+                        PriceBean priceBean = new PriceBean();
+                        priceBean.setTitle("Bitfinex");
+                        priceBean.setPrice(strDollarSymbol + Constants.btc_price);
+                        priceBean.setLow_price(strDollarSymbol + Constants.btc_price_low);
+                        priceBean.setHigh_price(strDollarSymbol + Constants.btc_price_high);
+                        priceBeanArrayList.add(priceBean);
+                        priceAdapter.notifyDataSetChanged();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<BitfinexPubTickerResponseBean> call, @NonNull Throwable t) {
-                if (getVisibleFragment() instanceof PriceCheckFragment) {
-                    bitfinexLastPrice.setText(Constants.btc_price);
-                    bitfinexLowPrice.setText(getString(R.string.zerodotzerozero));
-                    bitfinexHighPrice.setText(getString(R.string.zerodotzerozero));
-                    bitfinexVolumePrice.setText(R.string.zerovolume);
-                    if (dialogToSaveData != null) {
-                        CustomProgressDialog.dismissCustomProgressDialog(dialogToSaveData);
-                    }
-                }
             }
         });
     }
 
-    private Fragment getVisibleFragment() {
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        List<Fragment> fragments = fragmentManager.getFragments();
-        for (Fragment fragment : fragments) {
-            if (fragment != null && fragment.isVisible())
-                return fragment;
-        }
-        return null;
+    private void getZebpayTicker() {
+        zebpayApiManager.getZebpayTicker(new Callback<ZebPayBean>() {
+            @Override
+            public void onResponse(@NonNull Call<ZebPayBean> call, @NonNull Response<ZebPayBean> response) {
+                if (response.body() != null) {
+                    Constants.btc_price = String.valueOf(response.body().getMarket());
+                    Constants.btc_price_low = String.valueOf(response.body().getBuy());
+                    Constants.btc_price_high = String.valueOf(response.body().getSell());
+                    PriceBean priceBean = new PriceBean();
+                    priceBean.setTitle("Zebpay");
+                    priceBean.setPrice(strRuppeSymbol + Constants.btc_price);
+                    priceBean.setLow_price(strRuppeSymbol + Constants.btc_price_low);
+                    priceBean.setHigh_price(strRuppeSymbol + Constants.btc_price_high);
+                    priceBeanArrayList.add(priceBean);
+                    priceAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ZebPayBean> call, @NonNull Throwable t) {
+            }
+        });
     }
 
     @OnClick(R.id.btn_refresh)
     public void onClick() {
-        if (price_list_source.equalsIgnoreCase("Bitfinex")) {
+        new UpdateTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
+    private class UpdateTask extends AsyncTask<String, String, String> {
+
+        private Dialog dialogToSaveData = null;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialogToSaveData = CustomProgressDialog.showCustomProgressDialog(getActivity(), "Please Wait Loading Data ...");
+            priceBeanArrayList.clear();
+        }
+
+        @Override
+        protected String doInBackground(String... value) {
             getBitfinexPubTicker();
-        } else {
             getCoinsecureTicker();
+            getZebpayTicker();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String value) {
+            priceAdapter.notifyDataSetChanged();
+            if (dialogToSaveData != null) {
+                CustomProgressDialog.dismissCustomProgressDialog(dialogToSaveData);
+            }
         }
     }
+
 }

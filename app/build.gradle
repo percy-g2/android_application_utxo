@@ -16,6 +16,7 @@ repositories {
 
 
 android {
+    buildToolsVersion '27.0.1'
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.androidevlinux.percy.UTXO"
@@ -61,7 +62,6 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    buildToolsVersion '26.0.2'
 }
 
 dependencies {

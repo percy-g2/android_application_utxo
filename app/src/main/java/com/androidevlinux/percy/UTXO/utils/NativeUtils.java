@@ -16,5 +16,5 @@ public class NativeUtils {
     public static native String getChangellyApiKey();
     public static native String getChangellySecretKey();
     public static native String getChangellyBaseUrl();
-
+    public static native String getZebpayBaseUrl();
 }
