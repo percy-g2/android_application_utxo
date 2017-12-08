@@ -85,7 +85,7 @@ public class PriceCheckFragment extends BaseFragment {
         priceBeanArrayList = new ArrayList<>();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         priceListRecyclerView.setLayoutManager(linearLayoutManager);
-        priceAdapter = new PriceAdapter(priceBeanArrayList, mActivity);
+        priceAdapter = new PriceAdapter(priceBeanArrayList);
         priceListRecyclerView.setAdapter(priceAdapter);
         getBitfinexPubTicker();
         getBitstampTicker();
@@ -121,18 +121,18 @@ public class PriceCheckFragment extends BaseFragment {
     public static String rupeeFormat(String value) {
         value = value.replace(",", "");
         char lastDigit = value.charAt(value.length() - 1);
-        String result = "";
+        StringBuilder result = new StringBuilder();
         int len = value.length() - 1;
         int nDigits = 0;
 
         for (int i = len - 1; i >= 0; i--) {
-            result = value.charAt(i) + result;
+            result.insert(0, value.charAt(i));
             nDigits++;
             if (((nDigits % 2) == 0) && (i > 0)) {
-                result = "," + result;
+                result.insert(0, ",");
             }
         }
-        return (result + lastDigit);
+        return (result.toString() + lastDigit);
     }
 
     private void getBitfinexPubTicker() {
@@ -165,8 +165,8 @@ public class PriceCheckFragment extends BaseFragment {
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
                 if (response.body() != null) {
                     Constants.btc_price = String.valueOf(response.body().get("last")).replaceAll("^\"|\"$", "");
-                    Constants.btc_price_low = String.valueOf(response.body().get("high")).replaceAll("^\"|\"$", "");
-                    Constants.btc_price_high = String.valueOf(response.body().get("low")).replaceAll("^\"|\"$", "");
+                    Constants.btc_price_low = String.valueOf(response.body().get("low")).replaceAll("^\"|\"$", "");
+                    Constants.btc_price_high = String.valueOf(response.body().get("high")).replaceAll("^\"|\"$", "");
                     PriceBean priceBean = new PriceBean();
                     priceBean.setTitle("Bitstamp");
                     priceBean.setPrice(strDollarSymbol + Constants.btc_price);

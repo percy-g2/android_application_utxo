@@ -1,6 +1,5 @@
 package com.androidevlinux.percy.UTXO.ui.adapter;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,12 +17,10 @@ import java.util.ArrayList;
 
 public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.ViewHolder> {
 
-    private Context context;
     private ArrayList<PriceBean> priceBeanArrayList;
 
-    public PriceAdapter(ArrayList<PriceBean> priceBeanArrayList, Context context) {
+    public PriceAdapter(ArrayList<PriceBean> priceBeanArrayList) {
         this.priceBeanArrayList = priceBeanArrayList;
-        this.context = context;
     }
 
     @Override
@@ -44,8 +41,8 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.ViewHolder> 
             holder.footer_start.setText(R.string.buy);
             holder.footer_end.setText(R.string.sell);
         } else {
-            holder.footer_start.setText(R.string._24_hr_s_high);
-            holder.footer_end.setText(R.string._24_hr_s_low);
+            holder.footer_start.setText(R.string._24_hr_s_low);
+            holder.footer_end.setText(R.string._24_hr_s_high);
         }
     }
 
