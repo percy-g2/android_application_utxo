@@ -6,10 +6,10 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 
 /**
- * Created by percy on 2/12/17.
+ * Created by percy on 5/12/17.
  */
 
-public interface CoinsecureAPI {
-    @GET("/v1/exchange/ticker/")
-    Call<JsonObject> getCoinsecureTicker();
+public interface BitstampAPI {
+    @GET("/api/ticker/")
+    Call<JsonObject> getBitstampTicker();
 }

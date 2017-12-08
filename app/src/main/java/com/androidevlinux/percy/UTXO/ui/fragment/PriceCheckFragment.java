@@ -13,7 +13,6 @@ import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,7 +88,7 @@ public class PriceCheckFragment extends BaseFragment {
         priceAdapter = new PriceAdapter(priceBeanArrayList, mActivity);
         priceListRecyclerView.setAdapter(priceAdapter);
         getBitfinexPubTicker();
-        getCoinsecureTicker();
+        getBitstampTicker();
         getZebpayTicker();
         boolean isRefreshButtonEnabled = mSharedPreferences.getBoolean(SettingsFragment.refresh_btc_price_button_key, false);
         if (!isRefreshButtonEnabled) {
@@ -106,7 +105,7 @@ public class PriceCheckFragment extends BaseFragment {
         public void run() {
             priceBeanArrayList.clear();
             getBitfinexPubTicker();
-            getCoinsecureTicker();
+            getBitstampTicker();
             getZebpayTicker();
             handler.postDelayed(this, 60000);
         }
@@ -117,32 +116,6 @@ public class PriceCheckFragment extends BaseFragment {
         super.onDestroyView();
         handler.removeCallbacks(runnable);
         unbinder.unbind();
-    }
-
-    private void getCoinsecureTicker() {
-        coinsecureApiManager.getCoinsecureTicker(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                if (response.body() != null) {
-                        Log.i(TAG, response.body().toString());
-                        JsonObject jsonObject = response.body().getAsJsonObject("message");
-                        Constants.btc_price = String.valueOf(jsonObject.get("lastPrice"));
-                        Constants.btc_price_low = String.valueOf(jsonObject.get("low"));
-                        Constants.btc_price_high = String.valueOf(jsonObject.get("high"));
-                        PriceBean priceBean = new PriceBean();
-                        priceBean.setTitle("Coinsecure");
-                        priceBean.setPrice(strRuppeSymbol + rupeeFormat(Constants.btc_price.substring(0, Constants.btc_price.length() - 2)));
-                        priceBean.setLow_price(strRuppeSymbol + rupeeFormat(Constants.btc_price_low.substring(0, Constants.btc_price.length() - 2)));
-                        priceBean.setHigh_price(strRuppeSymbol + rupeeFormat(Constants.btc_price_high.substring(0, Constants.btc_price.length() - 2)));
-                        priceBeanArrayList.add(priceBean);
-                        priceAdapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-            }
-        });
     }
 
     public static String rupeeFormat(String value) {
@@ -182,6 +155,30 @@ public class PriceCheckFragment extends BaseFragment {
 
             @Override
             public void onFailure(@NonNull Call<BitfinexPubTickerResponseBean> call, @NonNull Throwable t) {
+            }
+        });
+    }
+
+    private void getBitstampTicker() {
+        bitstampApiManager.getBitstampTicker(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
+                if (response.body() != null) {
+                    Constants.btc_price = String.valueOf(response.body().get("last")).replaceAll("^\"|\"$", "");
+                    Constants.btc_price_low = String.valueOf(response.body().get("high")).replaceAll("^\"|\"$", "");
+                    Constants.btc_price_high = String.valueOf(response.body().get("low")).replaceAll("^\"|\"$", "");
+                    PriceBean priceBean = new PriceBean();
+                    priceBean.setTitle("Bitstamp");
+                    priceBean.setPrice(strDollarSymbol + Constants.btc_price);
+                    priceBean.setLow_price(strDollarSymbol + Constants.btc_price_low);
+                    priceBean.setHigh_price(strDollarSymbol + Constants.btc_price_high);
+                    priceBeanArrayList.add(priceBean);
+                    priceAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
             }
         });
     }
@@ -228,7 +225,7 @@ public class PriceCheckFragment extends BaseFragment {
         @Override
         protected String doInBackground(String... value) {
             getBitfinexPubTicker();
-            getCoinsecureTicker();
+            getBitstampTicker();
             getZebpayTicker();
             return null;
         }

@@ -9,9 +9,9 @@ import android.support.v4.app.Fragment;
 
 import com.androidevlinux.percy.UTXO.R;
 import com.androidevlinux.percy.UTXO.data.network.BitfinexApiManager;
+import com.androidevlinux.percy.UTXO.data.network.BitstampApiManager;
 import com.androidevlinux.percy.UTXO.data.network.BlocktrailApiManager;
 import com.androidevlinux.percy.UTXO.data.network.ChangellyApiManager;
-import com.androidevlinux.percy.UTXO.data.network.CoinsecureApiManager;
 import com.androidevlinux.percy.UTXO.data.network.ZebpayApiManager;
 
 /**
@@ -23,8 +23,8 @@ public class BaseFragment extends Fragment implements BaseView {
     protected BitfinexApiManager bitfinexApiManager;
     protected ChangellyApiManager changellyApiManager;
     protected BlocktrailApiManager blocktrailApiManager;
-    protected CoinsecureApiManager coinsecureApiManager;
     protected ZebpayApiManager zebpayApiManager;
+    protected BitstampApiManager bitstampApiManager;
 
     @VisibleForTesting
     public ProgressDialog mProgressDialog;
@@ -58,8 +58,8 @@ public class BaseFragment extends Fragment implements BaseView {
         bitfinexApiManager = BitfinexApiManager.getInstance();
         changellyApiManager = ChangellyApiManager.getInstance();
         blocktrailApiManager = BlocktrailApiManager.getInstance();
-        coinsecureApiManager = CoinsecureApiManager.getInstance();
         zebpayApiManager = ZebpayApiManager.getInstance();
+        bitstampApiManager = BitstampApiManager.getInstance();
     }
 
     @Override
