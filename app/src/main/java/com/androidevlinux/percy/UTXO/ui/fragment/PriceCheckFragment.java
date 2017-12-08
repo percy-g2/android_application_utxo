@@ -193,9 +193,9 @@ public class PriceCheckFragment extends BaseFragment {
                     Constants.btc_price_high = String.valueOf(response.body().getSell());
                     PriceBean priceBean = new PriceBean();
                     priceBean.setTitle("Zebpay");
-                    priceBean.setPrice(strRuppeSymbol + Constants.btc_price);
-                    priceBean.setLow_price(strRuppeSymbol + Constants.btc_price_low);
-                    priceBean.setHigh_price(strRuppeSymbol + Constants.btc_price_high);
+                    priceBean.setPrice(strRuppeSymbol + rupeeFormat(Constants.btc_price.substring(0, Constants.btc_price.length() - 2)));
+                    priceBean.setLow_price(strRuppeSymbol + rupeeFormat(Constants.btc_price_low.substring(0, Constants.btc_price_low.length() - 2)));
+                    priceBean.setHigh_price(strRuppeSymbol + rupeeFormat(Constants.btc_price_high.substring(0, Constants.btc_price_high.length() - 2)));
                     priceBeanArrayList.add(priceBean);
                     priceAdapter.notifyDataSetChanged();
                 }

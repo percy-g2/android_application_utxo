@@ -40,6 +40,13 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.ViewHolder> 
         holder.price.setText(priceBean.getPrice());
         holder.price_low.setText(priceBean.getLow_price());
         holder.price_high.setText(priceBean.getHigh_price());
+        if (priceBean.getTitle().equalsIgnoreCase("Zebpay")) {
+            holder.footer_start.setText(R.string.buy);
+            holder.footer_end.setText(R.string.sell);
+        } else {
+            holder.footer_start.setText(R.string._24_hr_s_high);
+            holder.footer_end.setText(R.string._24_hr_s_low);
+        }
     }
 
     @Override
@@ -55,6 +62,8 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.ViewHolder> 
         private TextView price;
         private TextView price_low;
         private TextView price_high;
+        private TextView footer_start;
+        private TextView footer_end;
 
         private ViewHolder(View view) {
             super(view);
@@ -62,6 +71,8 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.ViewHolder> 
             price = view.findViewById(R.id.txt_price);
             price_low = view.findViewById(R.id.txt_low_price);
             price_high = view.findViewById(R.id.txt_high_price);
+            footer_start = view.findViewById(R.id.footer_start);
+            footer_end = view.findViewById(R.id.footer_end);
         }
     }
 }

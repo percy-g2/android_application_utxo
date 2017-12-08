@@ -92,6 +92,14 @@
     <string name="spent_hash">spent_hash</string>
     <string name="spent_index">spent_index</string>
     <string name="loading">Loading....</string>
+    <string name="_24_hr_s_high">24 Hr\'s High</string>
+    <string name="_24_hr_s_low">24 Hr\'s Low</string>
+    <string name="bitfinex">Bitfinex</string>
+    <string name="_11000">$ 11000</string>
+    <string name="_10000">$ 10000</string>
+    <string name="_9000">$ 9000</string>
+    <string name="sell">Sell</string>
+    <string name="buy">Buy</string>
 
     <string-array name="spinner_explore_data">
         <item>Address</item>
