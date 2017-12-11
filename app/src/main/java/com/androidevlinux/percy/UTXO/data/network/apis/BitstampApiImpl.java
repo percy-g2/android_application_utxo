@@ -1,4 +1,4 @@
-package com.androidevlinux.percy.UTXO.data.network;
+package com.androidevlinux.percy.UTXO.data.network.apis;
 
 import com.androidevlinux.percy.UTXO.utils.NativeUtils;
 import com.google.gson.JsonObject;
@@ -9,19 +9,19 @@ import retrofit2.Callback;
  * Created by percy on 5/12/17.
  */
 
-public class BitstampApiManager  extends BaseApiManager<BitstampAPI> {
+public class BitstampApiImpl extends BaseApiManager<BitstampAPI> {
 
-    private static BitstampApiManager bitstampApiManager;
+    private static BitstampApiImpl bitstampApiManager;
     private BitstampAPI bitstampAPI;
-    private BitstampApiManager(){
+    private BitstampApiImpl(){
         setBaseUrl(NativeUtils.getbitStampBaseUrl());
         bitstampAPI = getClient(BitstampAPI.class);
 
     }
 
-    public static BitstampApiManager getInstance(){
+    public static BitstampApiImpl getInstance(){
         if(bitstampApiManager==null)
-            bitstampApiManager = new BitstampApiManager();
+            bitstampApiManager = new BitstampApiImpl();
         return bitstampApiManager;
     }
     public void getBitstampTicker(Callback<JsonObject> callback){

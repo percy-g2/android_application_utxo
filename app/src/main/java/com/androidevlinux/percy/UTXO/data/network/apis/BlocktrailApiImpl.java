@@ -1,4 +1,4 @@
-package com.androidevlinux.percy.UTXO.data.network;
+package com.androidevlinux.percy.UTXO.data.network.apis;
 
 import com.androidevlinux.percy.UTXO.data.models.blocktrail.AddressBean;
 import com.androidevlinux.percy.UTXO.data.models.blocktrail.TransactionBean;
@@ -11,19 +11,19 @@ import retrofit2.Callback;
  * Created by percy on 27/11/17.
  */
 
-public class BlocktrailApiManager extends BaseApiManager<BlocktrailAPI> {
+public class BlocktrailApiImpl extends BaseApiManager<BlocktrailAPI> {
     private BlocktrailAPI blocktrailAPI;
-    private static BlocktrailApiManager blocktrailApiManager;
-    private BlocktrailApiManager(){
+    private static BlocktrailApiImpl blocktrailApiImpl;
+    private BlocktrailApiImpl(){
         setBaseUrl(NativeUtils.getBlocktrailBaseUrl());
         blocktrailAPI = getClient(BlocktrailAPI.class);
     }
 
-    public static BlocktrailApiManager getInstance(){
-        if(blocktrailApiManager==null){
-            blocktrailApiManager = new BlocktrailApiManager();
+    public static BlocktrailApiImpl getInstance(){
+        if(blocktrailApiImpl ==null){
+            blocktrailApiImpl = new BlocktrailApiImpl();
         }
-        return blocktrailApiManager;
+        return blocktrailApiImpl;
     }
 
     public void getBlockTrailAddressData(String query, String data, Callback<AddressBean> callback){

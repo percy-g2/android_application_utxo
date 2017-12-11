@@ -136,7 +136,7 @@ public class PriceCheckFragment extends BaseFragment {
     }
 
     private void getBitfinexPubTicker() {
-        bitfinexApiManager.getBitfinexPubTicker(new Callback<BitfinexPubTickerResponseBean>() {
+        apiManager.getBitfinexPubTicker(new Callback<BitfinexPubTickerResponseBean>() {
             @Override
             public void onResponse(@NonNull Call<BitfinexPubTickerResponseBean> call, @NonNull Response<BitfinexPubTickerResponseBean> response) {
                 if (response.body() != null) {
@@ -160,7 +160,7 @@ public class PriceCheckFragment extends BaseFragment {
     }
 
     private void getBitstampTicker() {
-        bitstampApiManager.getBitstampTicker(new Callback<JsonObject>() {
+        apiManager.getBitstampTicker(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
                 if (response.body() != null) {
@@ -184,7 +184,7 @@ public class PriceCheckFragment extends BaseFragment {
     }
 
     private void getZebpayTicker() {
-        zebpayApiManager.getZebpayTicker(new Callback<ZebPayBean>() {
+        apiManager.getZebpayTicker(new Callback<ZebPayBean>() {
             @Override
             public void onResponse(@NonNull Call<ZebPayBean> call, @NonNull Response<ZebPayBean> response) {
                 if (response.body() != null) {

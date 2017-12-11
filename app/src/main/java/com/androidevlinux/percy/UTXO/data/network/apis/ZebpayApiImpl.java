@@ -1,4 +1,4 @@
-package com.androidevlinux.percy.UTXO.data.network;
+package com.androidevlinux.percy.UTXO.data.network.apis;
 
 import com.androidevlinux.percy.UTXO.data.models.price.ZebPayBean;
 import com.androidevlinux.percy.UTXO.utils.NativeUtils;
@@ -9,19 +9,19 @@ import retrofit2.Callback;
  * Created by percy on 3/12/17.
  */
 
-public class ZebpayApiManager extends BaseApiManager<ZebpayAPI> {
+public class ZebpayApiImpl extends BaseApiManager<ZebpayAPI> {
 
-    private static ZebpayApiManager zebpayApiManager;
+    private static ZebpayApiImpl zebpayApiManager;
     private ZebpayAPI zebpayAPI;
-    private ZebpayApiManager(){
+    private ZebpayApiImpl(){
         setBaseUrl(NativeUtils.getZebpayBaseUrl());
         zebpayAPI = getClient(ZebpayAPI.class);
 
     }
 
-    public static ZebpayApiManager getInstance(){
+    public static ZebpayApiImpl getInstance(){
         if(zebpayApiManager==null)
-            zebpayApiManager = new ZebpayApiManager();
+            zebpayApiManager = new ZebpayApiImpl();
         return zebpayApiManager;
     }
     public void getZebpayTicker(Callback<ZebPayBean> callback){

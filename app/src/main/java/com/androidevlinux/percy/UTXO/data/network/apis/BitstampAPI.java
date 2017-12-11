@@ -1,4 +1,4 @@
-package com.androidevlinux.percy.UTXO.data.network;
+package com.androidevlinux.percy.UTXO.data.network.apis;
 
 import com.google.gson.JsonObject;
 

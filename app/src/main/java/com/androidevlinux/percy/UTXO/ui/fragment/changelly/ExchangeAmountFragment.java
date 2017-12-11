@@ -111,7 +111,7 @@ public class ExchangeAmountFragment extends BaseFragment {
         }
 
         final Dialog dialogToSaveData =  CustomProgressDialog.showCustomProgressDialog(mActivity, "Please Wait ...");
-        changellyApiManager.getMinAmount(sign, testbean, new Callback<GetMinAmountReponseBean>() {
+        apiManager.getMinAmount(sign, testbean, new Callback<GetMinAmountReponseBean>() {
             @Override
             public void onResponse(@NonNull Call<GetMinAmountReponseBean> call, @NonNull Response<GetMinAmountReponseBean> response) {
                 if (response.body() != null) {
@@ -151,7 +151,7 @@ public class ExchangeAmountFragment extends BaseFragment {
         }
 
         final Dialog dialogToSaveData =  CustomProgressDialog.showCustomProgressDialog(mActivity, "Please Wait Loading Currencies ...");
-        changellyApiManager.getCurrencies(sign, testbean, new Callback<GetCurrenciesResponseBean>() {
+        apiManager.getCurrencies(sign, testbean, new Callback<GetCurrenciesResponseBean>() {
             @Override
             public void onResponse(@NonNull Call<GetCurrenciesResponseBean> call, @NonNull Response<GetCurrenciesResponseBean> response) {
                 if (response.body() != null) {

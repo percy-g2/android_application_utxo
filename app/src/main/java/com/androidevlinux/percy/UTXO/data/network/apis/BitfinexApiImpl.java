@@ -1,4 +1,4 @@
-package com.androidevlinux.percy.UTXO.data.network;
+package com.androidevlinux.percy.UTXO.data.network.apis;
 
 import com.androidevlinux.percy.UTXO.data.models.bitfinex.BitfinexPubTickerResponseBean;
 import com.androidevlinux.percy.UTXO.utils.NativeUtils;
@@ -9,19 +9,19 @@ import retrofit2.Callback;
  * Created by percy on 18/11/17.
  */
 
-public class BitfinexApiManager extends BaseApiManager<BitfinexAPI> {
+public class BitfinexApiImpl extends BaseApiManager<BitfinexAPI> {
 
-    private static BitfinexApiManager bitfinexApiManager;
+    private static BitfinexApiImpl bitfinexApiManager;
     private BitfinexAPI bitfinexAPI;
-    private BitfinexApiManager(){
+    private BitfinexApiImpl(){
         setBaseUrl(NativeUtils.getBitfinexBaseUrl());
         bitfinexAPI = getClient(BitfinexAPI.class);
 
     }
 
-    public static BitfinexApiManager getInstance(){
+    public static BitfinexApiImpl getInstance(){
         if(bitfinexApiManager==null)
-            bitfinexApiManager = new BitfinexApiManager();
+            bitfinexApiManager = new BitfinexApiImpl();
         return bitfinexApiManager;
     }
     public void getBitfinexPubTicker(Callback<BitfinexPubTickerResponseBean> callback){

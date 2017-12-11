@@ -1,4 +1,4 @@
-package com.androidevlinux.percy.UTXO.data.network;
+package com.androidevlinux.percy.UTXO.data.network.apis;
 
 import com.androidevlinux.percy.UTXO.data.models.blocktrail.AddressBean;
 import com.androidevlinux.percy.UTXO.data.models.blocktrail.TransactionBean;

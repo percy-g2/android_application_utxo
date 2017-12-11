@@ -8,11 +8,7 @@ import android.support.annotation.VisibleForTesting;
 import android.support.v4.app.Fragment;
 
 import com.androidevlinux.percy.UTXO.R;
-import com.androidevlinux.percy.UTXO.data.network.BitfinexApiManager;
-import com.androidevlinux.percy.UTXO.data.network.BitstampApiManager;
-import com.androidevlinux.percy.UTXO.data.network.BlocktrailApiManager;
-import com.androidevlinux.percy.UTXO.data.network.ChangellyApiManager;
-import com.androidevlinux.percy.UTXO.data.network.ZebpayApiManager;
+import com.androidevlinux.percy.UTXO.data.network.ApiManager;
 
 /**
  * Created by percy on 22/11/17.
@@ -20,11 +16,7 @@ import com.androidevlinux.percy.UTXO.data.network.ZebpayApiManager;
 
 public class BaseFragment extends Fragment implements BaseView {
 
-    protected BitfinexApiManager bitfinexApiManager;
-    protected ChangellyApiManager changellyApiManager;
-    protected BlocktrailApiManager blocktrailApiManager;
-    protected ZebpayApiManager zebpayApiManager;
-    protected BitstampApiManager bitstampApiManager;
+    protected ApiManager apiManager;
 
     @VisibleForTesting
     public ProgressDialog mProgressDialog;
@@ -55,11 +47,7 @@ public class BaseFragment extends Fragment implements BaseView {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        bitfinexApiManager = BitfinexApiManager.getInstance();
-        changellyApiManager = ChangellyApiManager.getInstance();
-        blocktrailApiManager = BlocktrailApiManager.getInstance();
-        zebpayApiManager = ZebpayApiManager.getInstance();
-        bitstampApiManager = BitstampApiManager.getInstance();
+        apiManager = apiManager.getInstance();
     }
 
     @Override

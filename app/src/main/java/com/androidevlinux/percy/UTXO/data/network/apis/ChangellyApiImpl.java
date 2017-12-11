@@ -1,4 +1,4 @@
-package com.androidevlinux.percy.UTXO.data.network;
+package com.androidevlinux.percy.UTXO.data.network.apis;
 
 import com.androidevlinux.percy.UTXO.data.models.changelly.GetCurrenciesResponseBean;
 import com.androidevlinux.percy.UTXO.data.models.changelly.GetMinAmountReponseBean;
@@ -13,19 +13,19 @@ import retrofit2.Callback;
  * Created by percy on 14/11/2017.
  */
 
-public class ChangellyApiManager extends BaseApiManager<ChangellyAPI> {
+public class ChangellyApiImpl extends BaseApiManager<ChangellyAPI> {
     private ChangellyAPI changellyAPI;
-    private static ChangellyApiManager changellyApiManager;
-    private ChangellyApiManager(){
+    private static ChangellyApiImpl changellyApiImpl;
+    private ChangellyApiImpl(){
         setBaseUrl(NativeUtils.getChangellyBaseUrl());
         changellyAPI= getClient(ChangellyAPI.class);
     }
 
-    public static ChangellyApiManager getInstance(){
-        if(changellyApiManager==null){
-            changellyApiManager = new ChangellyApiManager();
+    public static ChangellyApiImpl getInstance(){
+        if(changellyApiImpl ==null){
+            changellyApiImpl = new ChangellyApiImpl();
         }
-        return changellyApiManager;
+        return changellyApiImpl;
     }
 
     public void getCurrencies(String sign, MainBodyBean body, Callback<GetCurrenciesResponseBean> callback){

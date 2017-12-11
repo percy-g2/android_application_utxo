@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Changelly.iml" filepath="$PROJECT_DIR$/Changelly.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/android_application_changelly.iml" filepath="$PROJECT_DIR$/.idea/android_application_changelly.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android_application_utxo.iml" filepath="$PROJECT_DIR$/android_application_utxo.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

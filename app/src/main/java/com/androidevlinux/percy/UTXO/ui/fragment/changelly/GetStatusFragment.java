@@ -96,7 +96,7 @@ public class GetStatusFragment  extends BaseFragment {
 
         final Dialog dialogToSaveData =  CustomProgressDialog.showCustomProgressDialog(mActivity, "Please Wait ...");
 
-        changellyApiManager.getMinAmount(sign, testbean, new Callback<GetMinAmountReponseBean>() {
+        apiManager.getMinAmount(sign, testbean, new Callback<GetMinAmountReponseBean>() {
             @Override
             public void onResponse(@NonNull Call<GetMinAmountReponseBean> call, @NonNull Response<GetMinAmountReponseBean> response) {
                 if (response.body() != null) {

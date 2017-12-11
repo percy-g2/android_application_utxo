@@ -1,4 +1,4 @@
-package com.androidevlinux.percy.UTXO.data.network;
+package com.androidevlinux.percy.UTXO.data.network.apis;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -17,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 
-abstract class BaseApiManager<T> {
+public abstract class BaseApiManager<T> {
 
 
     private static final long connectTimeOut = 120;

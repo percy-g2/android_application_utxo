@@ -137,7 +137,7 @@ public class CreateTransactionFragment extends BaseFragment {
         }
 
         final Dialog dialogToSaveData = CustomProgressDialog.showCustomProgressDialog(mActivity, "Please Wait ...");
-        changellyApiManager.createTransaction(sign, testbean, new Callback<TransactionBean>() {
+        apiManager.createTransaction(sign, testbean, new Callback<TransactionBean>() {
             @Override
             public void onResponse(@NonNull Call<TransactionBean> call, @NonNull Response<TransactionBean> response) {
                 if (response.body() != null) {
@@ -187,7 +187,7 @@ public class CreateTransactionFragment extends BaseFragment {
         }
 
         final Dialog dialogToSaveData = CustomProgressDialog.showCustomProgressDialog(mActivity, "Please Wait Loading Currencies ...");
-        changellyApiManager.getCurrencies(sign, testbean, new Callback<GetCurrenciesResponseBean>() {
+        apiManager.getCurrencies(sign, testbean, new Callback<GetCurrenciesResponseBean>() {
             @Override
             public void onResponse(@NonNull Call<GetCurrenciesResponseBean> call, @NonNull Response<GetCurrenciesResponseBean> response) {
                 if (response.body() != null) {
