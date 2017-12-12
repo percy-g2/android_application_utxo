@@ -9,7 +9,7 @@ import retrofit2.Callback;
  * Created by percy on 18/11/17.
  */
 
-public class BitfinexApiImpl extends BaseApiManager<BitfinexAPI> {
+public class BitfinexApiImpl extends AbstractBaseApi<BitfinexAPI> {
 
     private static BitfinexApiImpl bitfinexApiManager;
     private BitfinexAPI bitfinexAPI;

@@ -17,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 
-public abstract class BaseApiManager<T> {
+public abstract class AbstractBaseApi<T> {
 
 
     private static final long connectTimeOut = 120;

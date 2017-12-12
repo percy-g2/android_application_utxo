@@ -9,7 +9,7 @@ import retrofit2.Callback;
  * Created by percy on 5/12/17.
  */
 
-public class BitstampApiImpl extends BaseApiManager<BitstampAPI> {
+public class BitstampApiImpl extends AbstractBaseApi<BitstampAPI> {
 
     private static BitstampApiImpl bitstampApiManager;
     private BitstampAPI bitstampAPI;

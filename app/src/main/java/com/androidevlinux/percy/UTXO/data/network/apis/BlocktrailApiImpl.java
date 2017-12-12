@@ -11,7 +11,7 @@ import retrofit2.Callback;
  * Created by percy on 27/11/17.
  */
 
-public class BlocktrailApiImpl extends BaseApiManager<BlocktrailAPI> {
+public class BlocktrailApiImpl extends AbstractBaseApi<BlocktrailAPI> {
     private BlocktrailAPI blocktrailAPI;
     private static BlocktrailApiImpl blocktrailApiImpl;
     private BlocktrailApiImpl(){

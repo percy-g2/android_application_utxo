@@ -9,7 +9,7 @@ import retrofit2.Callback;
  * Created by percy on 3/12/17.
  */
 
-public class ZebpayApiImpl extends BaseApiManager<ZebpayAPI> {
+public class ZebpayApiImpl extends AbstractBaseApi<ZebpayAPI> {
 
     private static ZebpayApiImpl zebpayApiManager;
     private ZebpayAPI zebpayAPI;

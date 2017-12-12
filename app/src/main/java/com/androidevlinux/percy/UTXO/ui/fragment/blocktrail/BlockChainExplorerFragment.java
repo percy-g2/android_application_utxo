@@ -164,7 +164,7 @@ public class BlockChainExplorerFragment extends BaseFragment {
 
     void loadAddressData(String query, String data) {
         final Dialog dialogToSaveData = CustomProgressDialog.showCustomProgressDialog(mActivity, "Please Wait Loading Data ...");
-        blocktrailApiImpl.getBlockTrailAddressData(query, data, new Callback<AddressBean>() {
+        apiManager.getBlockTrailAddressData(query, data, new Callback<AddressBean>() {
             @Override
             public void onResponse(@NonNull Call<AddressBean> call, @NonNull Response<AddressBean> response) {
                 if (response.body() != null) {
@@ -191,7 +191,7 @@ public class BlockChainExplorerFragment extends BaseFragment {
 
     void loadBlockData(String query, String data) {
         final Dialog dialogToSaveData = CustomProgressDialog.showCustomProgressDialog(mActivity, "Please Wait Loading Data ...");
-        blocktrailApiImpl.getBlockTrailBlockData(query, data, new Callback<JsonObject>() {
+        apiManager.getBlockTrailBlockData(query, data, new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
                 if (response.body() != null) {
@@ -219,7 +219,7 @@ public class BlockChainExplorerFragment extends BaseFragment {
 
     void loadTransactionData(String query, String data) {
         final Dialog dialogToSaveData = CustomProgressDialog.showCustomProgressDialog(mActivity, "Please Wait Loading Data ...");
-        blocktrailApiImpl.getBlockTrailTransactionData(query, data, new Callback<TransactionBean>() {
+        apiManager.getBlockTrailTransactionData(query, data, new Callback<TransactionBean>() {
             @Override
             public void onResponse(@NonNull Call<TransactionBean> call, @NonNull Response<TransactionBean> response) {
                 if (response.body() != null) {

@@ -13,7 +13,7 @@ import retrofit2.Callback;
  * Created by percy on 14/11/2017.
  */
 
-public class ChangellyApiImpl extends BaseApiManager<ChangellyAPI> {
+public class ChangellyApiImpl extends AbstractBaseApi<ChangellyAPI> {
     private ChangellyAPI changellyAPI;
     private static ChangellyApiImpl changellyApiImpl;
     private ChangellyApiImpl(){
