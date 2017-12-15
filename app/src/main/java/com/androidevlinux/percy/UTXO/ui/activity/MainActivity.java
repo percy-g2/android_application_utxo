@@ -10,27 +10,44 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.androidevlinux.percy.UTXO.R;
+import com.androidevlinux.percy.UTXO.ui.base.BaseActivity;
 import com.androidevlinux.percy.UTXO.ui.fragment.PriceCheckFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.SettingsFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.blocktrail.BlockChainExplorerFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.changelly.CreateTransactionFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.changelly.ExchangeAmountFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.changelly.GetStatusFragment;
-import com.androidevlinux.percy.UTXO.ui.fragment.changelly.MinAmountFragment;
+import com.androidevlinux.percy.UTXO.utils.Constants;
 import com.crashlytics.android.Crashlytics;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.fabric.sdk.android.Fabric;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
-    private Fragment fragment;
+public class MainActivity extends BaseActivity
+        implements NavigationView.OnNavigationItemSelectedListener, MainView {
+
+    @BindView(R.id.txtTitle)
+    TextView txtTitle;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.container)
+    FrameLayout container;
+    @BindView(R.id.fab)
     FloatingActionButton fab;
+    @BindView(R.id.nav_view)
+    NavigationView navView;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout drawer;
+    private Fragment fragment;
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -44,34 +61,25 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
-        fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
-            fragment = new CreateTransactionFragment();
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.container, fragment);
-            ft.addToBackStack(null).commit();
+            showCreateTransactionFragment();
         });
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        navigationView.setItemIconTintList(null);
-        String ACTION_SETTINGS = "com.androidevlinux.percy.UTXO.ui.activity.SETTINGS";
-        String ACTION_BTC = "com.androidevlinux.percy.UTXO.ui.activity.BTC";
-        String ACTION_CREATE_TRANSACTION = "com.androidevlinux.percy.UTXO.ui.activity.CREATE_TRANSACTION";
-        if (ACTION_SETTINGS.equalsIgnoreCase(getIntent().getAction())) {
+        navView.setNavigationItemSelectedListener(this);
+        navView.setItemIconTintList(null);
+        if (Constants.ACTION_SETTINGS.equalsIgnoreCase(getIntent().getAction())) {
             displaySelectedScreen(R.id.nav_settings);
-        } else if (ACTION_BTC.equalsIgnoreCase(getIntent().getAction())) {
+        } else if (Constants.ACTION_BTC.equalsIgnoreCase(getIntent().getAction())) {
             displaySelectedScreen(R.id.nav_btc_price);
-        } else if (ACTION_CREATE_TRANSACTION.equalsIgnoreCase(getIntent().getAction())) {
+        } else if (Constants.ACTION_CREATE_TRANSACTION.equalsIgnoreCase(getIntent().getAction())) {
             displaySelectedScreen(R.id.nav_create_transaction);
         } else {
             displaySelectedScreen(R.id.nav_get_min_amount);
@@ -82,38 +90,32 @@ public class MainActivity extends AppCompatActivity
         switch (itemId) {
             case R.id.nav_get_min_amount:
                 fab.show();
-                fragment = new MinAmountFragment();
+                showMinAmountFragment();
                 break;
             case R.id.nav_exchange_amount:
                 fab.show();
-                fragment = new ExchangeAmountFragment();
+                showExchangeAmountFragment();
                 break;
             case R.id.nav_create_transaction:
                 fab.show();
-                fragment = new CreateTransactionFragment();
+                showCreateTransactionFragment();
                 break;
             case R.id.nav_get_status:
                 fab.show();
-                fragment = new GetStatusFragment();
+                showGetStatusFragment();
                 break;
             case R.id.nav_btc_price:
                 fab.hide();
-                fragment = new PriceCheckFragment();
+                showPriceCheckFragment();
                 break;
             case R.id.nav_block_chain_explorer:
                 fab.hide();
-                fragment = new BlockChainExplorerFragment();
+                showBlockChainExplorerFragment();
                 break;
             case R.id.nav_settings:
                 fab.hide();
-                fragment = new SettingsFragment();
+                showSettingsFragment();
                 break;
-        }
-        //replacing the fragment
-        if (fragment != null) {
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.container, fragment);
-            ft.addToBackStack(null).commit();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -127,6 +129,14 @@ public class MainActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+        }
+    }
+
+    private void replaceFragment(Fragment fragment) {
+        if (fragment != null) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.container, fragment);
+            ft.addToBackStack(null).commit();
         }
     }
 
@@ -146,10 +156,7 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            fragment = new SettingsFragment();
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.container, fragment);
-            ft.addToBackStack(null).commit();
+            showSettingsFragment();
             return true;
         }
 
@@ -162,5 +169,47 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         displaySelectedScreen(item.getItemId());
         return true;
+    }
+
+    @Override
+    public void showMinAmountFragment() {
+        fragment = new SettingsFragment();
+        replaceFragment(fragment);
+    }
+
+    @Override
+    public void showExchangeAmountFragment() {
+        fragment = new ExchangeAmountFragment();
+        replaceFragment(fragment);
+    }
+
+    @Override
+    public void showCreateTransactionFragment() {
+        fragment = new CreateTransactionFragment();
+        replaceFragment(fragment);
+    }
+
+    @Override
+    public void showGetStatusFragment() {
+        fragment = new GetStatusFragment();
+        replaceFragment(fragment);
+    }
+
+    @Override
+    public void showPriceCheckFragment() {
+        fragment = new PriceCheckFragment();
+        replaceFragment(fragment);
+    }
+
+    @Override
+    public void showBlockChainExplorerFragment() {
+        fragment = new BlockChainExplorerFragment();
+        replaceFragment(fragment);
+    }
+
+    @Override
+    public void showSettingsFragment() {
+        fragment = new SettingsFragment();
+        replaceFragment(fragment);
     }
 }

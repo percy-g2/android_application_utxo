@@ -18,61 +18,62 @@ import retrofit2.Callback;
 
 public class ApiManager {
 
-  private BitfinexApiImpl bitfinexApiImpl;
+    private static ApiManager apiManager;
+    private BitfinexApiImpl bitfinexApiImpl;
     private BitstampApiImpl bitstampApiImpl;
     private BlocktrailApiImpl blocktrailApiImpl;
     private ChangellyApiImpl changellyApiImpl;
     private ZebpayApiImpl zebpayApiImpl;
-   private static ApiManager apiManager;
 
-    private ApiManager(){
-         bitfinexApiImpl = BitfinexApiImpl.getInstance();
-         bitstampApiImpl = BitstampApiImpl.getInstance();
-         blocktrailApiImpl = BlocktrailApiImpl.getInstance();
-         changellyApiImpl = ChangellyApiImpl.getInstance();
-         zebpayApiImpl = ZebpayApiImpl.getInstance();
+    private ApiManager() {
+        bitfinexApiImpl = BitfinexApiImpl.getInstance();
+        bitstampApiImpl = BitstampApiImpl.getInstance();
+        blocktrailApiImpl = BlocktrailApiImpl.getInstance();
+        changellyApiImpl = ChangellyApiImpl.getInstance();
+        zebpayApiImpl = ZebpayApiImpl.getInstance();
     }
 
-    public ApiManager getInstance(){
-        if(apiManager ==null){
+    public ApiManager getInstance() {
+        if (apiManager == null) {
             apiManager = new ApiManager();
         }
         return apiManager;
     }
 
-    public void getBitfinexPubTicker(Callback<BitfinexPubTickerResponseBean> callback){
+    public void getBitfinexPubTicker(Callback<BitfinexPubTickerResponseBean> callback) {
         bitfinexApiImpl.getBitfinexPubTicker(callback);
     }
 
-    public void getBitstampTicker(Callback<JsonObject> callback){
+    public void getBitstampTicker(Callback<JsonObject> callback) {
         bitstampApiImpl.getBitstampTicker(callback);
     }
 
 
-    public void getBlockTrailAddressData(String query, String data, Callback<AddressBean> callback){
+    public void getBlockTrailAddressData(String query, String data, Callback<AddressBean> callback) {
         blocktrailApiImpl.getBlockTrailAddressData(query, data, callback);
     }
 
-    public void getBlockTrailBlockData(String query, String data, Callback<JsonObject> callback){
-        blocktrailApiImpl.getBlockTrailBlockData(query, data,callback);
+    public void getBlockTrailBlockData(String query, String data, Callback<JsonObject> callback) {
+        blocktrailApiImpl.getBlockTrailBlockData(query, data, callback);
     }
 
-    public void getBlockTrailTransactionData(String query, String data, Callback<TransactionBean> callback){
+    public void getBlockTrailTransactionData(String query, String data, Callback<TransactionBean> callback) {
         blocktrailApiImpl.getBlockTrailTransactionData(query, data, callback);
     }
 
-    public void getCurrencies(String sign, MainBodyBean body, Callback<GetCurrenciesResponseBean> callback){
-        changellyApiImpl.getCurrencies(sign, body,callback);
-    }
-    public void getMinAmount(String sign, MainBodyBean body, Callback<GetMinAmountReponseBean> callback){
-        changellyApiImpl.getMinAmount(sign,body,callback);
+    public void getCurrencies(String sign, MainBodyBean body, Callback<GetCurrenciesResponseBean> callback) {
+        changellyApiImpl.getCurrencies(sign, body, callback);
     }
 
-    public void createTransaction(String sign, MainBodyBean body, Callback<com.androidevlinux.percy.UTXO.data.models.changelly.TransactionBean> callback){
-        changellyApiImpl.createTransaction(sign,body,callback);
+    public void getMinAmount(String sign, MainBodyBean body, Callback<GetMinAmountReponseBean> callback) {
+        changellyApiImpl.getMinAmount(sign, body, callback);
     }
 
-    public void getZebpayTicker(Callback<ZebPayBean> callback){
+    public void createTransaction(String sign, MainBodyBean body, Callback<com.androidevlinux.percy.UTXO.data.models.changelly.TransactionBean> callback) {
+        changellyApiImpl.createTransaction(sign, body, callback);
+    }
+
+    public void getZebpayTicker(Callback<ZebPayBean> callback) {
         zebpayApiImpl.getZebpayTicker(callback);
     }
 

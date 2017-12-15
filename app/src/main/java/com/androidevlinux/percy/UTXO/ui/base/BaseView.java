@@ -7,7 +7,7 @@ package com.androidevlinux.percy.UTXO.ui.base;
 import android.app.Activity;
 import android.os.Bundle;
 
-public interface BaseView<T> {
+public interface BaseView {
 
     void displaySnack(String text);
 
