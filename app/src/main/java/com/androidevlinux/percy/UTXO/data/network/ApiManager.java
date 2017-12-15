@@ -33,7 +33,7 @@ public class ApiManager {
         zebpayApiImpl = ZebpayApiImpl.getInstance();
     }
 
-    public ApiManager getInstance() {
+    public static ApiManager getInstance() {
         if (apiManager == null) {
             apiManager = new ApiManager();
         }

@@ -24,6 +24,7 @@ import com.androidevlinux.percy.UTXO.ui.fragment.blocktrail.BlockChainExplorerFr
 import com.androidevlinux.percy.UTXO.ui.fragment.changelly.CreateTransactionFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.changelly.ExchangeAmountFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.changelly.GetStatusFragment;
+import com.androidevlinux.percy.UTXO.ui.fragment.changelly.MinAmountFragment;
 import com.androidevlinux.percy.UTXO.utils.Constants;
 import com.crashlytics.android.Crashlytics;
 
@@ -173,7 +174,7 @@ public class MainActivity extends BaseActivity
 
     @Override
     public void showMinAmountFragment() {
-        fragment = new SettingsFragment();
+        fragment = new MinAmountFragment();
         replaceFragment(fragment);
     }
 
