@@ -100,6 +100,7 @@
     <string name="_9000">$ 9000</string>
     <string name="sell">Sell</string>
     <string name="buy">Buy</string>
+    <string name="copy_rights">Copyright \u00a9 2018 AndroDevLinux</string>
 
     <string-array name="spinner_explore_data">
         <item>Address</item>
