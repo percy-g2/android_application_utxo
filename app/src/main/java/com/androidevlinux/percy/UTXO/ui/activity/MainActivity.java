@@ -20,11 +20,11 @@ import com.androidevlinux.percy.UTXO.R;
 import com.androidevlinux.percy.UTXO.ui.base.BaseActivity;
 import com.androidevlinux.percy.UTXO.ui.fragment.PriceCheckFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.SettingsFragment;
+import com.androidevlinux.percy.UTXO.ui.fragment.Test;
 import com.androidevlinux.percy.UTXO.ui.fragment.blocktrail.BlockChainExplorerFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.changelly.CreateTransactionFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.changelly.ExchangeAmountFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.changelly.GetStatusFragment;
-import com.androidevlinux.percy.UTXO.ui.fragment.changelly.MinAmountFragment;
 import com.androidevlinux.percy.UTXO.utils.Constants;
 import com.crashlytics.android.Crashlytics;
 
@@ -174,7 +174,7 @@ public class MainActivity extends BaseActivity
 
     @Override
     public void showMinAmountFragment() {
-        fragment = new MinAmountFragment();
+        fragment = new Test();
         replaceFragment(fragment);
     }
 

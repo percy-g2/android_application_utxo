@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatButton;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,15 +12,14 @@ import android.view.ViewGroup;
 import com.androidevlinux.percy.UTXO.R;
 import com.androidevlinux.percy.UTXO.data.models.bitfinex.BitfinexPubTickerResponseBean;
 import com.androidevlinux.percy.UTXO.ui.base.BaseFragment;
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,45 +36,30 @@ import retrofit2.Response;
 public class Test extends BaseFragment {
 
     @BindView(R.id.chart1)
-    LineChart mChart;
+    BarChart mChart;
     Unbinder unbinder;
-    ArrayList<Entry> x;
-    ArrayList<String> y;
-    public String TAG = "YOUR CLASS NAME";
-    int count = 0;
     @BindView(R.id.asasx)
     AppCompatButton asasx;
-
+    int count = 0;
+    BarData data;
     @Override
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         assert inflater != null;
         View view = inflater.inflate(R.layout.test, container, false);
         unbinder = ButterKnife.bind(this, view);
         return view;
-
     }
 
     @Override
     public void onViewCreated(@Nullable View view, @Nullable Bundle savedInstanceState) {
         assert view != null;
         super.onViewCreated(view, savedInstanceState);
-        x = new ArrayList<Entry>();
-        y = new ArrayList<String>();
-        mChart.setDrawGridBackground(false);
-        //mChart.setDescription("");
-        mChart.setTouchEnabled(true);
-        mChart.setDragEnabled(true);
-        mChart.setScaleEnabled(true);
-        mChart.setPinchZoom(true);
-        XAxis xl = mChart.getXAxis();
-        xl.setAvoidFirstLastClipping(true);
-        YAxis leftAxis = mChart.getAxisLeft();
-        leftAxis.setInverted(true);
-        YAxis rightAxis = mChart.getAxisRight();
-        rightAxis.setEnabled(false);
-        Legend l = mChart.getLegend();
-        l.setForm(Legend.LegendForm.LINE);
+        Description description = new Description();
+        description.setText("Bitfinex");
+        mChart.setDescription(description);
+        data = new BarData();
     }
+
 
     @Override
     public void onDestroyView() {
@@ -89,16 +74,16 @@ public class Test extends BaseFragment {
                 if (response.body() != null) {
                     float value = Float.parseFloat(response.body().getLastPrice());
                     String date = response.body().getTimestamp();
-                    count = count + 1;
-                    x.add(new Entry(value, count));
-                    y.add(date);
-                    LineDataSet set1 = new LineDataSet(x, "NAV Data Value");
-                    set1.setLineWidth(1.5f);
-                    set1.setCircleRadius(4f);
-                    LineData data = new LineData(set1);
+                    count += 1;
+                    Log.i("s", date);
+                    List<BarEntry> entries = new ArrayList<>();
+                    entries.add(new BarEntry(value, count));
+                    BarDataSet set = new BarDataSet(entries, "Price");
+                    data.addDataSet(set);
+                    data.setBarWidth(0.9f); // set custom bar width
                     mChart.setData(data);
-                    mChart.invalidate();
-
+                    mChart.setFitBars(true); // make the x-axis fit exactly all bars
+                    mChart.invalidate(); // refresh
                 }
             }
 
@@ -107,6 +92,7 @@ public class Test extends BaseFragment {
             }
         });
     }
+
 
     @OnClick(R.id.asasx)
     public void onClick() {
