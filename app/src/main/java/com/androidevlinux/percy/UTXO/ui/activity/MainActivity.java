@@ -34,7 +34,7 @@ import butterknife.ButterKnife;
 import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener, MainView {
+        implements NavigationView.OnNavigationItemSelectedListener, MainContract.MainView {
 
     @BindView(R.id.txtTitle)
     TextView txtTitle;
