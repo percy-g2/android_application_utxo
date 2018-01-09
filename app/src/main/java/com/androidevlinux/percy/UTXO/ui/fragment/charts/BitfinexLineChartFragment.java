@@ -2,11 +2,14 @@ package com.androidevlinux.percy.UTXO.ui.fragment.charts;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.AppCompatButton;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +19,7 @@ import android.widget.TextView;
 import com.androidevlinux.percy.UTXO.R;
 import com.androidevlinux.percy.UTXO.data.models.bitfinex.BitfinexPubTickerResponseBean;
 import com.androidevlinux.percy.UTXO.ui.base.BaseFragment;
+import com.androidevlinux.percy.UTXO.ui.fragment.SettingsFragment;
 import com.androidevlinux.percy.UTXO.utils.CustomMarkerViewLineChart;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
@@ -57,7 +61,7 @@ public class BitfinexLineChartFragment extends BaseFragment {
     ArrayList<String> xValues = new ArrayList<>();
     ArrayList<Entry> yVals1 = new ArrayList<>();
     ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-    int count = 0;
+    int count = -1;
     private Activity mActivity;
 
     @Override
@@ -86,17 +90,34 @@ public class BitfinexLineChartFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         TextView Title = mActivity.findViewById(R.id.txtTitle);
         Title.setText(getResources().getString(R.string.bitfinex_line_graph));
-        mChart.setNoDataText("Click On Get Data");
         Description description = new Description();
         description.setText("Bitfinex");
         description.setTextAlign(Paint.Align.RIGHT);
         mChart.setDescription(description);
         CustomMarkerViewLineChart mv = new CustomMarkerViewLineChart(mChart, getActivity(), R.layout.custom_marker_view_layout);
-
         // set the marker to the chart
         mChart.setMarker(mv);
+        SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
+        boolean isRefreshButtonEnabled = mSharedPreferences.getBoolean(SettingsFragment.refresh_btc_price_button_key, false);
+        if (!isRefreshButtonEnabled) {
+            getBitfinexPubTicker();
+            handler.postDelayed(runnable, 60000);
+        } else {
+            mChart.setNoDataText("Click On Get Data");
+            btn_get_data.setVisibility(View.VISIBLE);
+        }
     }
 
+
+    // Init
+    private Handler handler = new Handler();
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            getBitfinexPubTicker();
+            handler.postDelayed(this, 60000);
+        }
+    };
 
     @Override
     public void onDestroyView() {

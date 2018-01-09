@@ -25,6 +25,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:text="@string/get_data"
+            android:visibility="gone"
             android:background="@color/colorPrimary"
             android:gravity="center"
             android:textColor="@android:color/white"
