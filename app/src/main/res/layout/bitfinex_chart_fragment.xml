@@ -11,14 +11,16 @@
         android:orientation="vertical"
         android:weightSum="8">
 
-        <com.github.mikephil.charting.charts.BarChart
-            android:id="@+id/chart1"
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/barChart"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="7" />
+            android:layout_weight="7">
+        </com.github.mikephil.charting.charts.LineChart>
 
         <android.support.v7.widget.AppCompatButton
-            android:id="@+id/asasx"
+            android:id="@+id/btn_get_data"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"

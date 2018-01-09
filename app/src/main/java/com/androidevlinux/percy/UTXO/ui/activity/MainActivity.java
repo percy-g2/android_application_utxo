@@ -18,9 +18,9 @@ import android.widget.TextView;
 
 import com.androidevlinux.percy.UTXO.R;
 import com.androidevlinux.percy.UTXO.ui.base.BaseActivity;
+import com.androidevlinux.percy.UTXO.ui.fragment.BitfinexChartFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.PriceCheckFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.SettingsFragment;
-import com.androidevlinux.percy.UTXO.ui.fragment.Test;
 import com.androidevlinux.percy.UTXO.ui.fragment.blocktrail.BlockChainExplorerFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.changelly.CreateTransactionFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.changelly.ExchangeAmountFragment;
@@ -174,7 +174,7 @@ public class MainActivity extends BaseActivity
 
     @Override
     public void showMinAmountFragment() {
-        fragment = new Test();
+        fragment = new BitfinexChartFragment();
         replaceFragment(fragment);
     }
 
