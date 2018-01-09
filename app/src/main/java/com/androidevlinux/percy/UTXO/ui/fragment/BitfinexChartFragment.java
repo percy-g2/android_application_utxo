@@ -1,19 +1,24 @@
 package com.androidevlinux.percy.UTXO.ui.fragment;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatButton;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.androidevlinux.percy.UTXO.R;
 import com.androidevlinux.percy.UTXO.data.models.bitfinex.BitfinexPubTickerResponseBean;
 import com.androidevlinux.percy.UTXO.ui.base.BaseFragment;
+import com.androidevlinux.percy.UTXO.utils.CustomMarkerView;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -51,8 +56,21 @@ public class BitfinexChartFragment extends BaseFragment {
     ArrayList<String> xValues = new ArrayList<>();
     ArrayList<Entry> yVals1 = new ArrayList<>();
     ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-
     int count = 0;
+    private Activity mActivity;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mActivity = (Activity) context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        this.mActivity = null;
+    }
+
     @Override
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         assert inflater != null;
@@ -65,7 +83,17 @@ public class BitfinexChartFragment extends BaseFragment {
     public void onViewCreated(@Nullable View view, @Nullable Bundle savedInstanceState) {
         assert view != null;
         super.onViewCreated(view, savedInstanceState);
-        mChart.setNoDataText("Creating Chart");
+        TextView Title = mActivity.findViewById(R.id.txtTitle);
+        Title.setText(getResources().getString(R.string.bitfinex_line_graph));
+        mChart.setNoDataText("Click On Get Data");
+        Description description = new Description();
+        description.setText("Bitfinex");
+        description.setTextAlign(Paint.Align.RIGHT);
+        mChart.setDescription(description);
+        CustomMarkerView mv = new CustomMarkerView(getActivity(), R.layout.custom_marker_view_layout);
+
+        // set the marker to the chart
+        mChart.setMarker(mv);
     }
 
 
@@ -82,7 +110,6 @@ public class BitfinexChartFragment extends BaseFragment {
                 if (response.body() != null) {
                     float value = Float.parseFloat(response.body().getLastPrice());
                     String dates = response.body().getTimestamp();
-                    Log.i("s", dates);
                     count += 1;
                     double s = Math.floor(Double.parseDouble(dates));
                     yVals1.add(new Entry(count, value));
@@ -107,7 +134,7 @@ public class BitfinexChartFragment extends BaseFragment {
 
                     XAxis xAxis = mChart.getXAxis();
                     xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-                    xAxis.setDrawGridLines(false);
+                    xAxis.setDrawGridLines(true);
                     xAxis.setAxisLineColor(Color.BLACK);
                     xAxis.setTextColor(Color.BLACK);
 
@@ -116,7 +143,7 @@ public class BitfinexChartFragment extends BaseFragment {
                     YAxis leftAxis = mChart.getAxisLeft();
                     leftAxis.setTextColor(Color.BLACK);
                     leftAxis.setDrawAxisLine(true);
-                    leftAxis.setDrawZeroLine(false);
+                    leftAxis.setDrawZeroLine(true);
                     leftAxis.setDrawGridLines(true);
 
                     leftAxis.setGridColor(Color.BLACK);
@@ -129,15 +156,14 @@ public class BitfinexChartFragment extends BaseFragment {
 
                     set1.setAxisDependency(YAxis.AxisDependency.LEFT);
                     set1.setColor(Color.BLACK);
-                    set1.setDrawCircles(false);
+                    set1.setDrawCircles(true);
                     set1.setLineWidth(1f);
                     set1.setCircleRadius(3f);
-                    set1.setFillAlpha(50);
-                    set1.setDrawFilled(true);
-                    set1.setFillColor(Color.BLUE);
-                    set1.setHighLightColor(Color.rgb(244, 117, 117));
-                    set1.setDrawCircleHole(false);
-
+                  //  set1.setFillAlpha(50);
+                 //   set1.setDrawFilled(true);
+                  //  set1.setFillColor(Color.BLUE);
+                 //   set1.setHighLightColor(Color.rgb(244, 117, 117));
+                    set1.setDrawCircleHole(true);
                     dataSets.add(set1);
 
                     LineData datab = new LineData(dataSets);
@@ -145,6 +171,7 @@ public class BitfinexChartFragment extends BaseFragment {
 
                     mChart.setData(datab);
                     mChart.invalidate();
+
                 }
             }
 

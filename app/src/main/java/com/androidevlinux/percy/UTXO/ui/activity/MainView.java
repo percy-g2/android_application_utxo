@@ -9,6 +9,7 @@ public interface MainView extends BaseView {
     void showCreateTransactionFragment();
     void showGetStatusFragment();
     void showPriceCheckFragment();
+    void showBitfinexChartFragment();
     void showBlockChainExplorerFragment();
     void showSettingsFragment();
 }

@@ -20,7 +20,7 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.androidevlinux.percy.UTXO"
-        minSdkVersion 19
+        minSdkVersion 16
         targetSdkVersion 27
         versionCode 6
         versionName "6.0"

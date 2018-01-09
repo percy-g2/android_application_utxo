@@ -101,6 +101,8 @@
     <string name="sell">Sell</string>
     <string name="buy">Buy</string>
     <string name="copy_rights">Copyright \u00a9 2018 AndroDevLinux</string>
+    <string name="get_data">Get Data</string>
+    <string name="bitfinex_line_graph">Bifinex Line Graph</string>
 
     <string-array name="spinner_explore_data">
         <item>Address</item>
