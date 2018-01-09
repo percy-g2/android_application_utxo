@@ -32,8 +32,8 @@ public class CustomMarkerView extends MarkerView {
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
 
-        tvContent.setText("" + mChart.getXAxis().getValueFormatter().getFormattedValue(e.getX(), mChart.getXAxis())); // set the entry-value as the display text
-        tvContent1.setText("" + e.getY());
+        tvContent.setText(String.format("TIME %s", mChart.getXAxis().getValueFormatter().getFormattedValue(e.getX(), mChart.getXAxis()))); // set the entry-value as the display text
+        tvContent1.setText(String.format("$ %s", e.getY()));
         super.refreshContent(e, highlight);
     }
 
