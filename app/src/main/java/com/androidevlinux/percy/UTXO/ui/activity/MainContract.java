@@ -14,7 +14,8 @@ public interface MainContract {
         void showPriceCheckFragment();
         void showBlockChainExplorerFragment();
         void showSettingsFragment();
-        void showBitfinexChartFragment();
+        void showBitfinexLineChartFragment();
+        void showBitfinexBarChartFragment();
     }
 
     interface MainPresenter<V extends  BaseView> extends BasePresenter{

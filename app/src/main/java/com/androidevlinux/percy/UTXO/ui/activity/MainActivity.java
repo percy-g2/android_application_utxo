@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import com.androidevlinux.percy.UTXO.R;
 import com.androidevlinux.percy.UTXO.ui.base.BaseActivity;
-import com.androidevlinux.percy.UTXO.ui.fragment.BitfinexChartFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.PriceCheckFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.SettingsFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.blocktrail.BlockChainExplorerFragment;
@@ -26,6 +25,8 @@ import com.androidevlinux.percy.UTXO.ui.fragment.changelly.CreateTransactionFrag
 import com.androidevlinux.percy.UTXO.ui.fragment.changelly.ExchangeAmountFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.changelly.GetStatusFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.changelly.MinAmountFragment;
+import com.androidevlinux.percy.UTXO.ui.fragment.charts.BitfinexBarChartFragment;
+import com.androidevlinux.percy.UTXO.ui.fragment.charts.BitfinexLineChartFragment;
 import com.androidevlinux.percy.UTXO.utils.Constants;
 import com.crashlytics.android.Crashlytics;
 
@@ -112,7 +113,11 @@ public class MainActivity extends BaseActivity
                 break;
             case R.id.nav_bitfinex_line_chart:
                 fab.hide();
-                showBitfinexChartFragment();
+                showBitfinexLineChartFragment();
+                break;
+            case R.id.nav_bitfinex_bar_chart:
+                fab.hide();
+                showBitfinexBarChartFragment();
                 break;
             case R.id.nav_block_chain_explorer:
                 fab.hide();
@@ -208,8 +213,14 @@ public class MainActivity extends BaseActivity
     }
 
     @Override
-    public void showBitfinexChartFragment() {
-        fragment = new BitfinexChartFragment();
+    public void showBitfinexLineChartFragment() {
+        fragment = new BitfinexLineChartFragment();
+        replaceFragment(fragment);
+    }
+
+    @Override
+    public void showBitfinexBarChartFragment() {
+        fragment = new BitfinexBarChartFragment();
         replaceFragment(fragment);
     }
 

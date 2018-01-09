@@ -1,4 +1,4 @@
-package com.androidevlinux.percy.UTXO.ui.fragment;
+package com.androidevlinux.percy.UTXO.ui.fragment.charts;
 
 import android.app.Activity;
 import android.content.Context;
@@ -17,6 +17,7 @@ import com.androidevlinux.percy.UTXO.R;
 import com.androidevlinux.percy.UTXO.data.models.bitfinex.BitfinexPubTickerResponseBean;
 import com.androidevlinux.percy.UTXO.ui.base.BaseFragment;
 import com.androidevlinux.percy.UTXO.utils.CustomMarkerView;
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
@@ -45,12 +46,12 @@ import retrofit2.Response;
  * Created by percy on 23/12/17.
  */
 
-public class BitfinexChartFragment extends BaseFragment {
+public class BitfinexLineChartFragment extends BaseFragment {
 
     Unbinder unbinder;
     @BindView(R.id.btn_get_data)
     AppCompatButton btn_get_data;
-    @BindView(R.id.barChart)
+    @BindView(R.id.lineChart)
     LineChart mChart;
     private int mFillColor = Color.argb(150, 51, 181, 229);
     ArrayList<String> xValues = new ArrayList<>();
@@ -74,7 +75,7 @@ public class BitfinexChartFragment extends BaseFragment {
     @Override
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         assert inflater != null;
-        View view = inflater.inflate(R.layout.bitfinex_chart_fragment, container, false);
+        View view = inflater.inflate(R.layout.bitfinex_line_chart_fragment, container, false);
         unbinder = ButterKnife.bind(this, view);
         return view;
     }
@@ -168,7 +169,8 @@ public class BitfinexChartFragment extends BaseFragment {
 
                     LineData datab = new LineData(dataSets);
                     datab.setDrawValues(false);
-
+                    mChart.animateY(30, Easing.EasingOption.EaseOutBack);
+                    mChart.animateX(30, Easing.EasingOption.EaseOutBack);
                     mChart.setData(datab);
                     mChart.invalidate();
 
