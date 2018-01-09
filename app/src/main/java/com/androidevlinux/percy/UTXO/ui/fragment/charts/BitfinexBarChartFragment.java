@@ -2,6 +2,8 @@ package com.androidevlinux.percy.UTXO.ui.fragment.charts;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,7 +16,23 @@ import android.widget.TextView;
 import com.androidevlinux.percy.UTXO.R;
 import com.androidevlinux.percy.UTXO.data.models.bitfinex.BitfinexPubTickerResponseBean;
 import com.androidevlinux.percy.UTXO.ui.base.BaseFragment;
+import com.androidevlinux.percy.UTXO.utils.CustomMarkerViewBarChart;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,8 +54,10 @@ public class BitfinexBarChartFragment extends BaseFragment {
     AppCompatButton btnGetData;
     private Activity mActivity;
     Unbinder unbinder;
-    int count = 0;
-
+    int count = -1;
+    List<BarEntry> entries = new ArrayList<>();
+    ArrayList<String> xValues = new ArrayList<>();
+    ArrayList<IBarDataSet> dataSets = new ArrayList<>();
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -64,6 +84,14 @@ public class BitfinexBarChartFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         TextView Title = mActivity.findViewById(R.id.txtTitle);
         Title.setText(getResources().getString(R.string.bitfinex_bar_graph));
+        Description description = new Description();
+        description.setText("Bitfinex");
+        description.setTextAlign(Paint.Align.RIGHT);
+        barChart.setDescription(description);
+        CustomMarkerViewBarChart mv = new CustomMarkerViewBarChart(barChart, getActivity(), R.layout.custom_marker_view_layout);
+
+        // set the marker to the chart
+        barChart.setMarker(mv);
     }
 
 
@@ -82,7 +110,44 @@ public class BitfinexBarChartFragment extends BaseFragment {
                     String dates = response.body().getTimestamp();
                     count += 1;
                     double s = Math.floor(Double.parseDouble(dates));
+                    entries.add(new BarEntry(count, value));
+                    Date date = new Date((int) s *1000L);
+                    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
+                    sdf.setTimeZone(TimeZone.getDefault());
+                    String formattedDate = sdf.format(date);
 
+                    xValues.add(formattedDate);
+
+                    Legend l = barChart.getLegend();
+                    l.setEnabled(false);
+
+                    XAxis xAxis = barChart.getXAxis();
+                    xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+                    xAxis.setDrawGridLines(true);
+                    xAxis.setAxisLineColor(Color.BLACK);
+                    xAxis.setTextColor(Color.BLACK);
+                    xAxis.setValueFormatter((value1, axis) -> xValues.get((int) value1 % xValues.size()));
+
+                    YAxis leftAxis = barChart.getAxisLeft();
+                    leftAxis.setTextColor(Color.BLACK);
+                    leftAxis.setDrawAxisLine(true);
+                    leftAxis.setDrawZeroLine(true);
+                    leftAxis.setDrawGridLines(true);
+
+                    leftAxis.setGridColor(Color.BLACK);
+                    leftAxis.setAxisLineColor(Color.BLACK);
+
+                    barChart.getAxisRight().setEnabled(false);
+
+                    BarDataSet set = new BarDataSet(entries, "Price");
+                    set.setAxisDependency(YAxis.AxisDependency.LEFT);
+
+                    dataSets.add(set);
+                    BarData datab = new BarData(dataSets);
+                    datab.setBarWidth(0.9f); // set custom bar width
+                    barChart.setData(datab);
+                    barChart.setFitBars(true); // make the x-axis fit exactly all bars
+                    barChart.invalidate(); // refresh
                 }
             }
 

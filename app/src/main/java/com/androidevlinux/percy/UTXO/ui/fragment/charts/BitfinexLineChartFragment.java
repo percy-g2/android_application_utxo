@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.androidevlinux.percy.UTXO.R;
 import com.androidevlinux.percy.UTXO.data.models.bitfinex.BitfinexPubTickerResponseBean;
 import com.androidevlinux.percy.UTXO.ui.base.BaseFragment;
-import com.androidevlinux.percy.UTXO.utils.CustomMarkerView;
+import com.androidevlinux.percy.UTXO.utils.CustomMarkerViewLineChart;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
@@ -91,7 +91,7 @@ public class BitfinexLineChartFragment extends BaseFragment {
         description.setText("Bitfinex");
         description.setTextAlign(Paint.Align.RIGHT);
         mChart.setDescription(description);
-        CustomMarkerView mv = new CustomMarkerView(mChart, getActivity(), R.layout.custom_marker_view_layout);
+        CustomMarkerViewLineChart mv = new CustomMarkerViewLineChart(mChart, getActivity(), R.layout.custom_marker_view_layout);
 
         // set the marker to the chart
         mChart.setMarker(mv);
