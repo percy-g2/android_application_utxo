@@ -90,7 +90,7 @@ public class BitfinexChartFragment extends BaseFragment {
         description.setText("Bitfinex");
         description.setTextAlign(Paint.Align.RIGHT);
         mChart.setDescription(description);
-        CustomMarkerView mv = new CustomMarkerView(getActivity(), R.layout.custom_marker_view_layout);
+        CustomMarkerView mv = new CustomMarkerView(mChart, getActivity(), R.layout.custom_marker_view_layout);
 
         // set the marker to the chart
         mChart.setMarker(mv);

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.widget.TextView;
 
 import com.androidevlinux.percy.UTXO.R;
+import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.MarkerView;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.highlight.Highlight;
@@ -16,19 +17,22 @@ import com.github.mikephil.charting.utils.MPPointF;
 public class CustomMarkerView extends MarkerView {
 
     private TextView tvContent, tvContent1;
+    private LineChart mChart;
 
-    public CustomMarkerView (Context context, int layoutResource) {
+    public CustomMarkerView(LineChart mChart, Context context, int layoutResource) {
         super(context, layoutResource);
         // this markerview only displays a textview
         tvContent = findViewById(R.id.tvContent);
         tvContent1 = findViewById(R.id.tvContent1);
+        this.mChart = mChart;
     }
 
     // callbacks everytime the MarkerView is redrawn, can be used to update the
     // content (user-interface)
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
-        tvContent.setText("" + e.getX()); // set the entry-value as the display text
+
+        tvContent.setText("" + mChart.getXAxis().getValueFormatter().getFormattedValue(e.getX(), mChart.getXAxis())); // set the entry-value as the display text
         tvContent1.setText("" + e.getY());
         super.refreshContent(e, highlight);
     }
