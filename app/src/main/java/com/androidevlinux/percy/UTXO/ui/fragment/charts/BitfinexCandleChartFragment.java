@@ -59,7 +59,6 @@ public class BitfinexCandleChartFragment extends BaseFragment {
     private Activity mActivity;
     ArrayList<CandleEntry> entries = new ArrayList<>();
     ArrayList<String> xValues = new ArrayList<>();
-    int count = -1;
 
     @Override
     public void onAttach(Context context) {
@@ -127,6 +126,11 @@ public class BitfinexCandleChartFragment extends BaseFragment {
                     BigDecimal[][] newMap;
                     BigDecimal[][] dummy = new BigDecimal[0][0];
                     newMap = gson.fromJson(response.body().string(), dummy.getClass());
+                    entries.clear();
+                    xValues.clear();
+                    candleChart.clear();
+                    candleChart.invalidate();
+                    int count = -1;
                     for (BigDecimal[] s : newMap){
                         count += 1;
                         entries.add(new CandleEntry(count, Float.valueOf(String.valueOf(s[3])), Float.valueOf(String.valueOf(s[4])), Float.valueOf(String.valueOf(s[1])), Float.valueOf(String.valueOf(s[2]))));
