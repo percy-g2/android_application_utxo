@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/container"
@@ -12,21 +12,37 @@
         android:orientation="vertical"
         android:weightSum="10">
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/get_fab"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_gravity="center|end"
-            android:layout_margin="@dimen/fab_margin"
             android:layout_weight="1"
-            android:visibility="gone"
-            app:srcCompat="@drawable/ic_file_download_white_48dp" />
+            android:layout_margin="2dp"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/spinner_TimeFrame"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:entries="@array/spinner_time_frame"
+                android:visibility="visible"
+                app:srcCompat="@drawable/ic_file_download_white_48dp" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/get_fab"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|end"
+                android:layout_weight="1"
+                android:visibility="gone"
+                app:srcCompat="@drawable/ic_file_download_white_48dp" />
+        </LinearLayout>
 
         <com.github.mikephil.charting.charts.CandleStickChart
             android:id="@+id/candleChart"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="9">
-        </com.github.mikephil.charting.charts.CandleStickChart>
+            android:layout_weight="9"/>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

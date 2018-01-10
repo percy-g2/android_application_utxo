@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.preference.PreferenceManager;
+import android.support.v7.widget.AppCompatSpinner;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,6 +57,8 @@ public class BitfinexCandleChartFragment extends BaseFragment {
     @BindView(R.id.candleChart)
     CandleStickChart candleChart;
     Unbinder unbinder;
+    @BindView(R.id.spinner_TimeFrame)
+    AppCompatSpinner spinnerTimeFrame;
     private Activity mActivity;
     ArrayList<CandleEntry> entries = new ArrayList<>();
     ArrayList<String> xValues = new ArrayList<>();
@@ -118,7 +121,7 @@ public class BitfinexCandleChartFragment extends BaseFragment {
     }
 
     private void getBitfinexData() {
-        apiManager.getBitfinexData(new Callback<ResponseBody>() {
+        apiManager.getBitfinexData(spinnerTimeFrame.getSelectedItem().toString(), new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 Gson gson = new Gson();
@@ -131,7 +134,7 @@ public class BitfinexCandleChartFragment extends BaseFragment {
                     candleChart.clear();
                     candleChart.invalidate();
                     int count = -1;
-                    for (BigDecimal[] s : newMap){
+                    for (BigDecimal[] s : newMap) {
                         count += 1;
                         entries.add(new CandleEntry(count, Float.valueOf(String.valueOf(s[3])), Float.valueOf(String.valueOf(s[4])), Float.valueOf(String.valueOf(s[1])), Float.valueOf(String.valueOf(s[2]))));
                         CandleDataSet dataset = new CandleDataSet(entries, "label");
@@ -145,7 +148,14 @@ public class BitfinexCandleChartFragment extends BaseFragment {
                         dataset.setNeutralColor(Color.BLUE);
                         dataset.setValueTextColor(Color.RED);
                         Date date = new Date(Long.valueOf(String.valueOf(s[0])));
-                        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
+                        SimpleDateFormat sdf;
+                        if (spinnerTimeFrame.getSelectedItem().toString().equals("7D") ||
+                                spinnerTimeFrame.getSelectedItem().toString().equals("14D") ||
+                                spinnerTimeFrame.getSelectedItem().toString().equals("1M")) {
+                            sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                        } else {
+                            sdf = new SimpleDateFormat("HH:mm", Locale.ENGLISH);
+                        }
                         sdf.setTimeZone(TimeZone.getDefault());
                         String formattedDate = sdf.format(date);
 
