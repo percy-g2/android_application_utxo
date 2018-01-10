@@ -13,7 +13,6 @@ public class NativeUtils {
     public static native String getBlocktrailBaseUrl();
     public static native String getbitStampBaseUrl();
     public static native String getBlocktrailApiKey();
-    public static native String getCoinSecureBaseUrl();
     public static native String getChangellyApiKey();
     public static native String getChangellySecretKey();
     public static native String getChangellyBaseUrl();
