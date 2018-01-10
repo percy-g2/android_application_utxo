@@ -14,6 +14,7 @@ import com.androidevlinux.percy.UTXO.data.network.apis.ChangellyApiImpl;
 import com.androidevlinux.percy.UTXO.data.network.apis.ZebpayApiImpl;
 import com.google.gson.JsonObject;
 
+import okhttp3.ResponseBody;
 import retrofit2.Callback;
 
 public class ApiManager {
@@ -42,6 +43,10 @@ public class ApiManager {
 
     public void getBitfinexPubTicker(Callback<BitfinexPubTickerResponseBean> callback) {
         bitfinexApiImpl.getBitfinexPubTicker(callback);
+    }
+
+    public void getBitfinexData(String time, Callback<ResponseBody> callback) {
+        bitfinexApiImpl.getBitfinexData(time, callback);
     }
 
     public void getBitstampTicker(Callback<JsonObject> callback) {

@@ -2,12 +2,15 @@ package com.androidevlinux.percy.UTXO.ui.fragment.charts;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.AppCompatButton;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +19,7 @@ import android.widget.TextView;
 import com.androidevlinux.percy.UTXO.R;
 import com.androidevlinux.percy.UTXO.data.models.bitfinex.BitfinexPubTickerResponseBean;
 import com.androidevlinux.percy.UTXO.ui.base.BaseFragment;
+import com.androidevlinux.percy.UTXO.ui.fragment.SettingsFragment;
 import com.androidevlinux.percy.UTXO.utils.CustomMarkerViewBarChart;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Description;
@@ -50,14 +54,15 @@ public class BitfinexBarChartFragment extends BaseFragment {
 
     @BindView(R.id.barChart)
     BarChart barChart;
-    @BindView(R.id.btn_get_data)
-    AppCompatButton btnGetData;
+    @BindView(R.id.get_fab)
+    FloatingActionButton getFab;
     private Activity mActivity;
     Unbinder unbinder;
     int count = -1;
     List<BarEntry> entries = new ArrayList<>();
     ArrayList<String> xValues = new ArrayList<>();
     ArrayList<IBarDataSet> dataSets = new ArrayList<>();
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -89,11 +94,29 @@ public class BitfinexBarChartFragment extends BaseFragment {
         description.setTextAlign(Paint.Align.RIGHT);
         barChart.setDescription(description);
         CustomMarkerViewBarChart mv = new CustomMarkerViewBarChart(barChart, getActivity(), R.layout.custom_marker_view_layout);
-
         // set the marker to the chart
         barChart.setMarker(mv);
+        SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
+        boolean isRefreshButtonEnabled = mSharedPreferences.getBoolean(SettingsFragment.refresh_btc_price_button_key, false);
+        if (!isRefreshButtonEnabled) {
+            getBitfinexPubTicker();
+            handler.postDelayed(runnable, 60000);
+        } else {
+            barChart.setNoDataText("Click On Get Data");
+            getFab.setVisibility(View.VISIBLE);
+        }
     }
 
+
+    // Init
+    private Handler handler = new Handler();
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            getBitfinexPubTicker();
+            handler.postDelayed(this, 60000);
+        }
+    };
 
     @Override
     public void onDestroyView() {
@@ -111,7 +134,7 @@ public class BitfinexBarChartFragment extends BaseFragment {
                     count += 1;
                     double s = Math.floor(Double.parseDouble(dates));
                     entries.add(new BarEntry(count, value));
-                    Date date = new Date((int) s *1000L);
+                    Date date = new Date((int) s * 1000L);
                     SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
                     sdf.setTimeZone(TimeZone.getDefault());
                     String formattedDate = sdf.format(date);
@@ -158,7 +181,7 @@ public class BitfinexBarChartFragment extends BaseFragment {
     }
 
 
-    @OnClick(R.id.btn_get_data)
+    @OnClick(R.id.get_fab)
     public void onClick() {
         getBitfinexPubTicker();
     }
