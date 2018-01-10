@@ -104,10 +104,26 @@
     <string name="get_data">Get Data</string>
     <string name="bitfinex_line_graph">Bifinex Line Graph</string>
     <string name="bitfinex_bar_graph">Bifinex Bar Graph</string>
+    <string name="bitfinex_candle_graph">Bitfinex Candle Graph</string>
 
     <string-array name="spinner_explore_data">
         <item>Address</item>
         <item>Block</item>
         <item>Transaction</item>
+    </string-array>
+
+    <string-array name="spinner_time_frame">
+        <item>1m</item>
+        <item>5m</item>
+        <item>15m</item>
+        <item>30m</item>
+        <item>1h</item>
+        <item>3h</item>
+        <item>6h</item>
+        <item>12h</item>
+        <item>1D</item>
+        <item>7D</item>
+        <item>14D</item>
+        <item>1M</item>
     </string-array>
 </resources>

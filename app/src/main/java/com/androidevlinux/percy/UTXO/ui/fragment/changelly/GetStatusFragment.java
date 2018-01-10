@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
@@ -77,6 +78,12 @@ public class GetStatusFragment  extends BaseFragment {
         TextView Title = mActivity.findViewById(R.id.txtTitle);
         Title.setText(getResources().getString(R.string.exchange_amount));
         txtInfo.setText(R.string.get_status_info);
+        FloatingActionButton fab = mActivity.findViewById(R.id.fab);
+        FloatingActionButton refreshFab = mActivity.findViewById(R.id.refresh_fab);
+        if (!fab.isShown()) {
+            fab.show();
+            refreshFab.hide();
+        }
     }
 
     private void MinAmount(String strTransactionId) {
