@@ -1,5 +1,6 @@
 package com.androidevlinux.percy.UTXO.ui.fragment;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -9,8 +10,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.preference.PreferenceManager;
-import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -32,7 +33,6 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,14 +45,13 @@ import retrofit2.Response;
 public class PriceCheckFragment extends BaseFragment {
     Unbinder unbinder;
     SharedPreferences mSharedPreferences;
-    @BindView(R.id.btn_refresh)
-    AppCompatButton btnRefresh;
     @BindView(R.id.price_list_recycler_view)
     RecyclerView priceListRecyclerView;
     private Activity mActivity;
     String TAG = "PriceCheckFragment", strRuppeSymbol = "\u20B9", strDollarSymbol = "$";
     ArrayList<PriceBean> priceBeanArrayList;
     PriceAdapter priceAdapter;
+    FloatingActionButton refreshFab;
 
     @Override
     public void onAttach(Context context) {
@@ -81,6 +80,7 @@ public class PriceCheckFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
         TextView Title = mActivity.findViewById(R.id.txtTitle);
+        refreshFab = mActivity.findViewById(R.id.refresh_fab);
         Title.setText(getResources().getString(R.string.btc_price));
         priceBeanArrayList = new ArrayList<>();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -92,10 +92,13 @@ public class PriceCheckFragment extends BaseFragment {
         getZebpayTicker();
         boolean isRefreshButtonEnabled = mSharedPreferences.getBoolean(SettingsFragment.refresh_btc_price_button_key, false);
         if (!isRefreshButtonEnabled) {
+            refreshFab.hide();
             handler.postDelayed(runnable, 60000);
         } else {
-            btnRefresh.setVisibility(View.VISIBLE);
+            refreshFab.show();
         }
+
+        refreshFab.setOnClickListener(view1 -> new UpdateTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR));
     }
 
     // Init
@@ -103,10 +106,7 @@ public class PriceCheckFragment extends BaseFragment {
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            priceBeanArrayList.clear();
-            getBitfinexPubTicker();
-            getBitstampTicker();
-            getZebpayTicker();
+            new UpdateTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             handler.postDelayed(this, 60000);
         }
     };
@@ -207,11 +207,7 @@ public class PriceCheckFragment extends BaseFragment {
         });
     }
 
-    @OnClick(R.id.btn_refresh)
-    public void onClick() {
-        new UpdateTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-    }
-
+    @SuppressLint("StaticFieldLeak")
     private class UpdateTask extends AsyncTask<String, String, String> {
 
         private Dialog dialogToSaveData = null;

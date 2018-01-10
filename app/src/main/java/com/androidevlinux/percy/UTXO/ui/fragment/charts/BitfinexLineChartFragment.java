@@ -9,8 +9,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.preference.PreferenceManager;
-import android.support.v7.widget.AppCompatButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,10 +53,10 @@ import retrofit2.Response;
 public class BitfinexLineChartFragment extends BaseFragment {
 
     Unbinder unbinder;
-    @BindView(R.id.btn_get_data)
-    AppCompatButton btn_get_data;
     @BindView(R.id.lineChart)
     LineChart mChart;
+    @BindView(R.id.get_fab)
+    FloatingActionButton getFab;
     private int mFillColor = Color.argb(150, 51, 181, 229);
     ArrayList<String> xValues = new ArrayList<>();
     ArrayList<Entry> yVals1 = new ArrayList<>();
@@ -104,7 +104,7 @@ public class BitfinexLineChartFragment extends BaseFragment {
             handler.postDelayed(runnable, 60000);
         } else {
             mChart.setNoDataText("Click On Get Data");
-            btn_get_data.setVisibility(View.VISIBLE);
+            getFab.setVisibility(View.VISIBLE);
         }
     }
 
@@ -135,7 +135,7 @@ public class BitfinexLineChartFragment extends BaseFragment {
                     count += 1;
                     double s = Math.floor(Double.parseDouble(dates));
                     yVals1.add(new Entry(count, value));
-                    Date date = new Date((int) s *1000L);
+                    Date date = new Date((int) s * 1000L);
                     SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
                     sdf.setTimeZone(TimeZone.getDefault());
                     String formattedDate = sdf.format(date);
@@ -181,10 +181,10 @@ public class BitfinexLineChartFragment extends BaseFragment {
                     set1.setDrawCircles(true);
                     set1.setLineWidth(1f);
                     set1.setCircleRadius(3f);
-                  //  set1.setFillAlpha(50);
-                 //   set1.setDrawFilled(true);
-                  //  set1.setFillColor(Color.BLUE);
-                 //   set1.setHighLightColor(Color.rgb(244, 117, 117));
+                    //  set1.setFillAlpha(50);
+                    //   set1.setDrawFilled(true);
+                    //  set1.setFillColor(Color.BLUE);
+                    //   set1.setHighLightColor(Color.rgb(244, 117, 117));
                     set1.setDrawCircleHole(true);
                     dataSets.add(set1);
 
@@ -205,7 +205,7 @@ public class BitfinexLineChartFragment extends BaseFragment {
     }
 
 
-    @OnClick(R.id.btn_get_data)
+    @OnClick(R.id.get_fab)
     public void onClick() {
         getBitfinexPubTicker();
     }

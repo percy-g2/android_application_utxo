@@ -9,8 +9,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.preference.PreferenceManager;
-import android.support.v7.widget.AppCompatButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,8 +54,8 @@ public class BitfinexBarChartFragment extends BaseFragment {
 
     @BindView(R.id.barChart)
     BarChart barChart;
-    @BindView(R.id.btn_get_data)
-    AppCompatButton btnGetData;
+    @BindView(R.id.get_fab)
+    FloatingActionButton getFab;
     private Activity mActivity;
     Unbinder unbinder;
     int count = -1;
@@ -103,7 +103,7 @@ public class BitfinexBarChartFragment extends BaseFragment {
             handler.postDelayed(runnable, 60000);
         } else {
             barChart.setNoDataText("Click On Get Data");
-            btnGetData.setVisibility(View.VISIBLE);
+            getFab.setVisibility(View.VISIBLE);
         }
     }
 
@@ -181,8 +181,7 @@ public class BitfinexBarChartFragment extends BaseFragment {
     }
 
 
-
-    @OnClick(R.id.btn_get_data)
+    @OnClick(R.id.get_fab)
     public void onClick() {
         getBitfinexPubTicker();
     }
