@@ -117,6 +117,7 @@ public class BitfinexCandleChartFragment extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        handler.removeCallbacks(runnable);
         unbinder.unbind();
     }
 

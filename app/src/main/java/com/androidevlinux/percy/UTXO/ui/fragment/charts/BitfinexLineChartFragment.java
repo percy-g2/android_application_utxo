@@ -122,6 +122,7 @@ public class BitfinexLineChartFragment extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        handler.removeCallbacks(runnable);
         unbinder.unbind();
     }
 
