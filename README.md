@@ -47,6 +47,6 @@ More things will be added in the future versions.
 <img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/develop/screenshots/10.jpg">
 <img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/develop/screenshots/11.jpg">
 <img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/develop/screenshots/12.jpg">
-<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/develop/screenshots/13.jpg">
-<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/develop/screenshots/14.jpg">
-<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/develop/screenshots/15.jpg">
+<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/develop/screenshots/13.png">
+<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/develop/screenshots/14.png">
+<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/develop/screenshots/15.png">
