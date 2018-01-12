@@ -37,6 +37,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -173,7 +174,7 @@ public class ExchangeAmountFragment extends BaseFragment {
                     CustomProgressDialog.dismissCustomProgressDialog(dialogToSaveData);
                 }
                 if (response.code() == 401) {
-                    Toast.makeText(mActivity, "Unauthorized! Please Check Your Keys", Toast.LENGTH_LONG).show();
+                    Toasty.error(mActivity, "Unauthorized! Please Check Your Keys", Toast.LENGTH_SHORT, true).show();
                 }
             }
 
@@ -199,10 +200,10 @@ public class ExchangeAmountFragment extends BaseFragment {
             if (spinnerFrom.getSelectedItem() !=null && spinnerTo.getSelectedItem() !=null && spinnerFrom.getSelectedItem().toString() != null && spinnerFrom.getSelectedItem().toString() != null && !edtAmount.getText().toString().isEmpty()) {
                 MinAmount(spinnerFrom.getSelectedItem().toString(), spinnerTo.getSelectedItem().toString(), edtAmount.getText().toString());
             } else {
-                Toast.makeText(mActivity, "Empty Fields Please Check", Toast.LENGTH_LONG).show();
+                Toasty.warning(mActivity, "Empty Fields Please Check", Toast.LENGTH_SHORT, true).show();
             }
         } else {
-            Toast.makeText(mActivity, "No Internet", Toast.LENGTH_LONG).show();
+            Toasty.warning(mActivity, "No Internet", Toast.LENGTH_SHORT, true).show();
         }
     }
 }

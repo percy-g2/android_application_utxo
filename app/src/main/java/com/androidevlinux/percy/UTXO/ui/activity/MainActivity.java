@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -33,6 +34,7 @@ import com.crashlytics.android.Crashlytics;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
 import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends BaseActivity
@@ -69,6 +71,15 @@ public class MainActivity extends BaseActivity
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+
+        Toasty.Config.getInstance()
+                .setErrorColor(ContextCompat.getColor(this, R.color.error))
+                .setWarningColor(ContextCompat.getColor(this, R.color.warning))
+                .setInfoColor(ContextCompat.getColor(this, R.color.information))
+                .setSuccessColor(ContextCompat.getColor(this, R.color.success))
+                .tintIcon(true)
+                .apply();
+
 
         fab.setOnClickListener(view -> {
             showCreateTransactionFragment();

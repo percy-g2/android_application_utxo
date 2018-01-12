@@ -7,4 +7,9 @@
 
     <color name="grey_100">#F5F5F5</color>
     <color name="grey_300">#E0E0E0</color>
+
+    <color name="warning">#8B0A50</color>
+    <color name="error">#CC0000</color>
+    <color name="information">#00C853</color>
+    <color name="success">#0277BD</color>
 </resources>

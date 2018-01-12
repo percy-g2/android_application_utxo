@@ -47,6 +47,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -147,7 +148,7 @@ public class CreateTransactionFragment extends BaseFragment {
                         txtMinAmount.setText(response.body().getResult().getId());
                         txtPayInAddress.setText(response.body().getResult().getPayinAddress());
                     }
-                    Log.i("Transaction", response.body().toString());
+                   // Log.i("Transaction", response.body().toString());
                 }
                 if (dialogToSaveData != null) {
                     CustomProgressDialog.dismissCustomProgressDialog(dialogToSaveData);
@@ -202,7 +203,7 @@ public class CreateTransactionFragment extends BaseFragment {
                     CustomProgressDialog.dismissCustomProgressDialog(dialogToSaveData);
                 }
                 if (response.code() == 401) {
-                    Toast.makeText(mActivity, "Unauthorized! Please Check Your Keys", Toast.LENGTH_LONG).show();
+                    Toasty.error(mActivity, "Unauthorized! Please Check Your Keys", Toast.LENGTH_SHORT, true).show();
                 }
             }
 
@@ -229,10 +230,10 @@ public class CreateTransactionFragment extends BaseFragment {
                     if (spinnerFrom.getSelectedItem() != null && spinnerTo.getSelectedItem() != null && spinnerFrom.getSelectedItem().toString() != null && spinnerFrom.getSelectedItem().toString() != null && !edtAmount.getText().toString().isEmpty() && !edtUserPayOutAddress.getText().toString().isEmpty()) {
                         MinAmount(spinnerFrom.getSelectedItem().toString(), spinnerTo.getSelectedItem().toString(), edtAmount.getText().toString(), edtUserPayOutAddress.getText().toString());
                     } else {
-                        Toast.makeText(mActivity, "Empty Fields Please Check", Toast.LENGTH_LONG).show();
+                        Toasty.warning(mActivity, "Empty Fields Please Check", Toast.LENGTH_SHORT, true).show();
                     }
                 } else {
-                    Toast.makeText(mActivity, "No Internet", Toast.LENGTH_LONG).show();
+                    Toasty.warning(mActivity, "No Internet", Toast.LENGTH_SHORT, true).show();
                 }
                 break;
             case R.id.btn_scan_qr:

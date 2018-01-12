@@ -45,6 +45,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -153,7 +154,7 @@ public class BlockChainExplorerFragment extends BaseFragment {
                         loadTransactionData(spinnerExplorer.getSelectedItem().toString().toLowerCase(), edtDataToExplore.getText().toString());
                     }
                 } else {
-                    Toast.makeText(mActivity, spinnerExplorer.getSelectedItem().toString() + " Input Is Empty!", Toast.LENGTH_SHORT).show();
+                    Toasty.warning(mActivity, spinnerExplorer.getSelectedItem().toString() + " Input Is Empty!", Toast.LENGTH_SHORT, true).show();
                 }
                 break;
             case R.id.btn_scan_qr:
@@ -173,7 +174,7 @@ public class BlockChainExplorerFragment extends BaseFragment {
                     BlockChainExplorerAddressAdapter blockChainExplorerAddressAdapter = new BlockChainExplorerAddressAdapter(addressBeanArrayList, getActivity());
                     response_data_recyclerView.setAdapter(blockChainExplorerAddressAdapter);
                 } else {
-                    Toast.makeText(mActivity, "Check Your Input", Toast.LENGTH_SHORT).show();
+                    Toasty.error(mActivity, "Check Your Input", Toast.LENGTH_SHORT, true).show();
                 }
                 if (dialogToSaveData != null) {
                     CustomProgressDialog.dismissCustomProgressDialog(dialogToSaveData);
@@ -201,7 +202,7 @@ public class BlockChainExplorerFragment extends BaseFragment {
                     BlockChainExplorerBlockAdapter blockChainExplorerBlockAdapter = new BlockChainExplorerBlockAdapter(jsonObjectArrayList, getActivity());
                     response_data_recyclerView.setAdapter(blockChainExplorerBlockAdapter);
                 } else {
-                    Toast.makeText(mActivity, "Check Your Input", Toast.LENGTH_SHORT).show();
+                    Toasty.error(mActivity, "Check Your Input", Toast.LENGTH_SHORT, true).show();
                 }
                 if (dialogToSaveData != null) {
                     CustomProgressDialog.dismissCustomProgressDialog(dialogToSaveData);
@@ -228,7 +229,7 @@ public class BlockChainExplorerFragment extends BaseFragment {
                     BlockChainExplorerTransactionAdapter blockChainExplorerTransactionAdapter = new BlockChainExplorerTransactionAdapter(transactionBeanArrayList, getActivity());
                     response_data_recyclerView.setAdapter(blockChainExplorerTransactionAdapter);
                 } else {
-                    Toast.makeText(mActivity, "Check Your Input", Toast.LENGTH_SHORT).show();
+                    Toasty.error(mActivity, "Check Your Input", Toast.LENGTH_SHORT, true).show();
                 }
                 if (dialogToSaveData != null) {
                     CustomProgressDialog.dismissCustomProgressDialog(dialogToSaveData);
