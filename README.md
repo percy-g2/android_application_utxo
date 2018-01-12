@@ -3,9 +3,9 @@
 
 **About**
 1. Exchange crypto currencies supported and available in Changelly as their API is used in the app
-2. Check Bitcoin Price (source: Bitfinex)
-3. Block Chain Explorer (Address, Block and Transaction) Data.
-4. Bitfinex pricing line graph.
+2. Check Bitcoin Price (source: Bitfinex, Bitstamp and Zebpay)
+3. BTC Block Chain Explorer (Address, Block and Transaction) Data.
+4. Bitfinex line, bar and candle stick real time graphs.
 5. You either enable refresh button to check BTC price in settings or get BTC price automatically updated every 1 min.
 
 More things will be added in the future versions.
@@ -36,12 +36,17 @@ More things will be added in the future versions.
 
 **ScreenShots**
 
-<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/master/screenshots/1.png"><img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/master/screenshots/2.png">
-<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/master/screenshots/3.png">
-<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/master/screenshots/4.png">
-<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/master/screenshots/5.png">
-<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/master/screenshots/6.png">
-<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/master/screenshots/7.png">
-<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/master/screenshots/8.png">
-<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/master/screenshots/9.jpg">
-<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/master/screenshots/10.jpg">
+<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/develop/screenshots/1.png"><img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/develop/screenshots/2.png">
+<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/develop/screenshots/3.png">
+<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/develop/screenshots/4.png">
+<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/develop/screenshots/5.png">
+<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/develop/screenshots/6.png">
+<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/develop/screenshots/7.png">
+<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/develop/screenshots/8.png">
+<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/develop/screenshots/9.jpg">
+<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/develop/screenshots/10.jpg">
+<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/develop/screenshots/11.jpg">
+<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/develop/screenshots/12.jpg">
+<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/develop/screenshots/13.png">
+<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/develop/screenshots/14.png">
+<img width="200" alt="portfolio_view" src="https://github.com/percy-g2/android_application_utxo/blob/develop/screenshots/15.png">

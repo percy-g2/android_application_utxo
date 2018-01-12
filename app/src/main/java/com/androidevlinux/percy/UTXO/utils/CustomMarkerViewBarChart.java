@@ -4,22 +4,22 @@ import android.content.Context;
 import android.widget.TextView;
 
 import com.androidevlinux.percy.UTXO.R;
-import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.MarkerView;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.utils.MPPointF;
 
 /**
- * Created by percy on 9/1/18.
+ * Created by percy on 10/1/18.
  */
 
-public class CustomMarkerView extends MarkerView {
+public class CustomMarkerViewBarChart extends MarkerView {
 
     private TextView tvContent, tvContent1;
-    private LineChart mChart;
+    private BarChart mChart;
 
-    public CustomMarkerView(LineChart mChart, Context context, int layoutResource) {
+    public CustomMarkerViewBarChart(BarChart mChart, Context context, int layoutResource) {
         super(context, layoutResource);
         // this markerview only displays a textview
         tvContent = findViewById(R.id.tvContent);

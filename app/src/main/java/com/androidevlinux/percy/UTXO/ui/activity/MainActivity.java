@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import com.androidevlinux.percy.UTXO.R;
 import com.androidevlinux.percy.UTXO.ui.base.BaseActivity;
-import com.androidevlinux.percy.UTXO.ui.fragment.BitfinexChartFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.PriceCheckFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.SettingsFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.blocktrail.BlockChainExplorerFragment;
@@ -26,6 +25,9 @@ import com.androidevlinux.percy.UTXO.ui.fragment.changelly.CreateTransactionFrag
 import com.androidevlinux.percy.UTXO.ui.fragment.changelly.ExchangeAmountFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.changelly.GetStatusFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.changelly.MinAmountFragment;
+import com.androidevlinux.percy.UTXO.ui.fragment.charts.BitfinexBarChartFragment;
+import com.androidevlinux.percy.UTXO.ui.fragment.charts.BitfinexCandleChartFragment;
+import com.androidevlinux.percy.UTXO.ui.fragment.charts.BitfinexLineChartFragment;
 import com.androidevlinux.percy.UTXO.utils.Constants;
 import com.crashlytics.android.Crashlytics;
 
@@ -48,6 +50,8 @@ public class MainActivity extends BaseActivity
     NavigationView navView;
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
+    @BindView(R.id.refresh_fab)
+    FloatingActionButton refreshFab;
     private Fragment fragment;
 
     @Override
@@ -92,34 +96,52 @@ public class MainActivity extends BaseActivity
         switch (itemId) {
             case R.id.nav_get_min_amount:
                 fab.show();
+                refreshFab.hide();
                 showMinAmountFragment();
                 break;
             case R.id.nav_exchange_amount:
                 fab.show();
+                refreshFab.hide();
                 showExchangeAmountFragment();
                 break;
             case R.id.nav_create_transaction:
                 fab.show();
+                refreshFab.hide();
                 showCreateTransactionFragment();
                 break;
             case R.id.nav_get_status:
                 fab.show();
+                refreshFab.hide();
                 showGetStatusFragment();
                 break;
             case R.id.nav_btc_price:
                 fab.hide();
+                refreshFab.show();
                 showPriceCheckFragment();
                 break;
             case R.id.nav_bitfinex_line_chart:
                 fab.hide();
-                showBitfinexChartFragment();
+                refreshFab.hide();
+                showBitfinexLineChartFragment();
+                break;
+            case R.id.nav_bitfinex_bar_chart:
+                fab.hide();
+                refreshFab.hide();
+                showBitfinexBarChartFragment();
+                break;
+            case R.id.nav_bitfinex_candle_chart:
+                fab.hide();
+                refreshFab.hide();
+                showBitfinexCandleChartFragment();
                 break;
             case R.id.nav_block_chain_explorer:
                 fab.hide();
+                refreshFab.hide();
                 showBlockChainExplorerFragment();
                 break;
             case R.id.nav_settings:
                 fab.hide();
+                refreshFab.hide();
                 showSettingsFragment();
                 break;
         }
@@ -208,8 +230,20 @@ public class MainActivity extends BaseActivity
     }
 
     @Override
-    public void showBitfinexChartFragment() {
-        fragment = new BitfinexChartFragment();
+    public void showBitfinexLineChartFragment() {
+        fragment = new BitfinexLineChartFragment();
+        replaceFragment(fragment);
+    }
+
+    @Override
+    public void showBitfinexBarChartFragment() {
+        fragment = new BitfinexBarChartFragment();
+        replaceFragment(fragment);
+    }
+
+    @Override
+    public void showBitfinexCandleChartFragment() {
+        fragment = new BitfinexCandleChartFragment();
         replaceFragment(fragment);
     }
 

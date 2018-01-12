@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatSpinner;
@@ -91,6 +92,12 @@ public class ExchangeAmountFragment extends BaseFragment {
         txtInfo.setText(R.string.exchange_amount_info);
         currenciesStringList = new ArrayList<>();
         Init();
+        FloatingActionButton fab = mActivity.findViewById(R.id.fab);
+        FloatingActionButton refreshFab = mActivity.findViewById(R.id.refresh_fab);
+        if (!fab.isShown()) {
+            fab.show();
+            refreshFab.hide();
+        }
     }
 
     private void MinAmount(String From, String To, String amount) {
