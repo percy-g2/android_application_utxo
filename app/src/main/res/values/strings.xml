@@ -105,6 +105,7 @@
     <string name="bitfinex_line_graph">Bifinex Line Graph</string>
     <string name="bitfinex_bar_graph">Bifinex Bar Graph</string>
     <string name="bitfinex_candle_graph">Bitfinex Candle Graph</string>
+    <string name="menu_licenses">Licenses</string>
 
     <string-array name="spinner_explore_data">
         <item>Address</item>

@@ -31,6 +31,8 @@ import com.androidevlinux.percy.UTXO.ui.fragment.charts.BitfinexCandleChartFragm
 import com.androidevlinux.percy.UTXO.ui.fragment.charts.BitfinexLineChartFragment;
 import com.androidevlinux.percy.UTXO.utils.Constants;
 import com.crashlytics.android.Crashlytics;
+import com.mikepenz.aboutlibraries.Libs;
+import com.mikepenz.aboutlibraries.LibsBuilder;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -192,14 +194,27 @@ public class MainActivity extends BaseActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            showSettingsFragment();
-            return true;
+        switch (item.getItemId()){
+            case R.id.action_settings:
+                showSettingsFragment();
+                break;
+            case R.id.action_licenses:
+                showLicenses();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showLicenses() {
+        new LibsBuilder()
+                //provide a style (optional) (LIGHT, DARK, LIGHT_DARK_TOOLBAR)
+                .withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR)
+                .withAboutIconShown(true)
+                .withAboutVersionShown(true)
+                .withAboutAppName(getString(R.string.app_name))
+                //start the activity
+                .start(this);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
