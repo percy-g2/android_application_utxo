@@ -103,6 +103,7 @@ public class MainActivity extends BaseActivity
         } else {
             displaySelectedScreen(R.id.nav_get_min_amount);
         }
+        drawer.openDrawer(GravityCompat.START);
     }
 
     private void displaySelectedScreen(int itemId) {
