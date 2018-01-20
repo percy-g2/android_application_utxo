@@ -10,6 +10,6 @@ import retrofit2.http.GET;
  */
 
 public interface ZebpayAPI {
-    @GET("/api/v1/market/ticker/btc/inr/")
+    @GET("/api/v1/ticker?currencyCode=inr")
     Call<ZebPayBean> getZebpayTicker();
 }

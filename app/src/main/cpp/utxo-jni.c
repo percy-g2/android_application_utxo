@@ -49,7 +49,7 @@ Java_com_androidevlinux_percy_UTXO_utils_NativeUtils_getBlocktrailApiKey(JNIEnv 
 JNIEXPORT jstring JNICALL
 Java_com_androidevlinux_percy_UTXO_utils_NativeUtils_getZebpayBaseUrl(JNIEnv *env, jclass type) {
 
-    char * baseUrl = "https://www.zebapi.com/";
+    char * baseUrl = "https://live.zebapi.com/";
     return (*env)->NewStringUTF(env, baseUrl);
 }
 
@@ -57,5 +57,12 @@ JNIEXPORT jstring JNICALL
 Java_com_androidevlinux_percy_UTXO_utils_NativeUtils_getbitStampBaseUrl(JNIEnv *env, jclass type) {
 
     char * baseUrl = "https://www.bitstamp.net/";
+    return (*env)->NewStringUTF(env, baseUrl);
+}
+
+JNIEXPORT jstring JNICALL
+Java_com_androidevlinux_percy_UTXO_utils_NativeUtils_getPocketbitsBaseUrl(JNIEnv *env,
+                                                                          jclass type) {
+    char * baseUrl = "https://pocketbits.in/";
     return (*env)->NewStringUTF(env, baseUrl);
 }

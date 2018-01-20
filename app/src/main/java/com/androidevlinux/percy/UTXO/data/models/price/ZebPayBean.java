@@ -13,42 +13,45 @@ public class ZebPayBean implements Serializable {
 
     @SerializedName("market")
     @Expose
-    private Double market;
+    private Integer market;
     @SerializedName("buy")
     @Expose
-    private Double buy;
+    private Integer buy;
     @SerializedName("sell")
     @Expose
-    private Double sell;
+    private Integer sell;
     @SerializedName("currency")
     @Expose
     private String currency;
     @SerializedName("volume")
     @Expose
     private Double volume;
-    private final static long serialVersionUID = -3404127777494987460L;
+    @SerializedName("virtualCurrency")
+    @Expose
+    private String virtualCurrency;
+    private final static long serialVersionUID = -6887817422339566777L;
 
-    public Double getMarket() {
+    public Integer getMarket() {
         return market;
     }
 
-    public void setMarket(Double market) {
+    public void setMarket(Integer market) {
         this.market = market;
     }
 
-    public Double getBuy() {
+    public Integer getBuy() {
         return buy;
     }
 
-    public void setBuy(Double buy) {
+    public void setBuy(Integer buy) {
         this.buy = buy;
     }
 
-    public Double getSell() {
+    public Integer getSell() {
         return sell;
     }
 
-    public void setSell(Double sell) {
+    public void setSell(Integer sell) {
         this.sell = sell;
     }
 
@@ -66,6 +69,14 @@ public class ZebPayBean implements Serializable {
 
     public void setVolume(Double volume) {
         this.volume = volume;
+    }
+
+    public String getVirtualCurrency() {
+        return virtualCurrency;
+    }
+
+    public void setVirtualCurrency(String virtualCurrency) {
+        this.virtualCurrency = virtualCurrency;
     }
 
 }

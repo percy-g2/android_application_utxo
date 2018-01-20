@@ -6,11 +6,13 @@ import com.androidevlinux.percy.UTXO.data.models.blocktrail.TransactionBean;
 import com.androidevlinux.percy.UTXO.data.models.changelly.GetCurrenciesResponseBean;
 import com.androidevlinux.percy.UTXO.data.models.changelly.GetMinAmountReponseBean;
 import com.androidevlinux.percy.UTXO.data.models.changelly.MainBodyBean;
+import com.androidevlinux.percy.UTXO.data.models.pocketbits.PocketBitsBean;
 import com.androidevlinux.percy.UTXO.data.models.price.ZebPayBean;
 import com.androidevlinux.percy.UTXO.data.network.apis.BitfinexApiImpl;
 import com.androidevlinux.percy.UTXO.data.network.apis.BitstampApiImpl;
 import com.androidevlinux.percy.UTXO.data.network.apis.BlocktrailApiImpl;
 import com.androidevlinux.percy.UTXO.data.network.apis.ChangellyApiImpl;
+import com.androidevlinux.percy.UTXO.data.network.apis.PocketbitsApiImpl;
 import com.androidevlinux.percy.UTXO.data.network.apis.ZebpayApiImpl;
 import com.google.gson.JsonObject;
 
@@ -25,6 +27,7 @@ public class ApiManager {
     private BlocktrailApiImpl blocktrailApiImpl;
     private ChangellyApiImpl changellyApiImpl;
     private ZebpayApiImpl zebpayApiImpl;
+    private PocketbitsApiImpl pocketbitsApiImpl;
 
     private ApiManager() {
         bitfinexApiImpl = BitfinexApiImpl.getInstance();
@@ -32,6 +35,7 @@ public class ApiManager {
         blocktrailApiImpl = BlocktrailApiImpl.getInstance();
         changellyApiImpl = ChangellyApiImpl.getInstance();
         zebpayApiImpl = ZebpayApiImpl.getInstance();
+        pocketbitsApiImpl = PocketbitsApiImpl.getInstance();
     }
 
     public static ApiManager getInstance() {
@@ -82,4 +86,7 @@ public class ApiManager {
         zebpayApiImpl.getZebpayTicker(callback);
     }
 
+    public void getPocketbitsTicker(Callback<PocketBitsBean> callback) {
+        pocketbitsApiImpl.getPocketbitsTicker(callback);
+    }
 }

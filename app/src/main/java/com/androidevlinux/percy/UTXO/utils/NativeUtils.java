@@ -17,4 +17,5 @@ public class NativeUtils {
     public static native String getChangellySecretKey();
     public static native String getChangellyBaseUrl();
     public static native String getZebpayBaseUrl();
+    public static native String getPocketbitsBaseUrl();
 }

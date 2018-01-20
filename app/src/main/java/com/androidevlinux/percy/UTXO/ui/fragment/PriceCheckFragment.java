@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.androidevlinux.percy.UTXO.R;
 import com.androidevlinux.percy.UTXO.data.models.bitfinex.BitfinexPubTickerResponseBean;
+import com.androidevlinux.percy.UTXO.data.models.pocketbits.PocketBitsBean;
 import com.androidevlinux.percy.UTXO.data.models.price.PriceBean;
 import com.androidevlinux.percy.UTXO.data.models.price.ZebPayBean;
 import com.androidevlinux.percy.UTXO.ui.adapter.PriceAdapter;
@@ -90,6 +91,7 @@ public class PriceCheckFragment extends BaseFragment {
         getBitfinexPubTicker();
         getBitstampTicker();
         getZebpayTicker();
+        getPocketbitsTicker();
         boolean isRefreshButtonEnabled = mSharedPreferences.getBoolean(SettingsFragment.refresh_btc_price_button_key, false);
         if (!isRefreshButtonEnabled) {
             refreshFab.hide();
@@ -189,13 +191,13 @@ public class PriceCheckFragment extends BaseFragment {
             public void onResponse(@NonNull Call<ZebPayBean> call, @NonNull Response<ZebPayBean> response) {
                 if (response.body() != null) {
                     Constants.btc_price = String.valueOf(response.body().getMarket());
-                    Constants.btc_price_low = String.valueOf(response.body().getBuy());
-                    Constants.btc_price_high = String.valueOf(response.body().getSell());
+                    Constants.btc_price_low = String.valueOf(response.body().getSell());
+                    Constants.btc_price_high = String.valueOf(response.body().getBuy());
                     PriceBean priceBean = new PriceBean();
                     priceBean.setTitle("Zebpay");
-                    priceBean.setPrice(strRuppeSymbol + rupeeFormat(Constants.btc_price.substring(0, Constants.btc_price.length() - 2)));
-                    priceBean.setLow_price(strRuppeSymbol + rupeeFormat(Constants.btc_price_low.substring(0, Constants.btc_price_low.length() - 2)));
-                    priceBean.setHigh_price(strRuppeSymbol + rupeeFormat(Constants.btc_price_high.substring(0, Constants.btc_price_high.length() - 2)));
+                    priceBean.setPrice(strRuppeSymbol + rupeeFormat(Constants.btc_price.substring(0, Constants.btc_price.length())));
+                    priceBean.setLow_price(strRuppeSymbol + rupeeFormat(Constants.btc_price_low.substring(0, Constants.btc_price_low.length())));
+                    priceBean.setHigh_price(strRuppeSymbol + rupeeFormat(Constants.btc_price_high.substring(0, Constants.btc_price_high.length())));
                     priceBeanArrayList.add(priceBean);
                     priceAdapter.notifyDataSetChanged();
                 }
@@ -203,6 +205,30 @@ public class PriceCheckFragment extends BaseFragment {
 
             @Override
             public void onFailure(@NonNull Call<ZebPayBean> call, @NonNull Throwable t) {
+            }
+        });
+    }
+
+    private void getPocketbitsTicker() {
+        apiManager.getPocketbitsTicker(new Callback<PocketBitsBean>() {
+            @Override
+            public void onResponse(@NonNull Call<PocketBitsBean> call, @NonNull Response<PocketBitsBean> response) {
+                if (response.body() != null) {
+                    Constants.btc_price = String.valueOf(response.body().getBuy());
+                    Constants.btc_price_low = String.valueOf(response.body().getSell());
+                    Constants.btc_price_high = String.valueOf(response.body().getBuy());
+                    PriceBean priceBean = new PriceBean();
+                    priceBean.setTitle("Pocketbits");
+                    priceBean.setPrice(strRuppeSymbol + rupeeFormat(Constants.btc_price.substring(0, Constants.btc_price.length())));
+                    priceBean.setLow_price(strRuppeSymbol + rupeeFormat(Constants.btc_price_low.substring(0, Constants.btc_price_low.length())));
+                    priceBean.setHigh_price(strRuppeSymbol + rupeeFormat(Constants.btc_price_high.substring(0, Constants.btc_price_high.length())));
+                    priceBeanArrayList.add(priceBean);
+                    priceAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<PocketBitsBean> call, @NonNull Throwable t) {
             }
         });
     }
@@ -223,6 +249,7 @@ public class PriceCheckFragment extends BaseFragment {
             getBitfinexPubTicker();
             getBitstampTicker();
             getZebpayTicker();
+            getPocketbitsTicker();
             return null;
         }
 

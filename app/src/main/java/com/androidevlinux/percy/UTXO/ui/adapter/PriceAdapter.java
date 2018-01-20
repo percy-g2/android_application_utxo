@@ -37,9 +37,9 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.ViewHolder> 
         holder.price.setText(priceBean.getPrice());
         holder.price_low.setText(priceBean.getLow_price());
         holder.price_high.setText(priceBean.getHigh_price());
-        if (priceBean.getTitle().equalsIgnoreCase("Zebpay")) {
-            holder.footer_start.setText(R.string.buy);
-            holder.footer_end.setText(R.string.sell);
+        if (priceBean.getTitle().equalsIgnoreCase("Zebpay") || priceBean.getTitle().equalsIgnoreCase("Pocketbits")) {
+            holder.footer_start.setText(R.string.sell);
+            holder.footer_end.setText(R.string.buy);
         } else {
             holder.footer_start.setText(R.string._24_hr_s_low);
             holder.footer_end.setText(R.string._24_hr_s_high);
