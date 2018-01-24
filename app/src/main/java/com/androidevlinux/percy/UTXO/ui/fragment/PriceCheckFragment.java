@@ -92,7 +92,7 @@ public class PriceCheckFragment extends BaseFragment {
         getBitstampTicker();
         getZebpayTicker();
         getPocketbitsTicker();
-        boolean isRefreshButtonEnabled = mSharedPreferences.getBoolean(SettingsFragment.refresh_btc_price_button_key, false);
+        boolean isRefreshButtonEnabled = mSharedPreferences.getBoolean(SettingsFragment.refresh_btc_price_button_key, true);
         if (!isRefreshButtonEnabled) {
             refreshFab.hide();
             handler.postDelayed(runnable, 60000);

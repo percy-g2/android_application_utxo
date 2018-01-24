@@ -24,7 +24,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.pref, rootKey);
         // This static call will reset default values only on the first ever read
-        PreferenceManager.setDefaultValues(mActivity, R.xml.pref, false);
+        PreferenceManager.setDefaultValues(mActivity, R.xml.pref, true);
         TextView Title = mActivity.findViewById(R.id.txtTitle);
         Title.setText(getResources().getString(R.string.action_settings));
         PreferenceManager.getDefaultSharedPreferences(mActivity);

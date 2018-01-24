@@ -3,7 +3,7 @@
         <SwitchPreference
             android:background="@color/colorAccent"
             android:key="enable_refresh_pref_key"
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:summary="Enable refresh button for BTC Price"
             android:title="Refresh Button" />
 </PreferenceScreen>

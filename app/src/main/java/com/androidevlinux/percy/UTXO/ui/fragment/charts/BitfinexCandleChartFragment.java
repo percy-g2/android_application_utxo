@@ -96,7 +96,8 @@ public class BitfinexCandleChartFragment extends BaseFragment {
         description.setTextAlign(Paint.Align.RIGHT);
         candleChart.setDescription(description);
         SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
-        boolean isRefreshButtonEnabled = mSharedPreferences.getBoolean(SettingsFragment.refresh_btc_price_button_key, false);
+        getBitfinexData();
+        boolean isRefreshButtonEnabled = mSharedPreferences.getBoolean(SettingsFragment.refresh_btc_price_button_key, true);
         if (!isRefreshButtonEnabled) {
             getBitfinexData();
             handler.postDelayed(runnable, 60000);
@@ -142,16 +143,16 @@ public class BitfinexCandleChartFragment extends BaseFragment {
                     for (BigDecimal[] s : newMap) {
                         count += 1;
                         entries.add(new CandleEntry(count, Float.valueOf(String.valueOf(s[3])), Float.valueOf(String.valueOf(s[4])), Float.valueOf(String.valueOf(s[1])), Float.valueOf(String.valueOf(s[2]))));
-                        CandleDataSet dataset = new CandleDataSet(entries, "label");
-                        dataset.setColor(Color.rgb(80, 80, 80));
-                        dataset.setShadowColor(Color.DKGRAY);
-                        dataset.setShadowWidth(0.7f);
-                        dataset.setDecreasingColor(Color.RED);
-                        dataset.setDecreasingPaintStyle(Paint.Style.FILL);
-                        dataset.setIncreasingColor(Color.rgb(122, 242, 84));
-                        dataset.setIncreasingPaintStyle(Paint.Style.FILL);
-                        dataset.setNeutralColor(Color.BLUE);
-                        dataset.setValueTextColor(Color.RED);
+                        CandleDataSet data_set = new CandleDataSet(entries, "Data");
+                        data_set.setColor(Color.rgb(80, 80, 80));
+                        data_set.setShadowColor(Color.DKGRAY);
+                        data_set.setShadowWidth(0.7f);
+                        data_set.setDecreasingColor(Color.RED);
+                        data_set.setDecreasingPaintStyle(Paint.Style.FILL);
+                        data_set.setIncreasingColor(Color.rgb(122, 242, 84));
+                        data_set.setIncreasingPaintStyle(Paint.Style.FILL);
+                        data_set.setNeutralColor(Color.BLUE);
+                        data_set.setValueTextColor(Color.RED);
                         Date date = new Date(Long.valueOf(String.valueOf(s[0])));
                         SimpleDateFormat sdf;
                         if (spinnerTimeFrame.getSelectedItem().toString().equals("7D") ||
@@ -167,17 +168,10 @@ public class BitfinexCandleChartFragment extends BaseFragment {
                         xValues.add(formattedDate);
                         XAxis xAxis = candleChart.getXAxis();
                         xAxis.setValueFormatter((value1, axis) -> xValues.get((int) value1 % xValues.size()));
-/*
-                        Log.i("time", String.valueOf(s[0]));
-                        Log.i("open", String.valueOf(s[1]));
-                        Log.i("close", String.valueOf(s[2]));
-                        Log.i("high", String.valueOf(s[3]));
-                        Log.i("low", String.valueOf(s[4]));
-                        Log.i("volume", String.valueOf(s[5]));
-*/
-                        CandleData data = new CandleData(dataset);
+                        CandleData data = new CandleData(data_set);
                         candleChart.setData(data);
                     }
+                    candleChart.setAutoScaleMinMaxEnabled(true);
                     candleChart.invalidate();
 
                 } catch (IOException e) {

@@ -97,8 +97,9 @@ public class BitfinexLineChartFragment extends BaseFragment {
         CustomMarkerViewLineChart mv = new CustomMarkerViewLineChart(mChart, getActivity(), R.layout.custom_marker_view_layout);
         // set the marker to the chart
         mChart.setMarker(mv);
+        getBitfinexPubTicker();
         SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
-        boolean isRefreshButtonEnabled = mSharedPreferences.getBoolean(SettingsFragment.refresh_btc_price_button_key, false);
+        boolean isRefreshButtonEnabled = mSharedPreferences.getBoolean(SettingsFragment.refresh_btc_price_button_key, true);
         if (!isRefreshButtonEnabled) {
             getBitfinexPubTicker();
             handler.postDelayed(runnable, 60000);
