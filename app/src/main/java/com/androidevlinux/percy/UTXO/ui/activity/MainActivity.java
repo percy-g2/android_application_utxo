@@ -91,7 +91,6 @@ public class MainActivity extends BaseActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
         navView.setNavigationItemSelectedListener(this);
         navView.setItemIconTintList(null);
         if (Constants.ACTION_SETTINGS.equalsIgnoreCase(getIntent().getAction())) {
@@ -194,8 +193,7 @@ public class MainActivity extends BaseActivity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.action_settings:
                 showSettingsFragment();
                 break;

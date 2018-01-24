@@ -22,8 +22,8 @@ android {
         applicationId "com.androidevlinux.percy.UTXO"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 7
-        versionName "7.0"
+        versionCode 8
+        versionName "8.0"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {
@@ -77,7 +77,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     implementation 'com.jakewharton:butterknife:8.8.1'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
     implementation 'com.android.support:animated-vector-drawable:27.0.2'
     implementation 'com.android.support:cardview-v7:27.0.2'
     implementation 'com.journeyapps:zxing-android-embedded:3.4.0'
