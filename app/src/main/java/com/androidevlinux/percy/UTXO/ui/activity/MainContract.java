@@ -14,7 +14,6 @@ public interface MainContract {
         void showPriceCheckFragment();
         void showBlockChainExplorerFragment();
         void showSettingsFragment();
-        void showBitfinexLineChartFragment();
         void showBitfinexBarChartFragment();
         void showBitfinexCandleChartFragment();
     }
