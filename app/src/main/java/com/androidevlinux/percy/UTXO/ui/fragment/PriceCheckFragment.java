@@ -190,14 +190,14 @@ public class PriceCheckFragment extends BaseFragment {
             @Override
             public void onResponse(@NonNull Call<ZebPayBean> call, @NonNull Response<ZebPayBean> response) {
                 if (response.body() != null) {
-                    Constants.btc_price = String.valueOf(response.body().getMarket());
+                    Constants.btc_price = String.valueOf(response.body().getBuy());
                     Constants.btc_price_low = String.valueOf(response.body().getSell());
                     Constants.btc_price_high = String.valueOf(response.body().getBuy());
                     PriceBean priceBean = new PriceBean();
                     priceBean.setTitle("Zebpay");
-                    priceBean.setPrice(strRuppeSymbol + rupeeFormat(Constants.btc_price.substring(0, Constants.btc_price.length())));
-                    priceBean.setLow_price(strRuppeSymbol + rupeeFormat(Constants.btc_price_low.substring(0, Constants.btc_price_low.length())));
-                    priceBean.setHigh_price(strRuppeSymbol + rupeeFormat(Constants.btc_price_high.substring(0, Constants.btc_price_high.length())));
+                    priceBean.setPrice(strRuppeSymbol + rupeeFormat(Constants.btc_price.substring(0, Constants.btc_price.length() - 2)));
+                    priceBean.setLow_price(strRuppeSymbol + rupeeFormat(Constants.btc_price_low.substring(0, Constants.btc_price_low.length() - 2)));
+                    priceBean.setHigh_price(strRuppeSymbol + rupeeFormat(Constants.btc_price_high.substring(0, Constants.btc_price_high.length() - 2)));
                     priceBeanArrayList.add(priceBean);
                     priceAdapter.notifyDataSetChanged();
                 }

@@ -9,58 +9,54 @@ import java.io.Serializable;
  * Created by percy on 3/12/17.
  */
 
-public class ZebPayBean implements Serializable {
+public class ZebPayBean implements Serializable
+{
 
     @SerializedName("market")
     @Expose
-    private Integer market;
+    private Double market;
     @SerializedName("buy")
     @Expose
-    private Integer buy;
+    private Double buy;
     @SerializedName("sell")
     @Expose
-    private Integer sell;
-    @SerializedName("currency")
-    @Expose
-    private String currency;
+    private Double sell;
     @SerializedName("volume")
     @Expose
     private Double volume;
     @SerializedName("virtualCurrency")
     @Expose
     private String virtualCurrency;
-    private final static long serialVersionUID = -6887817422339566777L;
+    @SerializedName("currency")
+    @Expose
+    private String currency;
+    @SerializedName("pair")
+    @Expose
+    private String pair;
+    private final static long serialVersionUID = -4766353430131075747L;
 
-    public Integer getMarket() {
+    public Double getMarket() {
         return market;
     }
 
-    public void setMarket(Integer market) {
+    public void setMarket(Double market) {
         this.market = market;
     }
 
-    public Integer getBuy() {
+    public Double getBuy() {
         return buy;
     }
 
-    public void setBuy(Integer buy) {
+    public void setBuy(Double buy) {
         this.buy = buy;
     }
 
-    public Integer getSell() {
+    public Double getSell() {
         return sell;
     }
 
-    public void setSell(Integer sell) {
+    public void setSell(Double sell) {
         this.sell = sell;
-    }
-
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
     }
 
     public Double getVolume() {
@@ -77,6 +73,22 @@ public class ZebPayBean implements Serializable {
 
     public void setVirtualCurrency(String virtualCurrency) {
         this.virtualCurrency = virtualCurrency;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public String getPair() {
+        return pair;
+    }
+
+    public void setPair(String pair) {
+        this.pair = pair;
     }
 
 }
