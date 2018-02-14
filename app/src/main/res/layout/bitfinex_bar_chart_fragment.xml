@@ -12,7 +12,7 @@
         android:orientation="vertical"
         android:weightSum="10">
 
-        <android.support.design.widget.FloatingActionButton
+        <android.support.v7.widget.AppCompatImageView
             android:id="@+id/get_fab"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
@@ -20,7 +20,8 @@
             android:layout_margin="@dimen/fab_margin"
             android:layout_weight="1"
             android:visibility="gone"
-            app:srcCompat="@drawable/ic_file_download_white_48dp" />
+            android:scaleType="centerInside"
+            app:srcCompat="@mipmap/refresh" />
 
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/barChart"

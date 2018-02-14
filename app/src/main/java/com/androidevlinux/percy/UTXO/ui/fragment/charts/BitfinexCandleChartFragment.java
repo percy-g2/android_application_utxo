@@ -9,8 +9,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.preference.PreferenceManager;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatSpinner;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,7 +55,7 @@ public class BitfinexCandleChartFragment extends BaseFragment {
 
 
     @BindView(R.id.get_fab)
-    FloatingActionButton getFab;
+    AppCompatImageView getFab;
     @BindView(R.id.candleChart)
     CandleStickChart candleChart;
     Unbinder unbinder;
