@@ -105,7 +105,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:background="@color/colorPrimary"
+                android:background="@drawable/round_black_button"
                 android:gravity="center"
                 android:text="@string/get"
                 android:textColor="@android:color/white"

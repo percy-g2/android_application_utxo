@@ -1,9 +1,7 @@
 package com.androidevlinux.percy.UTXO.ui.fragment.blocktrail;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -73,19 +71,6 @@ public class BlockChainExplorerFragment extends BaseFragment {
     protected static String TAG = "BlockChainExplorerFragment";
     protected ArrayList<AddressBean> addressBeanArrayList;
     protected ArrayList<TransactionBean> transactionBeanArrayList;
-    private Activity mActivity;
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        mActivity = (Activity) context;
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        this.mActivity = null;
-    }
 
     @Override
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

@@ -1,9 +1,7 @@
 package com.androidevlinux.percy.UTXO.ui.fragment;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -48,23 +46,10 @@ public class PriceCheckFragment extends BaseFragment {
     SharedPreferences mSharedPreferences;
     @BindView(R.id.price_list_recycler_view)
     RecyclerView priceListRecyclerView;
-    private Activity mActivity;
     String TAG = "PriceCheckFragment", strRuppeSymbol = "\u20B9", strDollarSymbol = "$";
     ArrayList<PriceBean> priceBeanArrayList;
     PriceAdapter priceAdapter;
     FloatingActionButton refreshFab;
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        mActivity = (Activity) context;
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        this.mActivity = null;
-    }
 
     @Override
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

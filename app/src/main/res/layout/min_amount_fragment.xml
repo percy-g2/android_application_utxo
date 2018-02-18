@@ -78,7 +78,7 @@
                 android:id="@+id/btn_get_amount"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
+                android:background="@drawable/round_black_button"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
                 android:layout_gravity="center"

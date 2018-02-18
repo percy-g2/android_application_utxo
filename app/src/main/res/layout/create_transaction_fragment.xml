@@ -129,7 +129,10 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight=".2"
-                android:text="@string/scan" />
+                android:background="@drawable/round_scan_button"
+                android:text="@string/scan"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
@@ -145,7 +148,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:background="@color/colorPrimary"
+                android:background="@drawable/round_black_button"
                 android:gravity="center"
                 android:text="@string/get"
                 android:textColor="@android:color/white"

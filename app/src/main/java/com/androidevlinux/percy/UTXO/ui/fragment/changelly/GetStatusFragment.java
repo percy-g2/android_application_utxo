@@ -1,8 +1,6 @@
 package com.androidevlinux.percy.UTXO.ui.fragment.changelly;
 
-import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -49,19 +47,6 @@ public class GetStatusFragment  extends BaseFragment {
     AppCompatTextView txtInfo;
     @BindView(R.id.edtTransactionId)
     AppCompatEditText edtTransactionId;
-    private Activity mActivity;
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        mActivity = (Activity) context;
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        this.mActivity = null;
-    }
 
     @Override
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

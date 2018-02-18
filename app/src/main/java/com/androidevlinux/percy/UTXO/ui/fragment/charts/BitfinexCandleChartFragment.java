@@ -1,7 +1,5 @@
 package com.androidevlinux.percy.UTXO.ui.fragment.charts;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -66,22 +64,11 @@ public class BitfinexCandleChartFragment extends BaseFragment {
     AppCompatSpinner spinnerTimeFrame;
     @BindView(R.id.spinner_currency)
     AppCompatSpinner spinnerCurrency;
-    private Activity mActivity;
     ArrayList<CandleEntry> entries = new ArrayList<>();
     ArrayList<String> xValues = new ArrayList<>();
     int currencyId = 0;
     Description description = new Description();
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        mActivity = (Activity) context;
-    }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        this.mActivity = null;
-    }
 
     @Override
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -105,7 +92,7 @@ public class BitfinexCandleChartFragment extends BaseFragment {
             getBitfinexData(currencyId);
             handler.postDelayed(runnable, 60000);
         } else {
-            candleChart.setNoDataText("Click On Get Data");
+            candleChart.setNoDataText("Click On Refresh Button");
             getFab.setVisibility(View.VISIBLE);
         }
 
