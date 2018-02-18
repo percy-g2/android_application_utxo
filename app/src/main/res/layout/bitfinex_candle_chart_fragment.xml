@@ -18,13 +18,22 @@
             android:layout_weight="1"
             android:layout_margin="2dp"
             android:orientation="horizontal"
-            android:weightSum="5">
+            android:weightSum="6">
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/spinner_currency"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:entries="@array/spinner_currency"
+                android:visibility="visible"
+                app:srcCompat="@drawable/ic_file_download_white_48dp" />
 
             <android.support.v7.widget.AppCompatSpinner
                 android:id="@+id/spinner_TimeFrame"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="4"
+                android:layout_weight="2"
                 android:entries="@array/spinner_time_frame"
                 android:visibility="visible"
                 app:srcCompat="@drawable/ic_file_download_white_48dp" />

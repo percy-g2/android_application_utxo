@@ -49,8 +49,8 @@ public class ApiManager {
         bitfinexApiImpl.getBitfinexPubTicker(callback);
     }
 
-    public void getBitfinexData(String time, Callback<ResponseBody> callback) {
-        bitfinexApiImpl.getBitfinexData(time, callback);
+    public void getBitfinexData(String time, String symbol, Callback<ResponseBody> callback) {
+        bitfinexApiImpl.getBitfinexData(time, symbol, callback);
     }
 
     public void getBitstampTicker(Callback<JsonObject> callback) {

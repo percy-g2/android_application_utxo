@@ -29,7 +29,7 @@ public class BitfinexApiImpl extends AbstractBaseApi<BitfinexAPI> {
         bitfinexAPI.getBitfinexPubTicker().enqueue(callback);
     }
 
-    public void getBitfinexData(String time, Callback<ResponseBody> callback){
-        bitfinexAPI.getBitfinexData(time).enqueue(callback);
+    public void getBitfinexData(String time, String symbol, Callback<ResponseBody> callback){
+        bitfinexAPI.getBitfinexData(time, symbol).enqueue(callback);
     }
 }

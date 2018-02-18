@@ -16,6 +16,6 @@ public interface BitfinexAPI {
     @GET("/v1/pubticker/btcusd/")
     Call<BitfinexPubTickerResponseBean> getBitfinexPubTicker();
 
-    @GET("/v2/candles/trade:{time}:tBTCUSD/hist/")
-    Call<ResponseBody> getBitfinexData(@Path(value = "time", encoded = true) String time);
+    @GET("/v2/candles/trade:{time}:{symbol}/hist/")
+    Call<ResponseBody> getBitfinexData(@Path(value = "time", encoded = true) String time, @Path(value = "symbol", encoded = true) String symbol);
 }

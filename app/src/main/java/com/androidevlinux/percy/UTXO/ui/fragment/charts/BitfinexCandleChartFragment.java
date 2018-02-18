@@ -15,6 +15,7 @@ import android.support.v7.widget.AppCompatSpinner;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.androidevlinux.percy.UTXO.R;
@@ -22,7 +23,9 @@ import com.androidevlinux.percy.UTXO.ui.base.BaseFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.SettingsFragment;
 import com.github.mikephil.charting.charts.CandleStickChart;
 import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.CandleData;
 import com.github.mikephil.charting.data.CandleDataSet;
 import com.github.mikephil.charting.data.CandleEntry;
@@ -61,10 +64,13 @@ public class BitfinexCandleChartFragment extends BaseFragment {
     Unbinder unbinder;
     @BindView(R.id.spinner_TimeFrame)
     AppCompatSpinner spinnerTimeFrame;
+    @BindView(R.id.spinner_currency)
+    AppCompatSpinner spinnerCurrency;
     private Activity mActivity;
     ArrayList<CandleEntry> entries = new ArrayList<>();
     ArrayList<String> xValues = new ArrayList<>();
-
+    int currencyId = 0;
+    Description description = new Description();
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -91,20 +97,43 @@ public class BitfinexCandleChartFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         TextView Title = mActivity.findViewById(R.id.txtTitle);
         Title.setText(getResources().getString(R.string.bitfinex_candle_graph));
-        Description description = new Description();
-        description.setText("Bitfinex");
-        description.setTextAlign(Paint.Align.RIGHT);
-        candleChart.setDescription(description);
         SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
-        getBitfinexData();
+
+        getBitfinexData(currencyId);
         boolean isRefreshButtonEnabled = mSharedPreferences.getBoolean(SettingsFragment.refresh_btc_price_button_key, true);
         if (!isRefreshButtonEnabled) {
-            getBitfinexData();
+            getBitfinexData(currencyId);
             handler.postDelayed(runnable, 60000);
         } else {
             candleChart.setNoDataText("Click On Get Data");
             getFab.setVisibility(View.VISIBLE);
         }
+
+        spinnerCurrency.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                currencyId = position;
+                getBitfinexData(currencyId);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        spinnerTimeFrame.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                getBitfinexData(currencyId);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
     }
 
     // Init
@@ -112,7 +141,7 @@ public class BitfinexCandleChartFragment extends BaseFragment {
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            getBitfinexData();
+            getBitfinexData(currencyId);
             handler.postDelayed(this, 60000);
         }
     };
@@ -124,8 +153,18 @@ public class BitfinexCandleChartFragment extends BaseFragment {
         unbinder.unbind();
     }
 
-    private void getBitfinexData() {
-        apiManager.getBitfinexData(spinnerTimeFrame.getSelectedItem().toString(), new Callback<ResponseBody>() {
+    private void getBitfinexData(int currencyId) {
+        String symbol = "tBTCUSD";
+        if (currencyId == 0) {
+            symbol = "tBTCUSD";
+        } else if (currencyId == 1) {
+            symbol = "tETHUSD";
+        } else if (currencyId == 2) {
+            symbol = "tXRPUSD";
+        } else if (currencyId == 3) {
+            symbol = "tXMRUSD";
+        }
+        apiManager.getBitfinexData(spinnerTimeFrame.getSelectedItem().toString(), symbol, new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 Gson gson = new Gson();
@@ -158,19 +197,40 @@ public class BitfinexCandleChartFragment extends BaseFragment {
                         if (spinnerTimeFrame.getSelectedItem().toString().equals("7D") ||
                                 spinnerTimeFrame.getSelectedItem().toString().equals("14D") ||
                                 spinnerTimeFrame.getSelectedItem().toString().equals("1M")) {
-                            sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                            sdf = new SimpleDateFormat("dd MMM yy", Locale.ENGLISH);
                         } else {
-                            sdf = new SimpleDateFormat("HH:mm", Locale.ENGLISH);
+                            sdf = new SimpleDateFormat("dd HH:mm", Locale.ENGLISH);
                         }
                         sdf.setTimeZone(TimeZone.getDefault());
                         String formattedDate = sdf.format(date);
 
                         xValues.add(formattedDate);
+                        YAxis yAxis = candleChart.getAxisRight();
+                        yAxis.setGranularityEnabled(true);
                         XAxis xAxis = candleChart.getXAxis();
+                        xAxis.setGranularity(1f);
                         xAxis.setValueFormatter((value1, axis) -> xValues.get((int) value1 % xValues.size()));
                         CandleData data = new CandleData(data_set);
                         candleChart.setData(data);
                     }
+                    description.setText(spinnerCurrency.getSelectedItem().toString());
+                    description.setTextSize(15f);
+                    description.setTextAlign(Paint.Align.RIGHT);
+                    candleChart.setDescription(description);
+                    candleChart.setDragEnabled(true);
+                    candleChart.setScaleEnabled(true);
+                    candleChart.setExtraRightOffset(30f);
+                    candleChart.setBackgroundColor(Color.WHITE);
+                    //mChart.setGridBackgroundColor(Color.WHITE);
+                    candleChart.setDrawGridBackground(false);
+
+                    candleChart.setDrawBorders(true);
+
+
+                    candleChart.setPinchZoom(true);
+
+                    Legend l = candleChart.getLegend();
+                    l.setEnabled(false);
                     candleChart.setAutoScaleMinMaxEnabled(true);
                     candleChart.invalidate();
 
@@ -187,6 +247,6 @@ public class BitfinexCandleChartFragment extends BaseFragment {
 
     @OnClick(R.id.get_fab)
     public void onClick() {
-        getBitfinexData();
+        getBitfinexData(currencyId);
     }
 }

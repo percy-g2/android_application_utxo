@@ -113,6 +113,13 @@
         <item>Transaction</item>
     </string-array>
 
+    <string-array name="spinner_currency">
+        <item>Bitcoin</item>
+        <item>Ethereum</item>
+        <item>Ripple</item>
+        <item>Monero</item>
+    </string-array>
+
     <string-array name="spinner_time_frame">
         <item>1m</item>
         <item>5m</item>

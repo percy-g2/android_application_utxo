@@ -33,10 +33,6 @@
                     android:icon="@drawable/btc_price_icon"
                     android:title="@string/btc_price" />
                 <item
-                    android:id="@+id/nav_bitfinex_bar_chart"
-                    android:icon="@drawable/bars_chart"
-                    android:title="@string/bitfinex_bar_graph" />
-                <item
                     android:id="@+id/nav_bitfinex_candle_chart"
                     android:icon="@drawable/candle_graph"
                     android:title="@string/bitfinex_candle_graph" />
