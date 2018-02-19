@@ -152,6 +152,7 @@ public class MinAmountFragment extends BaseFragment {
             public void onResponse(@NonNull Call<GetCurrenciesResponseBean> call, @NonNull Response<GetCurrenciesResponseBean> response) {
                 if (response.body()!=null) {
                     currenciesStringList = response.body().getResult();
+                    Constants.currenciesStringList = currenciesStringList;
                     ArrayAdapter<String> karant_adapter = new ArrayAdapter<>(mActivity,
                             android.R.layout.simple_spinner_item, currenciesStringList);
                     karant_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
