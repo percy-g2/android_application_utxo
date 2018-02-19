@@ -73,30 +73,30 @@ public class GetStatusFragment  extends BaseFragment {
     }
 
     private void MinAmount(String strTransactionId) {
-        MainBodyBean testbean = new MainBodyBean();
-        testbean.setId(1);
-        testbean.setJsonrpc("2.0");
-        testbean.setMethod("getStatus");
+        MainBodyBean mainBodyBean = new MainBodyBean();
+        mainBodyBean.setId(1);
+        mainBodyBean.setJsonrpc("2.0");
+        mainBodyBean.setMethod("getStatus");
         ParamsBean params = new ParamsBean();
         params.setId(strTransactionId);
-        testbean.setParams(params);
+        mainBodyBean.setParams(params);
         String sign = null;
         try {
-            sign = Utils.hmacDigest(new Gson().toJson(testbean), Constants.secret_key);
+            sign = Utils.hmacDigest(new Gson().toJson(mainBodyBean), Constants.secret_key);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         final Dialog dialogToSaveData =  CustomProgressDialog.showCustomProgressDialog(mActivity, "Please Wait ...");
 
-        apiManager.getMinAmount(sign, testbean, new Callback<GetMinAmountReponseBean>() {
+        apiManager.getMinAmount(sign, mainBodyBean, new Callback<GetMinAmountReponseBean>() {
             @Override
             public void onResponse(@NonNull Call<GetMinAmountReponseBean> call, @NonNull Response<GetMinAmountReponseBean> response) {
                 if (response.body() != null) {
                     if (response.body().getError() != null) {
-                        Toast.makeText(mActivity, response.body().getError().getMessage(), Toast.LENGTH_SHORT).show();
+                        Toasty.error(mActivity, response.body().getError().getMessage(), Toast.LENGTH_SHORT, true).show();
                     } else {
-                        Toast.makeText(mActivity, response.body().getResult(), Toast.LENGTH_SHORT).show();
+                        Toasty.success(mActivity, response.body().getResult(), Toast.LENGTH_SHORT, true).show();
                         txtMinAmount.setText(response.body().getResult());
                     }
                 }

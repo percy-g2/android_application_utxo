@@ -113,30 +113,30 @@ public class CreateTransactionFragment extends BaseFragment {
     }
 
     private void MinAmount(String From, String To, String amount, String address) {
-        MainBodyBean testbean = new MainBodyBean();
-        testbean.setId(1);
-        testbean.setJsonrpc("2.0");
-        testbean.setMethod("createTransaction");
+        MainBodyBean mainBodyBean = new MainBodyBean();
+        mainBodyBean.setId(1);
+        mainBodyBean.setJsonrpc("2.0");
+        mainBodyBean.setMethod("createTransaction");
         ParamsBean params = new ParamsBean();
         params.setFrom(From);
         params.setTo(To);
         params.setAmount(amount);
         params.setAddress(address);
-        testbean.setParams(params);
+        mainBodyBean.setParams(params);
         String sign = null;
         try {
-            sign = Utils.hmacDigest(new Gson().toJson(testbean), Constants.secret_key);
+            sign = Utils.hmacDigest(new Gson().toJson(mainBodyBean), Constants.secret_key);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         final Dialog dialogToSaveData = CustomProgressDialog.showCustomProgressDialog(mActivity, "Please Wait ...");
-        apiManager.createTransaction(sign, testbean, new Callback<TransactionBean>() {
+        apiManager.createTransaction(sign, mainBodyBean, new Callback<TransactionBean>() {
             @Override
             public void onResponse(@NonNull Call<TransactionBean> call, @NonNull Response<TransactionBean> response) {
                 if (response.body() != null) {
                     if (response.body().getError() != null) {
-                        Toast.makeText(mActivity, response.body().getError().getMessage(), Toast.LENGTH_SHORT).show();
+                        Toasty.error(mActivity, response.body().getError().getMessage(), Toast.LENGTH_SHORT, true).show();
                     } else {
                         txtMinAmount.setText(response.body().getResult().getId());
                         txtPayInAddress.setText(response.body().getResult().getPayinAddress());
@@ -167,21 +167,21 @@ public class CreateTransactionFragment extends BaseFragment {
     }
 
     private void Init() {
-        MainBodyBean testbean = new MainBodyBean();
-        testbean.setId(1);
-        testbean.setJsonrpc("2.0");
-        testbean.setMethod("getCurrencies");
+        MainBodyBean mainBodyBean = new MainBodyBean();
+        mainBodyBean.setId(1);
+        mainBodyBean.setJsonrpc("2.0");
+        mainBodyBean.setMethod("getCurrencies");
         ParamsBean params = new ParamsBean();
-        testbean.setParams(params);
+        mainBodyBean.setParams(params);
         String sign = null;
         try {
-            sign = Utils.hmacDigest(new Gson().toJson(testbean), Constants.secret_key);
+            sign = Utils.hmacDigest(new Gson().toJson(mainBodyBean), Constants.secret_key);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         final Dialog dialogToSaveData = CustomProgressDialog.showCustomProgressDialog(mActivity, "Please Wait Loading Currencies ...");
-        apiManager.getCurrencies(sign, testbean, new Callback<GetCurrenciesResponseBean>() {
+        apiManager.getCurrencies(sign, mainBodyBean, new Callback<GetCurrenciesResponseBean>() {
             @Override
             public void onResponse(@NonNull Call<GetCurrenciesResponseBean> call, @NonNull Response<GetCurrenciesResponseBean> response) {
                 if (response.body() != null) {

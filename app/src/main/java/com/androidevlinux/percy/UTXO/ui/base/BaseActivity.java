@@ -12,7 +12,7 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
     protected ApiManager apiManager;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         apiManager = ApiManager.getInstance();
     }
