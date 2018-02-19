@@ -73,7 +73,15 @@ public class MinAmountFragment extends BaseFragment {
         TextView txtInfo = view.findViewById(R.id.txt_info);
         txtInfo.setText(R.string.min_amount_info);
         currenciesStringList = new ArrayList<>();
-        Init();
+        if (Constants.currenciesStringList == null || Constants.currenciesStringList.size() == 0) {
+            Init();
+        } else {
+            ArrayAdapter<String> karant_adapter = new ArrayAdapter<>(mActivity,
+                    android.R.layout.simple_spinner_item, Constants.currenciesStringList);
+            karant_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerFrom.setAdapter(karant_adapter);
+            spinnerTo.setAdapter(karant_adapter);
+        }
         FloatingActionButton fab = mActivity.findViewById(R.id.fab);
         FloatingActionButton refreshFab = mActivity.findViewById(R.id.refresh_fab);
         if (!fab.isShown()) {

@@ -2,9 +2,21 @@ package com.androidevlinux.percy.UTXO.ui.base;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.androidevlinux.percy.UTXO.data.network.ApiManager;
+
 public class BaseActivity extends AppCompatActivity implements BaseView {
+
+    protected ApiManager apiManager;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        apiManager = ApiManager.getInstance();
+    }
+
     @Override
     public void displaySnack(String text) {
 

@@ -98,7 +98,15 @@ public class CreateTransactionFragment extends BaseFragment {
         Title.setText(getResources().getString(R.string.create_transaction));
         txtInfo.setText(R.string.transaction_id);
         currenciesStringList = new ArrayList<>();
-        Init();
+        if (Constants.currenciesStringList == null || Constants.currenciesStringList.size() == 0) {
+            Init();
+        } else {
+            ArrayAdapter<String> karant_adapter = new ArrayAdapter<>(mActivity,
+                    android.R.layout.simple_spinner_item, Constants.currenciesStringList);
+            karant_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerFrom.setAdapter(karant_adapter);
+            spinnerTo.setAdapter(karant_adapter);
+        }
         registerForContextMenu(txtPayInAddress);
         //intializing scan object
         qrScan = new IntentIntegrator(getActivity());
