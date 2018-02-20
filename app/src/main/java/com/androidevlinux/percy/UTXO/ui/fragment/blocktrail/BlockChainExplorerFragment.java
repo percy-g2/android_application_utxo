@@ -8,7 +8,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
@@ -260,7 +259,7 @@ public class BlockChainExplorerFragment extends BaseFragment {
     }
 
     private void requestPermission() {
-        ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CODE);
+        requestPermissions(new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CODE);
     }
 
     @Override
@@ -270,6 +269,7 @@ public class BlockChainExplorerFragment extends BaseFragment {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Toast.makeText(mActivity,
                             "Permission accepted", Toast.LENGTH_LONG).show();
+                    qrScan.initiateScan();
                 } else {
                     Toast.makeText(mActivity,
                             "Permission denied", Toast.LENGTH_LONG).show();
