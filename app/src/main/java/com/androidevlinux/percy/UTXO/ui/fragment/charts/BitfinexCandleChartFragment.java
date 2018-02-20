@@ -1,21 +1,30 @@
 package com.androidevlinux.percy.UTXO.ui.fragment.charts;
 
+import android.Manifest;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.FileProvider;
 import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatSpinner;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
 
+import com.androidevlinux.percy.UTXO.BuildConfig;
 import com.androidevlinux.percy.UTXO.R;
 import com.androidevlinux.percy.UTXO.ui.base.BaseFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.SettingsFragment;
@@ -29,6 +38,7 @@ import com.github.mikephil.charting.data.CandleDataSet;
 import com.github.mikephil.charting.data.CandleEntry;
 import com.google.gson.Gson;
 
+import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
@@ -68,7 +78,12 @@ public class BitfinexCandleChartFragment extends BaseFragment {
     ArrayList<String> xValues = new ArrayList<>();
     int currencyId = 0;
     Description description = new Description();
-
+    @BindView(R.id.share)
+    AppCompatImageView share;
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private static String[] PERMISSIONS_STORAGE = {
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
 
     @Override
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -232,8 +247,63 @@ public class BitfinexCandleChartFragment extends BaseFragment {
         });
     }
 
-    @OnClick(R.id.get_fab)
-    public void onClick() {
-        getBitfinexData(currencyId);
+    @OnClick({R.id.share, R.id.get_fab})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.share:
+                permissionCheck();
+                break;
+            case R.id.get_fab:
+                getBitfinexData(currencyId);
+                break;
+        }
     }
+
+    private void permissionCheck() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (mActivity.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        REQUEST_EXTERNAL_STORAGE);
+            } else {
+                saveChartAndShare();
+            }
+        } else {
+            saveChartAndShare();
+        }
+    }
+
+    private void saveChartAndShare() {
+        candleChart.saveToGallery("chart", 100);
+
+        File file = new File(Environment.getExternalStorageDirectory() + "/DCIM/chart.jpg");
+        Intent target = new Intent();
+        target.setAction(Intent.ACTION_SEND);
+        Uri uri;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            uri = FileProvider.getUriForFile(mActivity,
+                    BuildConfig.APPLICATION_ID + ".provider",
+                    file);
+        } else {
+            uri = Uri.fromFile(file);
+        }
+        target.putExtra(Intent.EXTRA_STREAM, uri);
+        target.setType("image/jpeg");
+        Intent intent = Intent.createChooser(target, "Share File");
+        try {
+            startActivity(intent);
+        } catch (Exception e) {
+            Log.i(BitfinexCandleChartFragment.class.getName(), e.getMessage());
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_EXTERNAL_STORAGE
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            saveChartAndShare();
+        }
+    }
+
 }
