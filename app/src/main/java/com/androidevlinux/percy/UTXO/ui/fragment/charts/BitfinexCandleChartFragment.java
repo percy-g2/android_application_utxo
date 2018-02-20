@@ -81,9 +81,6 @@ public class BitfinexCandleChartFragment extends BaseFragment {
     @BindView(R.id.share)
     AppCompatImageView share;
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
-    private static String[] PERMISSIONS_STORAGE = {
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-    };
 
     @Override
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

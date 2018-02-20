@@ -26,8 +26,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="2"
                 android:entries="@array/spinner_currency"
-                android:visibility="visible"
-                app:srcCompat="@drawable/ic_file_download_white_48dp" />
+                android:visibility="visible" />
 
             <android.support.v7.widget.AppCompatSpinner
                 android:id="@+id/spinner_TimeFrame"
@@ -35,8 +34,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="2"
                 android:entries="@array/spinner_time_frame"
-                android:visibility="visible"
-                app:srcCompat="@drawable/ic_file_download_white_48dp" />
+                android:visibility="visible" />
 
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/share"
