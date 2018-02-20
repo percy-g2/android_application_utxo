@@ -27,6 +27,7 @@ import com.androidevlinux.percy.UTXO.ui.fragment.changelly.ExchangeAmountFragmen
 import com.androidevlinux.percy.UTXO.ui.fragment.changelly.GetStatusFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.changelly.MinAmountFragment;
 import com.androidevlinux.percy.UTXO.ui.fragment.charts.BitfinexCandleChartFragment;
+import com.androidevlinux.percy.UTXO.ui.fragment.charts.BitfinexLineChartFragment;
 import com.androidevlinux.percy.UTXO.utils.Constants;
 import com.crashlytics.android.Crashlytics;
 import com.mikepenz.aboutlibraries.Libs;
@@ -134,6 +135,11 @@ public class MainActivity extends BaseActivity
                 fab.hide();
                 refreshFab.hide();
                 showBitfinexCandleChartFragment();
+                break;
+            case R.id.nav_bitfinex_line_chart:
+                fab.hide();
+                refreshFab.hide();
+                showBitfinexLineChartFragment();
                 break;
             case R.id.nav_block_chain_explorer:
                 fab.hide();
@@ -245,6 +251,12 @@ public class MainActivity extends BaseActivity
     @Override
     public void showBitfinexCandleChartFragment() {
         fragment = new BitfinexCandleChartFragment();
+        replaceFragment(fragment);
+    }
+
+    @Override
+    public void showBitfinexLineChartFragment() {
+        fragment = new BitfinexLineChartFragment();
         replaceFragment(fragment);
     }
 
