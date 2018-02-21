@@ -195,7 +195,14 @@ public class BitfinexLineChartFragment extends BaseFragment {
 
                         yVals1.add(new Entry(count, Float.valueOf(String.valueOf(s[2]))));
                         Date date = new Date(Long.valueOf(String.valueOf(s[0])));
-                        SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yy HH:mm", Locale.ENGLISH);
+                        SimpleDateFormat sdf;
+                        if (spinnerTimeFrame.getSelectedItem().toString().equals("7D") ||
+                                spinnerTimeFrame.getSelectedItem().toString().equals("14D") ||
+                                spinnerTimeFrame.getSelectedItem().toString().equals("1M")) {
+                            sdf = new SimpleDateFormat("dd MMM yy", Locale.ENGLISH);
+                        } else {
+                            sdf = new SimpleDateFormat("dd HH:mm", Locale.ENGLISH);
+                        }
                         sdf.setTimeZone(TimeZone.getDefault());
                         String formattedDate = sdf.format(date);
 
