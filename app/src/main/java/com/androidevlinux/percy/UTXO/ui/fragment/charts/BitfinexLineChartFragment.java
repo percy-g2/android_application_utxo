@@ -102,7 +102,7 @@ public class BitfinexLineChartFragment extends BaseFragment {
         assert view != null;
         super.onViewCreated(view, savedInstanceState);
         TextView Title = mActivity.findViewById(R.id.txtTitle);
-        Title.setText(getResources().getString(R.string.bitfinex_line_graph));
+        Title.setText(getResources().getString(R.string.bitfinex_line_chart));
         SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
 
         getBitfinexData(currencyId);

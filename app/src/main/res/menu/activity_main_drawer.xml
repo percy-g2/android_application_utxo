@@ -35,11 +35,11 @@
                 <item
                     android:id="@+id/nav_bitfinex_candle_chart"
                     android:icon="@drawable/candle_graph"
-                    android:title="@string/bitfinex_candle_graph" />
+                    android:title="@string/bitfinex_candle_chart" />
                 <item
                     android:id="@+id/nav_bitfinex_line_chart"
                     android:icon="@drawable/line_graphic"
-                    android:title="@string/bitfinex_line_graph" />
+                    android:title="@string/bitfinex_line_chart" />
                 <item
                     android:id="@+id/nav_block_chain_explorer"
                     android:icon="@drawable/chain_explorer"
