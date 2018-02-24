@@ -74,10 +74,7 @@ public class PriceCheckFragment extends BaseFragment {
         priceListRecyclerView.setLayoutManager(linearLayoutManager);
         priceAdapter = new PriceAdapter(priceBeanArrayList);
         priceListRecyclerView.setAdapter(priceAdapter);
-        getBitfinexPubTicker();
-        getBitStampTicker();
-        getZebpayTicker();
-        getPocketbitsTicker();
+        new UpdateTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         boolean isRefreshButtonEnabled = mSharedPreferences.getBoolean(SettingsFragment.refresh_btc_price_button_key, true);
         if (!isRefreshButtonEnabled) {
             refreshFab.hide();
@@ -85,9 +82,7 @@ public class PriceCheckFragment extends BaseFragment {
         } else {
             refreshFab.show();
         }
-
         refreshFab.setOnClickListener(view1 -> new UpdateTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR));
-
     }
 
     // Init
@@ -282,7 +277,6 @@ public class PriceCheckFragment extends BaseFragment {
             getBitStampTicker();
             getZebpayTicker();
             getPocketbitsTicker();
-
             return null;
         }
 
