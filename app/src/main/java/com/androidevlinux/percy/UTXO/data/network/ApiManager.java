@@ -16,6 +16,7 @@ import com.androidevlinux.percy.UTXO.data.network.apis.PocketbitsApiImpl;
 import com.androidevlinux.percy.UTXO.data.network.apis.ZebpayApiImpl;
 import com.google.gson.JsonObject;
 
+import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.Callback;
 
@@ -45,8 +46,8 @@ public class ApiManager {
         return apiManager;
     }
 
-    public void getBitfinexPubTicker(Callback<BitfinexPubTickerResponseBean> callback) {
-        bitfinexApiImpl.getBitfinexPubTicker(callback);
+    public Observable<BitfinexPubTickerResponseBean> getBitfinexTicker() {
+        return bitfinexApiImpl.getBitfinexTicker();
     }
 
     public void getBitfinexData(String time, String symbol, Callback<ResponseBody> callback) {

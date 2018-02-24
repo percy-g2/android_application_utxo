@@ -33,6 +33,11 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -86,6 +91,7 @@ public class PriceCheckFragment extends BaseFragment {
         }
 
         refreshFab.setOnClickListener(view1 -> new UpdateTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR));
+
     }
 
     // Init
@@ -123,13 +129,29 @@ public class PriceCheckFragment extends BaseFragment {
     }
 
     private void getBitfinexPubTicker() {
-        apiManager.getBitfinexPubTicker(new Callback<BitfinexPubTickerResponseBean>() {
-            @Override
-            public void onResponse(@NonNull Call<BitfinexPubTickerResponseBean> call, @NonNull Response<BitfinexPubTickerResponseBean> response) {
-                if (response.body() != null) {
-                        Constants.btc_price = response.body().getLastPrice();
-                        Constants.btc_price_low = response.body().getLow();
-                        Constants.btc_price_high = response.body().getHigh();
+        Observable<BitfinexPubTickerResponseBean> observable = apiManager.getBitfinexTicker();
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<BitfinexPubTickerResponseBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(BitfinexPubTickerResponseBean value) {
+                        Constants.btc_price = value.getLastPrice();
+                        Constants.btc_price_low = value.getLow();
+                        Constants.btc_price_high = value.getHigh();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
                         PriceBean priceBean = new PriceBean();
                         priceBean.setTitle("Bitfinex");
                         priceBean.setPrice(strDollarSymbol + Constants.btc_price);
@@ -137,13 +159,8 @@ public class PriceCheckFragment extends BaseFragment {
                         priceBean.setHigh_price(strDollarSymbol + Constants.btc_price_high);
                         priceBeanArrayList.add(priceBean);
                         priceAdapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<BitfinexPubTickerResponseBean> call, @NonNull Throwable t) {
-            }
-        });
+                    }
+                });
     }
 
     private void getBitstampTicker() {
@@ -222,6 +239,7 @@ public class PriceCheckFragment extends BaseFragment {
     private class UpdateTask extends AsyncTask<String, String, String> {
 
         private Dialog dialogToSaveData = null;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -235,6 +253,7 @@ public class PriceCheckFragment extends BaseFragment {
             getBitstampTicker();
             getZebpayTicker();
             getPocketbitsTicker();
+
             return null;
         }
 
@@ -246,5 +265,4 @@ public class PriceCheckFragment extends BaseFragment {
             }
         }
     }
-
 }

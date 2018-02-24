@@ -3,6 +3,7 @@ package com.androidevlinux.percy.UTXO.data.network.apis;
 import com.androidevlinux.percy.UTXO.data.models.bitfinex.BitfinexPubTickerResponseBean;
 import com.androidevlinux.percy.UTXO.utils.NativeUtils;
 
+import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.Callback;
 
@@ -25,8 +26,9 @@ public class BitfinexApiImpl extends AbstractBaseApi<BitfinexAPI> {
             bitfinexApiManager = new BitfinexApiImpl();
         return bitfinexApiManager;
     }
-    public void getBitfinexPubTicker(Callback<BitfinexPubTickerResponseBean> callback){
-        bitfinexAPI.getBitfinexPubTicker().enqueue(callback);
+
+    public Observable<BitfinexPubTickerResponseBean> getBitfinexTicker(){
+        return bitfinexAPI.getBitfinexTicker();
     }
 
     public void getBitfinexData(String time, String symbol, Callback<ResponseBody> callback){

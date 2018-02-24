@@ -12,9 +12,8 @@ import retrofit2.http.Path;
  */
 
 public interface BitfinexAPI {
-
     @GET("/v1/pubticker/btcusd/")
-    Call<BitfinexPubTickerResponseBean> getBitfinexPubTicker();
+    io.reactivex.Observable<BitfinexPubTickerResponseBean> getBitfinexTicker();
 
     @GET("/v2/candles/trade:{time}:{symbol}/hist/")
     Call<ResponseBody> getBitfinexData(@Path(value = "time", encoded = true) String time, @Path(value = "symbol", encoded = true) String symbol);
