@@ -2,7 +2,7 @@ package com.androidevlinux.percy.UTXO.data.network.apis;
 
 import com.google.gson.JsonObject;
 
-import retrofit2.Call;
+import io.reactivex.Observable;
 import retrofit2.http.GET;
 
 /**
@@ -10,6 +10,7 @@ import retrofit2.http.GET;
  */
 
 public interface BitstampAPI {
+
     @GET("/api/ticker/")
-    Call<JsonObject> getBitstampTicker();
+    Observable<JsonObject> getBitstampTicker();
 }

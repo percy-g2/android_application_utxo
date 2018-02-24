@@ -2,7 +2,7 @@ package com.androidevlinux.percy.UTXO.data.network.apis;
 
 import com.androidevlinux.percy.UTXO.data.models.pocketbits.PocketBitsBean;
 
-import retrofit2.Call;
+import io.reactivex.Observable;
 import retrofit2.http.GET;
 
 /**
@@ -11,5 +11,5 @@ import retrofit2.http.GET;
 
 public interface PocketbitsAPI {
     @GET("/api/ticker/")
-    Call<PocketBitsBean> getPocketbitsTicker();
+    Observable<PocketBitsBean> getPocketbitsTicker();
 }

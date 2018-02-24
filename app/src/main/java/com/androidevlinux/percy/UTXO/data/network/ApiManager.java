@@ -54,11 +54,9 @@ public class ApiManager {
         bitfinexApiImpl.getBitfinexData(time, symbol, callback);
     }
 
-    public void getBitstampTicker(Callback<JsonObject> callback) {
-        bitstampApiImpl.getBitstampTicker(callback);
+    public Observable<JsonObject> getBitstampTicker(){
+        return bitstampApiImpl.getBitstampTicker();
     }
-
-
     public void getBlockTrailAddressData(String query, String data, Callback<AddressBean> callback) {
         blocktrailApiImpl.getBlockTrailAddressData(query, data, callback);
     }
@@ -83,11 +81,11 @@ public class ApiManager {
         changellyApiImpl.createTransaction(sign, body, callback);
     }
 
-    public void getZebpayTicker(Callback<ZebPayBean> callback) {
-        zebpayApiImpl.getZebpayTicker(callback);
+    public Observable<ZebPayBean> getZebpayTicker() {
+        return zebpayApiImpl.getZebpayTicker();
     }
 
-    public void getPocketbitsTicker(Callback<PocketBitsBean> callback) {
-        pocketbitsApiImpl.getPocketbitsTicker(callback);
+    public Observable<PocketBitsBean> getPocketbitsTicker() {
+        return pocketbitsApiImpl.getPocketbitsTicker();
     }
 }

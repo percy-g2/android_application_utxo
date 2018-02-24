@@ -3,7 +3,7 @@ package com.androidevlinux.percy.UTXO.data.network.apis;
 import com.androidevlinux.percy.UTXO.utils.NativeUtils;
 import com.google.gson.JsonObject;
 
-import retrofit2.Callback;
+import io.reactivex.Observable;
 
 /**
  * Created by percy on 5/12/17.
@@ -24,7 +24,8 @@ public class BitstampApiImpl extends AbstractBaseApi<BitstampAPI> {
             bitstampApiManager = new BitstampApiImpl();
         return bitstampApiManager;
     }
-    public void getBitstampTicker(Callback<JsonObject> callback){
-        bitstampAPI.getBitstampTicker().enqueue(callback);
+
+    public Observable<JsonObject> getBitstampTicker(){
+        return bitstampAPI.getBitstampTicker();
     }
 }

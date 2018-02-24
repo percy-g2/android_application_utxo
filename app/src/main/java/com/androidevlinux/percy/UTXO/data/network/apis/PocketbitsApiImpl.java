@@ -3,7 +3,7 @@ package com.androidevlinux.percy.UTXO.data.network.apis;
 import com.androidevlinux.percy.UTXO.data.models.pocketbits.PocketBitsBean;
 import com.androidevlinux.percy.UTXO.utils.NativeUtils;
 
-import retrofit2.Callback;
+import io.reactivex.Observable;
 
 /**
  * Created by percy on 20/1/18.
@@ -24,7 +24,7 @@ public class PocketbitsApiImpl extends AbstractBaseApi<PocketbitsAPI> {
             pocketbitsApiManager = new PocketbitsApiImpl();
         return pocketbitsApiManager;
     }
-    public void getPocketbitsTicker(Callback<PocketBitsBean> callback){
-        pocketbitsAPI.getPocketbitsTicker().enqueue(callback);
+    public Observable<PocketBitsBean> getPocketbitsTicker(){
+        return pocketbitsAPI.getPocketbitsTicker();
     }
 }

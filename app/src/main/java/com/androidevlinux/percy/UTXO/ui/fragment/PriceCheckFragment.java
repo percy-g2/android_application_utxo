@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.preference.PreferenceManager;
@@ -38,9 +37,6 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by percy on 26/11/17.
@@ -79,7 +75,7 @@ public class PriceCheckFragment extends BaseFragment {
         priceAdapter = new PriceAdapter(priceBeanArrayList);
         priceListRecyclerView.setAdapter(priceAdapter);
         getBitfinexPubTicker();
-        getBitstampTicker();
+        getBitStampTicker();
         getZebpayTicker();
         getPocketbitsTicker();
         boolean isRefreshButtonEnabled = mSharedPreferences.getBoolean(SettingsFragment.refresh_btc_price_button_key, true);
@@ -163,76 +159,109 @@ public class PriceCheckFragment extends BaseFragment {
                 });
     }
 
-    private void getBitstampTicker() {
-        apiManager.getBitstampTicker(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                if (response.body() != null) {
-                    Constants.btc_price = String.valueOf(response.body().get("last")).replaceAll("^\"|\"$", "");
-                    Constants.btc_price_low = String.valueOf(response.body().get("low")).replaceAll("^\"|\"$", "");
-                    Constants.btc_price_high = String.valueOf(response.body().get("high")).replaceAll("^\"|\"$", "");
-                    PriceBean priceBean = new PriceBean();
-                    priceBean.setTitle("Bitstamp");
-                    priceBean.setPrice(strDollarSymbol + Constants.btc_price);
-                    priceBean.setLow_price(strDollarSymbol + Constants.btc_price_low);
-                    priceBean.setHigh_price(strDollarSymbol + Constants.btc_price_high);
-                    priceBeanArrayList.add(priceBean);
-                    priceAdapter.notifyDataSetChanged();
-                }
-            }
+    private void getBitStampTicker() {
+        Observable<JsonObject> observable = apiManager.getBitstampTicker();
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<JsonObject>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
-            @Override
-            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-            }
-        });
+                    }
+
+                    @Override
+                    public void onNext(JsonObject value) {
+                        Constants.btc_price = String.valueOf(value.get("last")).replaceAll("^\"|\"$", "");
+                        Constants.btc_price_low = String.valueOf(value.get("low")).replaceAll("^\"|\"$", "");
+                        Constants.btc_price_high = String.valueOf(value.get("high")).replaceAll("^\"|\"$", "");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        PriceBean priceBean = new PriceBean();
+                        priceBean.setTitle("Bitstamp");
+                        priceBean.setPrice(strDollarSymbol + Constants.btc_price);
+                        priceBean.setLow_price(strDollarSymbol + Constants.btc_price_low);
+                        priceBean.setHigh_price(strDollarSymbol + Constants.btc_price_high);
+                        priceBeanArrayList.add(priceBean);
+                        priceAdapter.notifyDataSetChanged();
+                    }
+                });
     }
 
     private void getZebpayTicker() {
-        apiManager.getZebpayTicker(new Callback<ZebPayBean>() {
-            @Override
-            public void onResponse(@NonNull Call<ZebPayBean> call, @NonNull Response<ZebPayBean> response) {
-                if (response.body() != null) {
-                    Constants.btc_price = String.valueOf(response.body().getBuy());
-                    Constants.btc_price_low = String.valueOf(response.body().getSell());
-                    Constants.btc_price_high = String.valueOf(response.body().getBuy());
-                    PriceBean priceBean = new PriceBean();
-                    priceBean.setTitle("Zebpay");
-                    priceBean.setPrice(strRuppeSymbol + rupeeFormat(Constants.btc_price.substring(0, Constants.btc_price.length() - 2)));
-                    priceBean.setLow_price(strRuppeSymbol + rupeeFormat(Constants.btc_price_low.substring(0, Constants.btc_price_low.length() - 2)));
-                    priceBean.setHigh_price(strRuppeSymbol + rupeeFormat(Constants.btc_price_high.substring(0, Constants.btc_price_high.length() - 2)));
-                    priceBeanArrayList.add(priceBean);
-                    priceAdapter.notifyDataSetChanged();
-                }
-            }
+        Observable<ZebPayBean> observable = apiManager.getZebpayTicker();
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ZebPayBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
-            @Override
-            public void onFailure(@NonNull Call<ZebPayBean> call, @NonNull Throwable t) {
-            }
-        });
+                    }
+
+                    @Override
+                    public void onNext(ZebPayBean value) {
+                        Constants.btc_price = String.valueOf(value.getBuy());
+                        Constants.btc_price_low = String.valueOf(value.getSell());
+                        Constants.btc_price_high = String.valueOf(value.getBuy());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        PriceBean priceBean = new PriceBean();
+                        priceBean.setTitle("Zebpay");
+                        priceBean.setPrice(strRuppeSymbol + rupeeFormat(Constants.btc_price.substring(0, Constants.btc_price.length() - 2)));
+                        priceBean.setLow_price(strRuppeSymbol + rupeeFormat(Constants.btc_price_low.substring(0, Constants.btc_price_low.length() - 2)));
+                        priceBean.setHigh_price(strRuppeSymbol + rupeeFormat(Constants.btc_price_high.substring(0, Constants.btc_price_high.length() - 2)));
+                        priceBeanArrayList.add(priceBean);
+                        priceAdapter.notifyDataSetChanged();
+                    }
+                });
     }
 
     private void getPocketbitsTicker() {
-        apiManager.getPocketbitsTicker(new Callback<PocketBitsBean>() {
-            @Override
-            public void onResponse(@NonNull Call<PocketBitsBean> call, @NonNull Response<PocketBitsBean> response) {
-                if (response.body() != null) {
-                    Constants.btc_price = String.valueOf(response.body().getBuy());
-                    Constants.btc_price_low = String.valueOf(response.body().getSell());
-                    Constants.btc_price_high = String.valueOf(response.body().getBuy());
-                    PriceBean priceBean = new PriceBean();
-                    priceBean.setTitle("Pocketbits");
-                    priceBean.setPrice(strRuppeSymbol + rupeeFormat(Constants.btc_price.substring(0, Constants.btc_price.length())));
-                    priceBean.setLow_price(strRuppeSymbol + rupeeFormat(Constants.btc_price_low.substring(0, Constants.btc_price_low.length())));
-                    priceBean.setHigh_price(strRuppeSymbol + rupeeFormat(Constants.btc_price_high.substring(0, Constants.btc_price_high.length())));
-                    priceBeanArrayList.add(priceBean);
-                    priceAdapter.notifyDataSetChanged();
-                }
-            }
+        Observable<PocketBitsBean> observable = apiManager.getPocketbitsTicker();
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<PocketBitsBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
-            @Override
-            public void onFailure(@NonNull Call<PocketBitsBean> call, @NonNull Throwable t) {
-            }
-        });
+                    }
+
+                    @Override
+                    public void onNext(PocketBitsBean value) {
+                        Constants.btc_price = String.valueOf(value.getBuy());
+                        Constants.btc_price_low = String.valueOf(value.getSell());
+                        Constants.btc_price_high = String.valueOf(value.getBuy());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        PriceBean priceBean = new PriceBean();
+                        priceBean.setTitle("Pocketbits");
+                        priceBean.setPrice(strRuppeSymbol + rupeeFormat(Constants.btc_price.substring(0, Constants.btc_price.length())));
+                        priceBean.setLow_price(strRuppeSymbol + rupeeFormat(Constants.btc_price_low.substring(0, Constants.btc_price_low.length())));
+                        priceBean.setHigh_price(strRuppeSymbol + rupeeFormat(Constants.btc_price_high.substring(0, Constants.btc_price_high.length())));
+                        priceBeanArrayList.add(priceBean);
+                        priceAdapter.notifyDataSetChanged();
+                    }
+                });
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -250,7 +279,7 @@ public class PriceCheckFragment extends BaseFragment {
         @Override
         protected String doInBackground(String... value) {
             getBitfinexPubTicker();
-            getBitstampTicker();
+            getBitStampTicker();
             getZebpayTicker();
             getPocketbitsTicker();
 

@@ -3,7 +3,7 @@ package com.androidevlinux.percy.UTXO.data.network.apis;
 import com.androidevlinux.percy.UTXO.data.models.price.ZebPayBean;
 import com.androidevlinux.percy.UTXO.utils.NativeUtils;
 
-import retrofit2.Callback;
+import io.reactivex.Observable;
 
 /**
  * Created by percy on 3/12/17.
@@ -24,7 +24,7 @@ public class ZebpayApiImpl extends AbstractBaseApi<ZebpayAPI> {
             zebpayApiManager = new ZebpayApiImpl();
         return zebpayApiManager;
     }
-    public void getZebpayTicker(Callback<ZebPayBean> callback){
-        zebpayAPI.getZebpayTicker().enqueue(callback);
+    public Observable<ZebPayBean> getZebpayTicker(){
+        return zebpayAPI.getZebpayTicker();
     }
 }
