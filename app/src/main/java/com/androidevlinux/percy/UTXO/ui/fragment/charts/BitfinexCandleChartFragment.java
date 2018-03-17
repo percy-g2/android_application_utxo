@@ -173,8 +173,10 @@ public class BitfinexCandleChartFragment extends BaseFragment {
                     newMap = gson.fromJson(response.body().string(), dummy.getClass());
                     entries.clear();
                     xValues.clear();
-                    candleChart.clear();
-                    candleChart.invalidate();
+                    if (candleChart != null) {
+                        candleChart.clear();
+                        candleChart.invalidate();
+                    }
                     int count = -1;
 
                     Collections.reverse(Arrays.asList(newMap));

@@ -51,6 +51,10 @@ public class PriceCheckFragment extends BaseFragment {
     ArrayList<PriceBean> priceBeanArrayList;
     PriceAdapter priceAdapter;
     FloatingActionButton refreshFab;
+    Observable<BitfinexPubTickerResponseBean> bitfinexPubTickerResponseBeanObservable;
+    Observable<JsonObject> bitstampObservable;
+    Observable<ZebPayBean> zebPayBeanObservable;
+    Observable<PocketBitsBean> pocketBitsBeanObservable;
 
     @Override
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -98,6 +102,10 @@ public class PriceCheckFragment extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        bitfinexPubTickerResponseBeanObservable.unsubscribeOn(Schedulers.io());
+        bitstampObservable.unsubscribeOn(Schedulers.io());
+        pocketBitsBeanObservable.unsubscribeOn(Schedulers.io());
+        zebPayBeanObservable.unsubscribeOn(Schedulers.io());
         handler.removeCallbacks(runnable);
         unbinder.unbind();
     }
@@ -120,8 +128,8 @@ public class PriceCheckFragment extends BaseFragment {
     }
 
     private void getBitfinexPubTicker() {
-        Observable<BitfinexPubTickerResponseBean> observable = apiManager.getBitfinexTicker();
-        observable.subscribeOn(Schedulers.io())
+        bitfinexPubTickerResponseBeanObservable = apiManager.getBitfinexTicker();
+        bitfinexPubTickerResponseBeanObservable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<BitfinexPubTickerResponseBean>() {
                     @Override
@@ -155,8 +163,8 @@ public class PriceCheckFragment extends BaseFragment {
     }
 
     private void getBitStampTicker() {
-        Observable<JsonObject> observable = apiManager.getBitstampTicker();
-        observable.subscribeOn(Schedulers.io())
+        bitstampObservable = apiManager.getBitstampTicker();
+        bitstampObservable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<JsonObject>() {
                     @Override
@@ -190,8 +198,8 @@ public class PriceCheckFragment extends BaseFragment {
     }
 
     private void getZebpayTicker() {
-        Observable<ZebPayBean> observable = apiManager.getZebpayTicker();
-        observable.subscribeOn(Schedulers.io())
+        zebPayBeanObservable = apiManager.getZebpayTicker();
+        zebPayBeanObservable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ZebPayBean>() {
                     @Override
@@ -225,8 +233,8 @@ public class PriceCheckFragment extends BaseFragment {
     }
 
     private void getPocketbitsTicker() {
-        Observable<PocketBitsBean> observable = apiManager.getPocketbitsTicker();
-        observable.subscribeOn(Schedulers.io())
+        pocketBitsBeanObservable = apiManager.getPocketbitsTicker();
+        pocketBitsBeanObservable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<PocketBitsBean>() {
                     @Override

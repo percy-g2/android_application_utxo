@@ -183,9 +183,11 @@ public class BitfinexLineChartFragment extends BaseFragment {
                     newMap = gson.fromJson(response.body().string(), dummy.getClass());
                     yVals1.clear();
                     xValues.clear();
-                    lineChart.clear();
+                    if (lineChart != null) {
+                        lineChart.clear();
+                        lineChart.invalidate();
+                    }
                     dataSets.clear();
-                    lineChart.invalidate();
                     count = -1;
 
                     Collections.reverse(Arrays.asList(newMap));
