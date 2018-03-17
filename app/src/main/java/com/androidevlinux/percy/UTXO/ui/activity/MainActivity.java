@@ -163,7 +163,11 @@ public class MainActivity extends BaseActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if (this.getSupportFragmentManager().getBackStackEntryCount() == 1) {
+                finish();
+            } else {
+                super.onBackPressed();
+            }
         }
     }
 

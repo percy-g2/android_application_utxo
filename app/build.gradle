@@ -22,8 +22,8 @@ android {
         applicationId "com.androidevlinux.percy.UTXO"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 14
-        versionName "14.0"
+        versionCode 15
+        versionName "15.0"
         multiDexEnabled true
         packagingOptions.pickFirst('META-INF/rxjava.properties')
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
