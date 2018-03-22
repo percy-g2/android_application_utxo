@@ -2,6 +2,7 @@ package com.androidevlinux.percy.UTXO.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -16,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androidevlinux.percy.UTXO.R;
 import com.androidevlinux.percy.UTXO.ui.base.BaseActivity;
@@ -56,6 +58,7 @@ public class MainActivity extends BaseActivity
     @BindView(R.id.refresh_fab)
     FloatingActionButton refreshFab;
     private Fragment fragment;
+    boolean doubleBackToExitPressedOnce = false;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -164,7 +167,13 @@ public class MainActivity extends BaseActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             if (this.getSupportFragmentManager().getBackStackEntryCount() == 1) {
-                finish();
+                if (doubleBackToExitPressedOnce) {
+                    finish();
+                } else {
+                    Toasty.info(this,"Press BACK again to exit!", Toast.LENGTH_SHORT, true).show();
+                }
+                this.doubleBackToExitPressedOnce = true;
+                new Handler().postDelayed(() -> doubleBackToExitPressedOnce=false, 2000);
             } else {
                 super.onBackPressed();
             }
