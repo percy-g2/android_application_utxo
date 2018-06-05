@@ -17,9 +17,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
     private Activity mActivity;
 
-    String TAG = "Settings Fragment";
     public static String refresh_btc_price_button_key = "enable_refresh_pref_key";
-    public static String price_list_key = "price_list_pref_key";
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.pref, rootKey);

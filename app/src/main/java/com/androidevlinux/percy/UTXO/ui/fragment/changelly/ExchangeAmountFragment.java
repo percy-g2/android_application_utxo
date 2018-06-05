@@ -30,6 +30,7 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -116,11 +117,11 @@ public class ExchangeAmountFragment extends BaseFragment {
             @Override
             public void onResponse(@NonNull Call<GetMinAmountReponseBean> call, @NonNull Response<GetMinAmountReponseBean> response) {
                 if (response.body() != null) {
-                    if (response.body().getError() != null) {
-                        Toasty.error(mActivity, response.body().getError().getMessage(), Toast.LENGTH_SHORT, true).show();
+                    if (Objects.requireNonNull(response.body()).getError() != null) {
+                        Toasty.error(mActivity, Objects.requireNonNull(response.body()).getError().getMessage(), Toast.LENGTH_SHORT, true).show();
                     } else {
-                        Toasty.success(mActivity, response.body().getResult(), Toast.LENGTH_SHORT, true).show();
-                        txtMinAmount.setText(response.body().getResult());
+                        Toasty.success(mActivity, Objects.requireNonNull(response.body()).getResult(), Toast.LENGTH_SHORT, true).show();
+                        txtMinAmount.setText(Objects.requireNonNull(response.body()).getResult());
                     }
                 }
                 if (dialogToSaveData != null) {
@@ -156,7 +157,7 @@ public class ExchangeAmountFragment extends BaseFragment {
             @Override
             public void onResponse(@NonNull Call<GetCurrenciesResponseBean> call, @NonNull Response<GetCurrenciesResponseBean> response) {
                 if (response.body() != null) {
-                    currenciesStringList = response.body().getResult();
+                    currenciesStringList = Objects.requireNonNull(response.body()).getResult();
                     Constants.currenciesStringList = currenciesStringList;
                     ArrayAdapter<String> karant_adapter = new ArrayAdapter<>(mActivity,
                             android.R.layout.simple_spinner_item, currenciesStringList);
@@ -190,7 +191,7 @@ public class ExchangeAmountFragment extends BaseFragment {
 
     @OnClick(R.id.btn_get_amount)
     public void onClick() {
-        if (Utils.isConnectingToInternet(getActivity())) {
+        if (Utils.isConnectingToInternet(mActivity)) {
             if (spinnerFrom.getSelectedItem() !=null && spinnerTo.getSelectedItem() !=null && spinnerFrom.getSelectedItem().toString() != null && spinnerFrom.getSelectedItem().toString() != null && !edtAmount.getText().toString().isEmpty()) {
                 MinAmount(spinnerFrom.getSelectedItem().toString(), spinnerTo.getSelectedItem().toString(), edtAmount.getText().toString());
             } else {

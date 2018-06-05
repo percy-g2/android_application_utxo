@@ -1,6 +1,7 @@
 package com.androidevlinux.percy.UTXO.ui.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 
 public class BlockChainExplorerTransactionAdapter extends RecyclerView.Adapter<BlockChainExplorerTransactionAdapter.ViewHolder> {
 
-    private ArrayList<TransactionBean> transactionBeanArrayList = null;
+    private ArrayList<TransactionBean> transactionBeanArrayList;
     private Context context;
     private int lastPosition = -1;
 
@@ -30,21 +31,22 @@ public class BlockChainExplorerTransactionAdapter extends RecyclerView.Adapter<B
         this.context = context;
     }
 
+    @NonNull
     @Override
-    public BlockChainExplorerTransactionAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BlockChainExplorerTransactionAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.block_chain_explorer_transaction_adapter_row, parent, false);
         return new BlockChainExplorerTransactionAdapter.ViewHolder(v);
     }
 
     @Override
-    public void onViewDetachedFromWindow(BlockChainExplorerTransactionAdapter.ViewHolder holder) {
+    public void onViewDetachedFromWindow(@NonNull BlockChainExplorerTransactionAdapter.ViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
         holder.itemView.clearAnimation();
     }
 
     @Override
-    public void onBindViewHolder(final BlockChainExplorerTransactionAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final BlockChainExplorerTransactionAdapter.ViewHolder holder, int position) {
         final TransactionBean transactionBean = transactionBeanArrayList.get(holder.getAdapterPosition());
         holder.txt_view1.setText(R.string.block_hash);
         holder.txt_value1.setText(transactionBean.getBlockHash());

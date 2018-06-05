@@ -47,7 +47,7 @@ public class PriceCheckFragment extends BaseFragment {
     SharedPreferences mSharedPreferences;
     @BindView(R.id.price_list_recycler_view)
     RecyclerView priceListRecyclerView;
-    String TAG = "PriceCheckFragment", strRuppeSymbol = "\u20B9", strDollarSymbol = "$";
+    String strRuppeSymbol = "\u20B9", strDollarSymbol = "$";
     ArrayList<PriceBean> priceBeanArrayList;
     PriceAdapter priceAdapter;
     FloatingActionButton refreshFab;

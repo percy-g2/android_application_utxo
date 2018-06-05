@@ -180,7 +180,6 @@ public class BlockChainExplorerFragment extends BaseFragment {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
                 if (response.body() != null) {
-                    Log.i(TAG, response.body().toString());
                     ArrayList<JsonObject> jsonObjectArrayList = new ArrayList<>();
                     jsonObjectArrayList.add(response.body());
                     BlockChainExplorerBlockAdapter blockChainExplorerBlockAdapter = new BlockChainExplorerBlockAdapter(jsonObjectArrayList, getActivity());

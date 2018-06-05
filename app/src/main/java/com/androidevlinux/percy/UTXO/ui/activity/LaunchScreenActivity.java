@@ -16,6 +16,8 @@ import com.androidevlinux.percy.UTXO.utils.Constants;
 import com.androidevlinux.percy.UTXO.utils.Utils;
 import com.google.gson.Gson;
 
+import java.util.Objects;
+
 import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -86,7 +88,7 @@ public class LaunchScreenActivity extends BaseActivity {
             @Override
             public void onResponse(@NonNull Call<GetCurrenciesResponseBean> call, @NonNull Response<GetCurrenciesResponseBean> response) {
                 if (response.body()!=null) {
-                    Constants.currenciesStringList = response.body().getResult();
+                    Constants.currenciesStringList = Objects.requireNonNull(response.body()).getResult();
                 }
                 if (response.code() == 401) {
                     Toasty.error(LaunchScreenActivity.this, "Unauthorized! Please Check Your Keys", Toast.LENGTH_SHORT, true).show();

@@ -1,5 +1,6 @@
 package com.androidevlinux.percy.UTXO.ui.adapter;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,15 +24,16 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.ViewHolder> 
         this.priceBeanArrayList = priceBeanArrayList;
     }
 
+    @NonNull
     @Override
-    public PriceAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public PriceAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.price_fragment_adapter_row, parent, false);
         return new PriceAdapter.ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(final PriceAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final PriceAdapter.ViewHolder holder, int position) {
         final PriceBean priceBean = priceBeanArrayList.get(position);
         holder.title.setText(priceBean.getTitle());
         holder.price.setText(priceBean.getPrice());

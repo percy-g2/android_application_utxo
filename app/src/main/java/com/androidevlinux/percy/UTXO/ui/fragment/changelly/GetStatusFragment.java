@@ -24,6 +24,8 @@ import com.androidevlinux.percy.UTXO.utils.CustomProgressDialog;
 import com.androidevlinux.percy.UTXO.utils.Utils;
 import com.google.gson.Gson;
 
+import java.util.Objects;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -93,11 +95,11 @@ public class GetStatusFragment  extends BaseFragment {
             @Override
             public void onResponse(@NonNull Call<GetMinAmountReponseBean> call, @NonNull Response<GetMinAmountReponseBean> response) {
                 if (response.body() != null) {
-                    if (response.body().getError() != null) {
-                        Toasty.error(mActivity, response.body().getError().getMessage(), Toast.LENGTH_SHORT, true).show();
+                    if (Objects.requireNonNull(response.body()).getError() != null) {
+                        Toasty.error(mActivity, Objects.requireNonNull(response.body()).getError().getMessage(), Toast.LENGTH_SHORT, true).show();
                     } else {
-                        Toasty.success(mActivity, response.body().getResult(), Toast.LENGTH_SHORT, true).show();
-                        txtMinAmount.setText(response.body().getResult());
+                        Toasty.success(mActivity, Objects.requireNonNull(response.body()).getResult(), Toast.LENGTH_SHORT, true).show();
+                        txtMinAmount.setText(Objects.requireNonNull(response.body()).getResult());
                     }
                 }
                 if (response.code() == 401) {

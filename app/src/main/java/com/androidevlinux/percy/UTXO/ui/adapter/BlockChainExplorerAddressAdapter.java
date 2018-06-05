@@ -1,6 +1,7 @@
 package com.androidevlinux.percy.UTXO.ui.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 
 public class BlockChainExplorerAddressAdapter extends RecyclerView.Adapter<BlockChainExplorerAddressAdapter.ViewHolder> {
 
-    private ArrayList<AddressBean> addressBeanArrayList = null;
+    private ArrayList<AddressBean> addressBeanArrayList;
     private Context context;
     private int lastPosition = -1;
 
@@ -29,21 +30,22 @@ public class BlockChainExplorerAddressAdapter extends RecyclerView.Adapter<Block
         this.context = context;
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.block_chain_explorer_adapter_row, parent, false);
         return new ViewHolder(v);
     }
 
     @Override
-    public void onViewDetachedFromWindow(BlockChainExplorerAddressAdapter.ViewHolder holder) {
+    public void onViewDetachedFromWindow(@NonNull BlockChainExplorerAddressAdapter.ViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
         holder.itemView.clearAnimation();
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         final AddressBean addressBean = addressBeanArrayList.get(holder.getAdapterPosition());
         holder.txt_view1.setText(R.string.address);
         holder.txt_value1.setText(addressBean.getAddress());

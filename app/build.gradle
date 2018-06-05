@@ -17,7 +17,7 @@ repositories {
 
 android {
     buildToolsVersion '28.0.0 rc1'
-    compileSdkVersion 'android-P'
+    compileSdkVersion 27
     defaultConfig {
         applicationId "com.androidevlinux.percy.UTXO"
         minSdkVersion 16
@@ -28,7 +28,7 @@ android {
         packagingOptions.pickFirst('META-INF/rxjava.properties')
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {
-            abiFilters 'x86', 'x86_64', 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+            abiFilters 'x86', 'x86_64', 'armeabi-v7a', 'arm64-v8a'
         }
         externalNativeBuild {
             cmake {
@@ -68,19 +68,19 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'com.android.support:preference-v14:27.1.0'
-    implementation 'com.android.support:preference-v7:27.1.0'
-    implementation 'com.android.support:appcompat-v7:27.1.0'
-    implementation 'com.android.support:design:27.1.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'com.android.support:preference-v14:27.1.1'
+    implementation 'com.android.support:preference-v7:27.1.1'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     implementation 'com.jakewharton:butterknife:8.8.1'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
-    implementation 'com.android.support:animated-vector-drawable:27.1.0'
-    implementation 'com.android.support:cardview-v7:27.1.0'
+    implementation 'com.android.support:animated-vector-drawable:27.1.1'
+    implementation 'com.android.support:cardview-v7:27.1.1'
     implementation 'com.journeyapps:zxing-android-embedded:3.4.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     implementation 'com.github.GrenderG:Toasty:1.2.8'
@@ -90,8 +90,8 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation('com.crashlytics.sdk.android:crashlytics:2.9.0@aar') {
         transitive = true
     }
